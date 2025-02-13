@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataCollection Component - Orion Design System</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>DataCollection Component</h1>
+
+      <section>
+        <h2>Overview</h2>
+        <p>
+          The DataCollection component is a composite Orion component that
+          provides a complete solution for rendering tables with advanced
+          features like search, filter, and action buttons. It's perfect for
+          building listing pages with rich functionality.
+        </p>
+
+        <div class="example-image">
+          <img src="../image-5.png" alt="DataCollection Example" />
+        </div>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <pre><code class="language-javascript">import DataCollection from "orion/lib/dataCollection";</code></pre>
+      </section>
+
+      <section>
+        <h2>Usage with DynamicChildHeight</h2>
+        <p>
+          The DataCollection component requires a height to render properly. Use
+          it with the DynamicChildHeight component:
+        </p>
+        <pre><code class="language-javascript">import DynamicChildHeight from "../../../components/helperComponents";
+
+const MyComponent = () => {
+    return (
+        &lt;div className="table-container"&gt;
+            &lt;DynamicChildHeight childElmClassName="table-list"&gt;
+                &lt;div className="table-list"&gt;
+                    &lt;DataCollection {...props}/&gt;
+                &lt;/div&gt;
+            &lt;/DynamicChildHeight&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Selection Hooks</h2>
+        <h3>Single Select</h3>
+        <pre><code class="language-javascript">import { useSingleSelect } from "../../utils/tableUtils";
+
+const MyComponent = () => {
+    const [selectedRow, handleRowSelect, clearSelectedRow] = useSingleSelect({
+        initialSelectedRow: null,
+        onChange: (row) => {
+            console.log('Selected row:', row);
+        }
+    });
+    // ... rest of the component
+}</code></pre>
+
+        <h3>Multi Select</h3>
+        <pre><code class="language-javascript">import { useMultiselect } from "../../hooks";
+
+const MyComponent = () => {
+    const [areAllRowsSelected, toggleAll, toggleRow, selectedRowsList, resetAll] = useMultiselect(
+        false,
+        [],
+        true,
+        "id"
+    );
+    // ... rest of the component
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Props</h2>
+
+        <h3>Main Props</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Data Type</th>
+              <th>Default Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>dataGridConfig</td>
+              <td>Object</td>
+              <td>See description</td>
+              <td>
+                Accepts all props of DataGrid component except Children,
+                defaultExpandedRows, expandedRows, and onRowExpand. Includes
+                configuration for pagination, table ID, responsiveness, etc.
+              </td>
+            </tr>
+            <tr>
+              <td>actionButtonConfig</td>
+              <td>Object</td>
+              <td>-</td>
+              <td>
+                Configuration for action buttons including primary, group, and
+                dropdown actions.
+              </td>
+            </tr>
+            <tr>
+              <td>autoSuggestConfig</td>
+              <td>Object</td>
+              <td>-</td>
+              <td>
+                Configuration for search functionality including search data,
+                callbacks, and customization options.
+              </td>
+            </tr>
+            <tr>
+              <td>filterButtonConfig</td>
+              <td>Object</td>
+              <td>-</td>
+              <td>
+                Configuration for filter functionality including filter title,
+                filters array, and callbacks.
+              </td>
+            </tr>
+            <tr>
+              <td>paginationConfig</td>
+              <td>Object</td>
+              <td>-</td>
+              <td>
+                Configuration for pagination including page change handling and
+                records per page.
+              </td>
+            </tr>
+            <tr>
+              <td>listCountWrapperConfig</td>
+              <td>Object</td>
+              <td>-</td>
+              <td>
+                Configuration for the list count wrapper including refresh
+                functionality and count display options.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>DataGrid Configuration</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Data Type</th>
+              <th>Default Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>tableId</td>
+              <td>String</td>
+              <td>data-grid</td>
+              <td>Unique identifier for the table</td>
+            </tr>
+            <tr>
+              <td>columnsDef*</td>
+              <td>Array</td>
+              <td>-</td>
+              <td>Array of column definitions</td>
+            </tr>
+            <tr>
+              <td>data*</td>
+              <td>Array</td>
+              <td>-</td>
+              <td>Array of row data items</td>
+            </tr>
+            <tr>
+              <td>uniqueDataKey</td>
+              <td>String</td>
+              <td>id</td>
+              <td>Property used to uniquely identify each row</td>
+            </tr>
+            <tr>
+              <td>responsive</td>
+              <td>Boolean</td>
+              <td>false</td>
+              <td>Enables responsive table behavior</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Column Definition Properties</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Data Type</th>
+              <th>Default Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>key*</td>
+              <td>String</td>
+              <td>-</td>
+              <td>Unique identifier for the column</td>
+            </tr>
+            <tr>
+              <td>title*</td>
+              <td>String</td>
+              <td>-</td>
+              <td>Column header title</td>
+            </tr>
+            <tr>
+              <td>dataKey</td>
+              <td>String</td>
+              <td>-</td>
+              <td>Key to access column value from row data</td>
+            </tr>
+            <tr>
+              <td>cellRenderer</td>
+              <td>Function</td>
+              <td>-</td>
+              <td>Custom renderer for cell content</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </body>
+</html>
