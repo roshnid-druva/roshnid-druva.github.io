@@ -14,10 +14,39 @@
         padding: 20px;
         color: #333;
       }
-      header {
+      .component-header {
         border-bottom: 1px solid #eee;
         padding-bottom: 20px;
         margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
       }
       .back-link {
         display: inline-block;
@@ -28,228 +57,227 @@
       .back-link:hover {
         color: #2980b9;
       }
-      h1,
-      h2,
-      h3 {
-        color: #2c3e50;
-      }
-      pre {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 4px;
-        overflow-x: auto;
-      }
-      code {
-        font-family: "Courier New", Courier, monospace;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
         margin: 20px 0;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-      }
-      th {
-        background-color: #f8f9fa;
-      }
-      .example {
-        margin: 20px 0;
-        padding: 20px;
-        border: 1px solid #eee;
-        border-radius: 4px;
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-        margin: 10px 0;
       }
     </style>
   </head>
   <body>
     <a href="../index.html" class="back-link">← Back to Components</a>
 
-    <header>
+    <div class="component-header">
       <h1>Button Component</h1>
       <p>
-        The Orion button component provides a versatile set of button styles and
-        variants for different use cases.
+        A versatile button component that supports multiple types, sizes,
+        states, and can include icons. The button can be rendered as either a
+        button or anchor element based on the presence of an href prop.
       </p>
-    </header>
+    </div>
 
-    <main>
-      <section>
-        <h2>Import</h2>
-        <pre><code>import Button from "orion/lib/button";</code></pre>
-      </section>
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>The label text of the button</td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>secondary</td>
+            <td>
+              Type of the Button component. Can be "primary", "secondary",
+              "danger" or "link"
+            </td>
+          </tr>
+          <tr>
+            <td>isSuccess</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              If true, shows button in success color. With primary type shows
+              filled success button, with secondary type shows outlined success
+              button.
+            </td>
+          </tr>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>md</td>
+            <td>Size of the button. Can be "sm", "md" or "lg"</td>
+          </tr>
+          <tr>
+            <td>href</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Required for link buttons. Renders as &lt;a&gt; tag when provided,
+              else &lt;button&gt;
+            </td>
+          </tr>
+          <tr>
+            <td>icon</td>
+            <td>React Element</td>
+            <td>-</td>
+            <td>
+              Icon from orion-icons library. Pass inheritFontColor prop to icon
+              for hover color changes
+            </td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the button when true</td>
+          </tr>
+          <tr>
+            <td>active</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes button appear in active state</td>
+          </tr>
+          <tr>
+            <td>block</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes button full width</td>
+          </tr>
+          <tr>
+            <td>onClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Click handler function</td>
+          </tr>
+          <tr>
+            <td>onMouseDown</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Mouse down handler function</td>
+          </tr>
+          <tr>
+            <td>onMouseUp</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Mouse up handler function</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>orion-button</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <section>
-        <h2>Properties</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Data Type</th>
-              <th>Default Value</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>label</code></td>
-              <td>String</td>
-              <td>-</td>
-              <td>The label of the button.</td>
-            </tr>
-            <tr>
-              <td><code>type</code></td>
-              <td>String</td>
-              <td>secondary</td>
-              <td>
-                Type of the Button component. Can be either "primary",
-                "secondary", "danger" or "link".
-              </td>
-            </tr>
-            <tr>
-              <td><code>isSuccess</code></td>
-              <td>Boolean</td>
-              <td>false</td>
-              <td>
-                If passed as true, the button will be shown in success color. We
-                could not take it in type prop because then outline variant of
-                success was not possible. Now if you pass isSuccess with primary
-                and secondary type, it will be shown as filled and outlined
-                buttons respectively.
-              </td>
-            </tr>
-            <tr>
-              <td><code>size</code></td>
-              <td>String</td>
-              <td>md</td>
-              <td>
-                Size of the Button component. Can be either "sm", "md" or "lg".
-                Font size, padding will be automatically adjusted.
-              </td>
-            </tr>
-            <tr>
-              <td><code>href</code></td>
-              <td>String</td>
-              <td>-</td>
-              <td>
-                <code>href</code> is required for link button only. If
-                <code>href</code> is provided then the button is created using
-                <code>&lt;a&gt;</code> else using <code>&lt;button&gt;</code>.
-              </td>
-            </tr>
-            <tr>
-              <td><code>icon</code></td>
-              <td>&lt;FromOrionIconsLibrary /&gt;</td>
-              <td>-</td>
-              <td>
-                <strong>Icon React Element</strong> imported from orion-icons
-                library. If you want the icon color changed on hover of the
-                button, please pass <code>inheritFontColor</code> prop to the
-                Icon component.
-              </td>
-            </tr>
-            <tr>
-              <td><code>disabled</code></td>
-              <td>Boolean</td>
-              <td>false</td>
-              <td>Handles the disability of the button.</td>
-            </tr>
-            <tr>
-              <td><code>active</code></td>
-              <td>Boolean</td>
-              <td>false</td>
-              <td>Makes button style look active.</td>
-            </tr>
-            <tr>
-              <td><code>block</code></td>
-              <td>Boolean</td>
-              <td>false</td>
-              <td>Full-width button.</td>
-            </tr>
-            <tr>
-              <td><code>onClick</code></td>
-              <td>Function</td>
-              <td>-</td>
-              <td>Click handler function for the button.</td>
-            </tr>
-            <tr>
-              <td><code>onMouseDown</code></td>
-              <td>Function</td>
-              <td>-</td>
-              <td>Mouse down handler function for the button.</td>
-            </tr>
-            <tr>
-              <td><code>onMouseUp</code></td>
-              <td>Function</td>
-              <td>-</td>
-              <td>Mouse up handler function for the button.</td>
-            </tr>
-            <tr>
-              <td><code>className</code></td>
-              <td>String</td>
-              <td>-</td>
-              <td>Provision to pass custom class.</td>
-            </tr>
-            <tr>
-              <td><code>dataTestId</code></td>
-              <td>String</td>
-              <td>orion-button</td>
-              <td>
-                Provision to pass a custom data test ID for automation purposes.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+    <div class="section">
+      <h2>Usage Examples</h2>
 
-      <section>
-        <h2>Usage Examples</h2>
+      <div class="example">
+        <h3>Basic Button Types</h3>
+        <code>
+          import Button from "orion/lib/button";<br /><br />
+          &lt;Button label="Primary Button" type="primary" /&gt;<br />
+          &lt;Button label="Secondary Button" /&gt;<br />
+          &lt;Button label="Danger Button" type="danger" /&gt;<br />
+          &lt;Button label="Link Type" type="link" href="#test" /&gt;
+        </code>
+      </div>
 
-        <div class="example">
-          <h3>1. Primary Button</h3>
-          <p>
-            This is a blue colored button with white text. It's used for primary
-            actions and provides high visual emphasis.
-          </p>
-          <pre><code>&lt;Button label="primary" type="primary"/&gt;</code></pre>
-        </div>
+      <div class="example">
+        <h3>Button with Icon</h3>
+        <code>
+          import Button from "orion/lib/button";<br />
+          import Filter from "@druva-apps/orion-icons/lib/FilterGreyOutline";<br /><br />
+          &lt;Button icon={&lt;Filter inheritFontColor /&gt;} /&gt;<br />
+          &lt;Button<br />
+          &nbsp;&nbsp;icon={&lt;Filter inheritFontColor inheritFontSize
+          /&gt;}<br />
+          &nbsp;&nbsp;label="Filter"<br />
+          &nbsp;&nbsp;type="primary"<br />
+          /&gt;
+        </code>
+      </div>
 
-        <div class="example">
-          <h3>2. Secondary Button</h3>
-          <p>
-            This is a white colored button with a border and colored text.
-            Secondary is the default type, used for secondary actions with
-            medium visual emphasis.
-          </p>
-          <pre><code>&lt;Button label="secondary" type="primary"/&gt;</code></pre>
-        </div>
+      <div class="example">
+        <h3>Button Sizes</h3>
+        <code>
+          &lt;Button label="Small Button" size="sm" /&gt;<br />
+          &lt;Button label="Medium Button" size="md" /&gt;<br />
+          &lt;Button label="Large Button" size="lg" /&gt;
+        </code>
+      </div>
 
-        <div class="example">
-          <h3>3. Danger Button</h3>
-          <p>
-            This is a red colored button with white text, used for destructive
-            actions or to indicate dangerous operations.
-          </p>
-          <pre><code>&lt;Button label="danger" type="danger"/&gt;</code></pre>
-        </div>
+      <div class="example">
+        <h3>Success Button</h3>
+        <code>
+          &lt;Button<br />
+          &nbsp;&nbsp;label="Success Filled"<br />
+          &nbsp;&nbsp;type="primary"<br />
+          &nbsp;&nbsp;isSuccess={true}<br />
+          /&gt;<br />
+          &lt;Button<br />
+          &nbsp;&nbsp;label="Success Outlined"<br />
+          &nbsp;&nbsp;type="secondary"<br />
+          &nbsp;&nbsp;isSuccess={true}<br />
+          /&gt;
+        </code>
+      </div>
 
-        <div class="example">
-          <h3>4. Link Button</h3>
-          <p>
-            This is a button component styled to look like a link. It behaves
-            like a button but appears as an inline text link, useful for
-            navigation or less prominent actions.
-          </p>
-          <pre><code>&lt;Button label="link button" type="link" href="/dummylink"/&gt;</code></pre>
-        </div>
-      </section>
-    </main>
+      <div class="example">
+        <h3>Block Button</h3>
+        <code>
+          &lt;Button<br />
+          &nbsp;&nbsp;label="Full Width Button"<br />
+          &nbsp;&nbsp;type="primary"<br />
+          &nbsp;&nbsp;block={true}<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Button States</h3>
+        <code>
+          &lt;Button label="Normal Button" /&gt;<br />
+          &lt;Button label="Active Button" active={true} /&gt;<br />
+          &lt;Button label="Disabled Button" disabled={true} /&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Best Practices</h2>
+      <ul>
+        <li>Use primary buttons for main actions</li>
+        <li>Use secondary buttons for alternative actions</li>
+        <li>Use danger buttons for destructive actions</li>
+        <li>Use link buttons for navigation or less important actions</li>
+        <li>When using icons, ensure they are from the orion-icons library</li>
+        <li>Keep button labels clear and concise</li>
+        <li>
+          Use appropriate button sizes based on their importance and context
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
