@@ -3,236 +3,671 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DataCollection Component - Orion Design System</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <title>DataCollection Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .note {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin: 20px 0;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
       <h1>DataCollection Component</h1>
+      <p>
+        DataCollection is a powerful compound component that combines several
+        atomic components into a single unit. It provides a complete solution
+        for displaying and managing tabular data with features like filtering,
+        searching, sorting, pagination, and action buttons.
+      </p>
+    </div>
 
-      <section>
-        <h2>Overview</h2>
-        <p>
-          The DataCollection component is a composite Orion component that
-          provides a complete solution for rendering tables with advanced
-          features like search, filter, and action buttons. It's perfect for
-          building listing pages with rich functionality.
-        </p>
+    <div class="section">
+      <h2>Installation and Imports</h2>
+      <div class="example">
+        <h3>Basic Import</h3>
+        <code> import DataCollection from "orion/lib/dataCollection"; </code>
+      </div>
 
-        <div class="example-image">
-          <img src="../image-5.png" alt="DataCollection Example" />
-        </div>
-      </section>
+      <div class="note">
+        <strong>Height Requirement:</strong> DataCollection component needs to
+        be wrapped in a container with a defined height to render properly. This
+        is typically achieved by wrapping it in a DynamicChildHeight component
+        from the Orion library.
+      </div>
+    </div>
 
-      <section>
-        <h2>Import</h2>
-        <pre><code class="language-javascript">import DataCollection from "orion/lib/dataCollection";</code></pre>
-      </section>
+    <div class="section">
+      <h2>Configuration Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>dataGridConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for the data grid component. Key properties include:
+              <ul>
+                <li>
+                  <code>data: Array</code> - Array of data objects to display
+                </li>
+                <li>
+                  <code>columnsDef: Array</code> - Column definitions array with
+                  properties:
+                  <ul>
+                    <li><code>field: string</code> - Data field to display</li>
+                    <li><code>title: string</code> - Column header text</li>
+                    <li><code>width?: number</code> - Optional column width</li>
+                    <li>
+                      <code>cellRenderer?: Function</code> - Custom cell
+                      rendering function
+                    </li>
+                    <li>
+                      <code>rowSpan?: Function</code> - Function to calculate
+                      row span
+                    </li>
+                    <li>
+                      <code>sortable?: boolean</code> - Enable column sorting
+                    </li>
+                    <li>
+                      <code>headerRenderer?: Function</code> - Custom header
+                      rendering
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <code>tableId: string</code> - Unique identifier for the table
+                </li>
+                <li>
+                  <code>multiSelect: boolean</code> - Enable row selection
+                </li>
+                <li>
+                  <code>isExpandable: boolean</code> - Enable row expansion
+                </li>
+                <li>
+                  <code>isSelectable: boolean</code> - Enable row selection
+                </li>
+                <li>
+                  <code>enableExportToCsv: boolean</code> - Enable CSV export
+                </li>
+                <li>
+                  <code>csvFileName?: string</code> - Name for exported CSV file
+                </li>
+                <li>
+                  <code>enableConfiguration: boolean</code> - Enable table
+                  configuration
+                </li>
+                <li>
+                  <code>enableCSVToastMessage?: boolean</code> - Show toast on
+                  CSV export
+                </li>
+                <li>
+                  <code>enableFullScreen: boolean</code> - Enable full screen
+                  mode
+                </li>
+                <li>
+                  <code>paginationEnabled: boolean</code> - Enable pagination
+                </li>
+                <li>
+                  <code>enableRowSpan: boolean</code> - Enable row spanning
+                </li>
+                <li>
+                  <code>tableHeight: string</code> - Table height (e.g.,
+                  "400px")
+                </li>
+                <li>
+                  <code>footerHeight?: number</code> - Height of table footer
+                </li>
+                <li><code>onSort: Function</code> - Sort handler function</li>
+                <li>
+                  <code>onLoadMore: Function</code> - Infinite scroll handler
+                </li>
+                <li><code>onRowClick: Function</code> - Row click handler</li>
+                <li>
+                  <code>onRowSelectionChange: Function</code> - Selection change
+                  handler
+                </li>
+                <li>
+                  <code>onSelectAll: Function</code> - Select all rows handler
+                </li>
+                <li>
+                  <code>emptyRenderer: Function</code> - Custom empty state
+                  renderer
+                </li>
+                <li>
+                  <code>loadedAll: boolean</code> - Whether all data is loaded
+                </li>
+                <li><code>isLoading: boolean</code> - Show loading state</li>
+                <li>
+                  <code>isLoadingMore: boolean</code> - Show loading more state
+                </li>
+                <li>
+                  <code>defaultSelectedRows: Array</code> - Pre-selected rows
+                </li>
+                <li>
+                  <code>selectedRowsCountText: string</code> - Text for selected
+                  rows count
+                </li>
+                <li>
+                  <code>responsive: boolean</code> - Enable responsive behavior
+                </li>
+                <li>
+                  <code>enablePersistConfig: boolean</code> - Persist table
+                  configuration
+                </li>
+                <li><code>sortBy: string</code> - Default sort field</li>
+                <li>
+                  <code>sortOrder: "asc" | "desc"</code> - Default sort order
+                </li>
+                <li>
+                  <code>isLoadingTotalRowsCount: boolean</code> - Loading state
+                  for total count
+                </li>
+                <li>
+                  <code>totalRowsCount: number</code> - Total number of rows
+                </li>
+                <li>
+                  <code>tableRef: React.RefObject</code> - Reference to table
+                  element
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>actionButtonConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for action buttons. Properties include:
+              <ul>
+                <li>
+                  <code>buttons: Array</code> - Array of button configurations:
+                  <ul>
+                    <li><code>label: string</code> - Button text</li>
+                    <li>
+                      <code
+                        >type: "primary" | "secondary" | "danger" | "link"</code
+                      >
+                      - Button type
+                    </li>
+                    <li><code>onClick: Function</code> - Click handler</li>
+                    <li><code>icon?: ReactElement</code> - Optional icon</li>
+                    <li><code>disabled?: boolean</code> - Disable state</li>
+                  </ul>
+                </li>
+                <li>
+                  <code>groupActionButtons?: Array</code> - Buttons shown when
+                  rows are selected
+                </li>
+                <li>
+                  <code>dropdownActions?: Array</code> - Actions shown in
+                  dropdown menu
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>filterButtonConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for filter buttons. Properties include:
+              <ul>
+                <li>
+                  <code>filters: Array</code> - Array of filter configurations:
+                  <ul>
+                    <li><code>label: string</code> - Filter label</li>
+                    <li><code>options: Array</code> - Filter options</li>
+                    <li>
+                      <code>type?: "single" | "multi"</code> - Selection type
+                    </li>
+                    <li>
+                      <code>defaultValue?: any</code> - Default selected value
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <code>onFilterChange: Function</code> - Filter change handler
+                </li>
+                <li>
+                  <code>clearAllFilters: Function</code> - Clear filters handler
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>autoSuggestConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for search functionality. Properties include:
+              <ul>
+                <li>
+                  <code>placeholder: string</code> - Search input placeholder
+                </li>
+                <li>
+                  <code>onSearch: Function</code> - Search handler function
+                </li>
+                <li>
+                  <code>suggestions: Array</code> - Autocomplete suggestions
+                </li>
+                <li>
+                  <code>minChars?: number</code> - Minimum characters to trigger
+                  search
+                </li>
+                <li>
+                  <code>debounceTime?: number</code> - Debounce time in
+                  milliseconds
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>paginationConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for pagination. Properties include:
+              <ul>
+                <li>
+                  <code>onPageChange: (page: number) => void</code> - Page
+                  change handler
+                </li>
+                <li>
+                  <code>recordsPerPage: number</code> - Number of records per
+                  page
+                </li>
+                <li>
+                  <code
+                    >getInfoText: (from: number, to: number, total: number) =>
+                    string</code
+                  >
+                  - Custom text formatter
+                </li>
+                <li>
+                  <code>totalPages?: number</code> - Total number of pages
+                </li>
+                <li><code>currentPage?: number</code> - Current active page</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>listCountWrapperConfig</td>
+            <td>Object</td>
+            <td>
+              Configuration for record count display. Properties include:
+              <ul>
+                <li>
+                  <code>totalRowsCount: number</code> - Total number of records
+                </li>
+                <li>
+                  <code>selectedRowsCount?: number</code> - Number of selected
+                  records
+                </li>
+                <li>
+                  <code>selectedRowsCountText?: string</code> - Custom text for
+                  selection count
+                </li>
+                <li>
+                  <code>refreshData?: Function</code> - Data refresh handler
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <section>
-        <h2>Usage with DynamicChildHeight</h2>
-        <p>
-          The DataCollection component requires a height to render properly. Use
-          it with the DynamicChildHeight component:
-        </p>
-        <pre><code class="language-javascript">import DynamicChildHeight from "../../../components/helperComponents";
+    <div class="section">
+      <h2>Usage Examples</h2>
 
-const MyComponent = () => {
-    return (
-        &lt;div className="table-container"&gt;
-            &lt;DynamicChildHeight childElmClassName="table-list"&gt;
-                &lt;div className="table-list"&gt;
-                    &lt;DataCollection {...props}/&gt;
-                &lt;/div&gt;
-            &lt;/DynamicChildHeight&gt;
-        &lt;/div&gt;
-    );
-}</code></pre>
-      </section>
+      <div class="example">
+        <h3>Basic DataCollection</h3>
+        <code>
+          import DataCollection from "orion/lib/dataCollection";<br /><br />
+          const dataGridConfig = {<br />
+          &nbsp;&nbsp;data: tableData,<br />
+          &nbsp;&nbsp;columnsDef: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{ field: 'name', title: 'Name' },<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{ field: 'email', title: 'Email' },<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{ field: 'role', title: 'Role' }<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;tableId: "users-table",<br />
+          &nbsp;&nbsp;multiSelect: true,<br />
+          &nbsp;&nbsp;isSelectable: true<br />
+          };<br /><br />
+          &lt;DataCollection<br />
+          &nbsp;&nbsp;dataGridConfig={dataGridConfig}<br />
+          /&gt;
+        </code>
+      </div>
 
-      <section>
-        <h2>Selection Hooks</h2>
-        <h3>Single Select</h3>
-        <pre><code class="language-javascript">import { useSingleSelect } from "../../utils/tableUtils";
+      <div class="example">
+        <h3>DataCollection with Actions and Filters</h3>
+        <code>
+          const actionButtonConfig = {<br />
+          &nbsp;&nbsp;buttons: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Add User",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onClick: () => handleAddUser(),<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "primary"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;]<br />
+          };<br /><br />
+          const filterButtonConfig = {<br />
+          &nbsp;&nbsp;filters: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Role",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options: ["Admin", "User",
+          "Guest"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;onFilterChange: (filters) =>
+          handleFilterChange(filters),<br />
+          &nbsp;&nbsp;clearAllFilters: () => handleClearFilters()<br />
+          };<br /><br />
+          &lt;DataCollection<br />
+          &nbsp;&nbsp;dataGridConfig={dataGridConfig}<br />
+          &nbsp;&nbsp;actionButtonConfig={actionButtonConfig}<br />
+          &nbsp;&nbsp;filterButtonConfig={filterButtonConfig}<br />
+          /&gt;
+        </code>
+      </div>
 
-const MyComponent = () => {
-    const [selectedRow, handleRowSelect, clearSelectedRow] = useSingleSelect({
-        initialSelectedRow: null,
-        onChange: (row) => {
-            console.log('Selected row:', row);
-        }
-    });
-    // ... rest of the component
-}</code></pre>
+      <div class="example">
+        <h3>DataCollection with Pagination</h3>
+        <code>
+          const paginationConfig = {<br />
+          &nbsp;&nbsp;onPageChange: (currentPage) =>
+          handlePageChange(currentPage),<br />
+          &nbsp;&nbsp;recordsPerPage: 20,<br />
+          &nbsp;&nbsp;getInfoText: (from, to, total) => `Records ${from} - ${to}
+          of ${total}`<br />
+          };<br /><br />
+          const dataGridConfig = {<br />
+          &nbsp;&nbsp;...baseConfig,<br />
+          &nbsp;&nbsp;paginationEnabled: true<br />
+          };<br /><br />
+          &lt;DataCollection<br />
+          &nbsp;&nbsp;dataGridConfig={dataGridConfig}<br />
+          &nbsp;&nbsp;paginationConfig={paginationConfig}<br />
+          /&gt;
+        </code>
+      </div>
 
-        <h3>Multi Select</h3>
-        <pre><code class="language-javascript">import { useMultiselect } from "../../hooks";
+      <div class="example">
+        <h3>DataCollection with Row Spanning</h3>
+        <code>
+          const dataGridConfig = {<br />
+          &nbsp;&nbsp;...baseConfig,<br />
+          &nbsp;&nbsp;enableRowSpan: true,<br />
+          &nbsp;&nbsp;rowRenderer: (rowData, cells, rowIndex) => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;// Custom row rendering logic<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return cells;<br />
+          &nbsp;&nbsp;}<br />
+          };<br /><br />
+          &lt;DataCollection<br />
+          &nbsp;&nbsp;dataGridConfig={dataGridConfig}<br />
+          /&gt;
+        </code>
+      </div>
 
-const MyComponent = () => {
-    const [areAllRowsSelected, toggleAll, toggleRow, selectedRowsList, resetAll] = useMultiselect(
-        false,
-        [],
-        true,
-        "id"
-    );
-    // ... rest of the component
-}</code></pre>
-      </section>
+      <div class="example">
+        <h3>Complete DataCollection Example</h3>
+        <code>
+          import DataCollection from "orion/lib/dataCollection";<br />
+          import MessageBox from "orion/lib/messageBox";<br />
+          import WarningIcon from
+          "@druva-apps/orion-icons/lib/WarningYellowOutline";<br /><br />
 
-      <section>
-        <h2>Props</h2>
+          const dataGridConfig = {<br />
+          &nbsp;&nbsp;data: tableData,<br />
+          &nbsp;&nbsp;columnsDef: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field: 'name',<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Name',<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sortable: true,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellRenderer: (value) =>
+          &lt;strong&gt;{value}&lt;/strong&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;},<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field: 'status',<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Status',<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: 120,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellRenderer: (value) => (<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span
+          className={`status-${value.toLowerCase()}`}&gt;{value}&lt;/span&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;tableId: "users-table",<br />
+          &nbsp;&nbsp;multiSelect: true,<br />
+          &nbsp;&nbsp;isSelectable: true,<br />
+          &nbsp;&nbsp;enableExportToCsv: true,<br />
+          &nbsp;&nbsp;csvFileName: "users-data",<br />
+          &nbsp;&nbsp;enableConfiguration: true,<br />
+          &nbsp;&nbsp;enableCSVToastMessage: true,<br />
+          &nbsp;&nbsp;responsive: true,<br />
+          &nbsp;&nbsp;tableHeight: "400px",<br />
+          &nbsp;&nbsp;emptyRenderer: () => (<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;MessageBox<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon={&lt;WarningIcon /&gt;}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primaryText="No data available"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryText="Please add some
+          data to view here"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;/&gt;<br />
+          &nbsp;&nbsp;),<br />
+          &nbsp;&nbsp;onSort: (field, order) => handleSort(field, order),<br />
+          &nbsp;&nbsp;onLoadMore: () => loadMoreData(),<br />
+          &nbsp;&nbsp;onRowClick: (row) => handleRowClick(row),<br />
+          &nbsp;&nbsp;onSelectAll: (selected) => handleSelectAll(selected)<br />
+          };<br /><br />
 
-        <h3>Main Props</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Data Type</th>
-              <th>Default Value</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>dataGridConfig</td>
-              <td>Object</td>
-              <td>See description</td>
-              <td>
-                Accepts all props of DataGrid component except Children,
-                defaultExpandedRows, expandedRows, and onRowExpand. Includes
-                configuration for pagination, table ID, responsiveness, etc.
-              </td>
-            </tr>
-            <tr>
-              <td>actionButtonConfig</td>
-              <td>Object</td>
-              <td>-</td>
-              <td>
-                Configuration for action buttons including primary, group, and
-                dropdown actions.
-              </td>
-            </tr>
-            <tr>
-              <td>autoSuggestConfig</td>
-              <td>Object</td>
-              <td>-</td>
-              <td>
-                Configuration for search functionality including search data,
-                callbacks, and customization options.
-              </td>
-            </tr>
-            <tr>
-              <td>filterButtonConfig</td>
-              <td>Object</td>
-              <td>-</td>
-              <td>
-                Configuration for filter functionality including filter title,
-                filters array, and callbacks.
-              </td>
-            </tr>
-            <tr>
-              <td>paginationConfig</td>
-              <td>Object</td>
-              <td>-</td>
-              <td>
-                Configuration for pagination including page change handling and
-                records per page.
-              </td>
-            </tr>
-            <tr>
-              <td>listCountWrapperConfig</td>
-              <td>Object</td>
-              <td>-</td>
-              <td>
-                Configuration for the list count wrapper including refresh
-                functionality and count display options.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          const actionButtonConfig = {<br />
+          &nbsp;&nbsp;buttons: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Add User",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "primary",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onClick: () => handleAddUser()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;groupActionButtons: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Delete Selected",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "danger",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onClick: () =>
+          handleDeleteSelected()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;dropdownActions: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Export All",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onClick: () =>
+          handleExportAll()<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;]<br />
+          };<br /><br />
 
-        <h3>DataGrid Configuration</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Data Type</th>
-              <th>Default Value</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>tableId</td>
-              <td>String</td>
-              <td>data-grid</td>
-              <td>Unique identifier for the table</td>
-            </tr>
-            <tr>
-              <td>columnsDef*</td>
-              <td>Array</td>
-              <td>-</td>
-              <td>Array of column definitions</td>
-            </tr>
-            <tr>
-              <td>data*</td>
-              <td>Array</td>
-              <td>-</td>
-              <td>Array of row data items</td>
-            </tr>
-            <tr>
-              <td>uniqueDataKey</td>
-              <td>String</td>
-              <td>id</td>
-              <td>Property used to uniquely identify each row</td>
-            </tr>
-            <tr>
-              <td>responsive</td>
-              <td>Boolean</td>
-              <td>false</td>
-              <td>Enables responsive table behavior</td>
-            </tr>
-          </tbody>
-        </table>
+          const filterButtonConfig = {<br />
+          &nbsp;&nbsp;filters: [<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Status",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "multi",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options: ["Active", "Inactive",
+          "Pending"],<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultValue: ["Active"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;},<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: "Role",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "single",<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options: ["Admin", "User",
+          "Guest"]<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;],<br />
+          &nbsp;&nbsp;onFilterChange: (filters) =>
+          handleFilterChange(filters),<br />
+          &nbsp;&nbsp;clearAllFilters: () => handleClearFilters()<br />
+          };<br /><br />
 
-        <h3>Column Definition Properties</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Data Type</th>
-              <th>Default Value</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>key*</td>
-              <td>String</td>
-              <td>-</td>
-              <td>Unique identifier for the column</td>
-            </tr>
-            <tr>
-              <td>title*</td>
-              <td>String</td>
-              <td>-</td>
-              <td>Column header title</td>
-            </tr>
-            <tr>
-              <td>dataKey</td>
-              <td>String</td>
-              <td>-</td>
-              <td>Key to access column value from row data</td>
-            </tr>
-            <tr>
-              <td>cellRenderer</td>
-              <td>Function</td>
-              <td>-</td>
-              <td>Custom renderer for cell content</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+          const autoSuggestConfig = {<br />
+          &nbsp;&nbsp;placeholder: "Search users...",<br />
+          &nbsp;&nbsp;minChars: 2,<br />
+          &nbsp;&nbsp;debounceTime: 300,<br />
+          &nbsp;&nbsp;onSearch: (query) => handleSearch(query),<br />
+          &nbsp;&nbsp;suggestions: searchSuggestions<br />
+          };<br /><br />
+
+          const paginationConfig = {<br />
+          &nbsp;&nbsp;recordsPerPage: 20,<br />
+          &nbsp;&nbsp;currentPage: 1,<br />
+          &nbsp;&nbsp;totalPages: 10,<br />
+          &nbsp;&nbsp;onPageChange: (page) => handlePageChange(page),<br />
+          &nbsp;&nbsp;getInfoText: (from, to, total) => `Showing ${from} to
+          ${to} of ${total} users`<br />
+          };<br /><br />
+
+          const listCountWrapperConfig = {<br />
+          &nbsp;&nbsp;totalRowsCount: 200,<br />
+          &nbsp;&nbsp;selectedRowsCount: 5,<br />
+          &nbsp;&nbsp;selectedRowsCountText: "users selected",<br />
+          &nbsp;&nbsp;refreshData: () => handleRefreshData()<br />
+          };<br /><br />
+
+          return (<br />
+          &nbsp;&nbsp;&lt;DataCollection<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;dataGridConfig={dataGridConfig}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;actionButtonConfig={actionButtonConfig}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;filterButtonConfig={filterButtonConfig}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;autoSuggestConfig={autoSuggestConfig}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;paginationConfig={paginationConfig}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;listCountWrapperConfig={listCountWrapperConfig}<br />
+          &nbsp;&nbsp;/&gt;<br />
+          );
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Notes and Best Practices</h2>
+      <div class="note">
+        <strong>Pagination vs Infinite Loading:</strong> To use pagination
+        instead of infinite loading, set <code>paginationEnabled: true</code> in
+        the dataGridConfig.
+      </div>
+      <div class="note">
+        <strong>Row Spanning:</strong> When using row spanning functionality:
+        <ul>
+          <li>Enable it with <code>enableRowSpan: true</code></li>
+          <li>Provide a custom <code>rowRenderer</code> function</li>
+          <li>
+            Note that row spanning won't work if
+            <code>estimatedRowHeight</code> is set
+          </li>
+        </ul>
+      </div>
+      <div class="note">
+        <strong>Height Management:</strong>
+        <ul>
+          <li>
+            Always wrap DataCollection with DynamicChildHeight for proper
+            rendering
+          </li>
+          <li>
+            Ensure unique class names for childElmClassName to avoid conflicts
+          </li>
+          <li>
+            The container div should have a defined width (percentage or fixed)
+          </li>
+        </ul>
+      </div>
+      <div class="note">
+        <strong>Selection Management:</strong>
+        <ul>
+          <li>Use useSingleSelect for radio button selection behavior</li>
+          <li>Use useMultiselect for checkbox selection behavior</li>
+          <li>Both hooks provide clean APIs for selection state management</li>
+          <li>
+            Selection hooks handle all edge cases and provide consistent
+            behavior
+          </li>
+        </ul>
+      </div>
+      <ul>
+        <li>
+          Always provide a unique <code>tableId</code> for proper functionality
+        </li>
+        <li>
+          Use <code>multiSelect</code> with caution when row spanning is enabled
+        </li>
+        <li>
+          Implement proper error handling in data loading and action callbacks
+        </li>
+        <li>
+          Consider performance implications when dealing with large datasets
+        </li>
+        <li>
+          Use the <code>listCountWrapperConfig</code> to provide clear feedback
+          about data status
+        </li>
+      </ul>
     </div>
   </body>
 </html>
