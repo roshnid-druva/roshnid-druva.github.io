@@ -71,10 +71,13 @@
     <div class="component-header">
       <h1>Button Component</h1>
       <p>
-        A versatile button component that supports multiple types, sizes,
-        states, and can include icons. The button can be rendered as either a
-        button or anchor element based on the presence of an href prop.
+        A versatile button component with multiple types, sizes, and states.
       </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Button from "orion/lib/button"; </code>
     </div>
 
     <div class="section">
@@ -93,15 +96,15 @@
             <td>label</td>
             <td>String</td>
             <td>-</td>
-            <td>The label text of the button</td>
+            <td>The label of the button</td>
           </tr>
           <tr>
             <td>type</td>
             <td>String</td>
             <td>secondary</td>
             <td>
-              Type of the Button component. Can be "primary", "secondary",
-              "danger" or "link"
+              Type of the Button component. Can be either "primary",
+              "secondary", "danger" or "link"
             </td>
           </tr>
           <tr>
@@ -109,24 +112,27 @@
             <td>Boolean</td>
             <td>false</td>
             <td>
-              If true, shows button in success color. With primary type shows
-              filled success button, with secondary type shows outlined success
-              button.
+              If passed as true, the button will be shown in success color.
+              Using isSuccess with primary and secondary type will show filled
+              and outlined buttons respectively.
             </td>
           </tr>
           <tr>
             <td>size</td>
             <td>String</td>
             <td>md</td>
-            <td>Size of the button. Can be "sm", "md" or "lg"</td>
+            <td>
+              Size of the Button component. Can be either "sm", "md" or "lg".
+              Font size, padding will be automatically adjusted.
+            </td>
           </tr>
           <tr>
             <td>href</td>
             <td>String</td>
             <td>-</td>
             <td>
-              Required for link buttons. Renders as &lt;a&gt; tag when provided,
-              else &lt;button&gt;
+              href is required for link button only. If href is provided then
+              the button is created using &lt;a&gt; else using &lt;button&gt;
             </td>
           </tr>
           <tr>
@@ -134,57 +140,60 @@
             <td>React Element</td>
             <td>-</td>
             <td>
-              Icon from orion-icons library. Pass inheritFontColor prop to icon
-              for hover color changes
+              Icon React Element imported from orion-icons library. If you want
+              the icon color changed on hover of the button, please pass
+              inheritFontColor prop to the Icon component.
             </td>
           </tr>
           <tr>
             <td>disabled</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Disables the button when true</td>
+            <td>Handles the disability of the button.</td>
           </tr>
           <tr>
             <td>active</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Makes button appear in active state</td>
+            <td>Makes button style looks like active.</td>
           </tr>
           <tr>
             <td>block</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Makes button full width</td>
+            <td>Full width button.</td>
           </tr>
           <tr>
             <td>onClick</td>
             <td>Function</td>
             <td>-</td>
-            <td>Click handler function</td>
+            <td>Click handler function for the button.</td>
           </tr>
           <tr>
             <td>onMouseDown</td>
             <td>Function</td>
             <td>-</td>
-            <td>Mouse down handler function</td>
+            <td>Mouse down handler function for the button.</td>
           </tr>
           <tr>
             <td>onMouseUp</td>
             <td>Function</td>
             <td>-</td>
-            <td>Mouse up handler function</td>
+            <td>Mouse up handler function for the button.</td>
           </tr>
           <tr>
             <td>className</td>
             <td>String</td>
             <td>-</td>
-            <td>Custom CSS class</td>
+            <td>Provision to pass custom class.</td>
           </tr>
           <tr>
             <td>dataTestId</td>
             <td>String</td>
             <td>orion-button</td>
-            <td>Custom data test ID for automation</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -194,38 +203,75 @@
       <h2>Usage Examples</h2>
 
       <div class="example">
-        <h3>Basic Button Types</h3>
+        <h3>Button Types</h3>
+
+        <h4>Primary Button</h4>
+        <code> &lt;Button label="click me" type="primary" /&gt; </code>
+
+        <h4>Secondary Button</h4>
+        <code> &lt;Button label="secondary" /&gt; </code>
+
+        <h4>Danger Button</h4>
+        <code> &lt;Button label="danger" type="danger" /&gt; </code>
+
+        <h4>Button with Icon and Label</h4>
         <code>
-          import Button from "orion/lib/button";<br /><br />
-          &lt;Button label="Primary Button" type="primary" /&gt;<br />
-          &lt;Button label="Secondary Button" /&gt;<br />
-          &lt;Button label="Danger Button" type="danger" /&gt;<br />
-          &lt;Button label="Link Type" type="link" href="#test" /&gt;
+          &lt;Button<br />
+          &nbsp;&nbsp;icon={&lt;Alert inheritFontColor inheritFontSize /&gt;}<br />
+          &nbsp;&nbsp;label="Alarm"<br />
+          &nbsp;&nbsp;type="primary"<br />
+          /&gt;
+        </code>
+
+        <h4>Link Button</h4>
+        <code>
+          &lt;Button label="link button" type="link" href="/dummylink" /&gt;
         </code>
       </div>
 
       <div class="example">
-        <h3>Button with Icon</h3>
+        <h3>Button States</h3>
+
+        <h4>Disabled Primary Button</h4>
+        <code> &lt;Button label="click me" type="primary" disabled /&gt; </code>
+
+        <h4>Disabled Secondary Button</h4>
+        <code> &lt;Button label="secondary" disabled /&gt; </code>
+
+        <h4>Disabled Link Button</h4>
         <code>
-          import Button from "orion/lib/button";<br />
-          import Filter from "@druva-apps/orion-icons/lib/FilterGreyOutline";<br /><br />
-          &lt;Button icon={&lt;Filter inheritFontColor /&gt;} /&gt;<br />
-          &lt;Button<br />
-          &nbsp;&nbsp;icon={&lt;Filter inheritFontColor inheritFontSize
-          /&gt;}<br />
-          &nbsp;&nbsp;label="Filter"<br />
-          &nbsp;&nbsp;type="primary"<br />
+          &lt;Button label="link button" type="link" href="/dummylink" disabled
           /&gt;
         </code>
       </div>
 
       <div class="example">
         <h3>Button Sizes</h3>
+
+        <h4>Small Button</h4>
         <code>
-          &lt;Button label="Small Button" size="sm" /&gt;<br />
-          &lt;Button label="Medium Button" size="md" /&gt;<br />
-          &lt;Button label="Large Button" size="lg" /&gt;
+          &lt;Button label="Small Button" type="primary" size="sm" /&gt;
         </code>
+
+        <h4>Regular Button</h4>
+        <code> &lt;Button label="Regular Button" type="primary" /&gt; </code>
+
+        <h4>Large Button</h4>
+        <code>
+          &lt;Button label="Large Button" type="primary" size="lg" /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Button with Block Style (Full Width)</h3>
+        <code>
+          &lt;Button label="Block Button" type="primary" block /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Button with Icon Only</h3>
+        <code> &lt;Button icon={&lt;Filter inheritFontColor /&gt;} /&gt; </code>
       </div>
 
       <div class="example">
@@ -245,22 +291,11 @@
       </div>
 
       <div class="example">
-        <h3>Block Button</h3>
-        <code>
-          &lt;Button<br />
-          &nbsp;&nbsp;label="Full Width Button"<br />
-          &nbsp;&nbsp;type="primary"<br />
-          &nbsp;&nbsp;block={true}<br />
-          /&gt;
-        </code>
-      </div>
+        <h3>Button Events</h3>
 
-      <div class="example">
-        <h3>Button States</h3>
+        <h4>Button Click Event</h4>
         <code>
-          &lt;Button label="Normal Button" /&gt;<br />
-          &lt;Button label="Active Button" active={true} /&gt;<br />
-          &lt;Button label="Disabled Button" disabled={true} /&gt;
+          &lt;Button label="click me" onClick={this.handleClick} /&gt;
         </code>
       </div>
     </div>
