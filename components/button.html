@@ -42,6 +42,13 @@
         border-radius: 4px;
         font-family: monospace;
       }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
       .example {
         background-color: #f8f9fa;
         padding: 20px;
@@ -57,11 +64,66 @@
       .back-link:hover {
         color: #2980b9;
       }
-      .button-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin: 20px 0;
+      .button-example {
+        display: inline-block;
+        margin: 0 5px 15px 0;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+      }
+      .btn-primary {
+        color: white;
+        background-color: #3498db;
+        border: 1px solid #3498db;
+      }
+      .btn-secondary {
+        color: #3498db;
+        background-color: transparent;
+        border: 1px solid #3498db;
+      }
+      .btn-danger {
+        color: white;
+        background-color: #e74c3c;
+        border: 1px solid #e74c3c;
+      }
+      .btn-link {
+        color: #3498db;
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+        padding: 0;
+      }
+      .btn-sm {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+      .btn-lg {
+        padding: 10px 16px;
+        font-size: 16px;
+      }
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+      .btn[disabled] {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+      .btn-icon {
+        margin-right: 6px;
       }
     </style>
   </head>
@@ -101,7 +163,7 @@
           <tr>
             <td>type</td>
             <td>String</td>
-            <td>secondary</td>
+            <td>"secondary"</td>
             <td>
               Type of the Button component. Can be either "primary",
               "secondary", "danger" or "link"
@@ -120,7 +182,7 @@
           <tr>
             <td>size</td>
             <td>String</td>
-            <td>md</td>
+            <td>"md"</td>
             <td>
               Size of the Button component. Can be either "sm", "md" or "lg".
               Font size, padding will be automatically adjusted.
@@ -190,7 +252,7 @@
           <tr>
             <td>dataTestId</td>
             <td>String</td>
-            <td>orion-button</td>
+            <td>"orion-button"</td>
             <td>
               Provision to pass a custom data test ID for automation purpose.
             </td>
@@ -202,101 +264,146 @@
     <div class="section">
       <h2>Usage Examples</h2>
 
-      <div class="example">
-        <h3>Button Types</h3>
+      <h3>Button Types</h3>
 
+      <div class="example">
         <h4>Primary Button</h4>
-        <code> &lt;Button label="click me" type="primary" /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-primary">click me</button>
+        </div>
+        <pre>&lt;Button label="click me" type="primary" /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Secondary Button</h4>
-        <code> &lt;Button label="secondary" /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-secondary">secondary</button>
+        </div>
+        <pre>&lt;Button label="secondary" /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Danger Button</h4>
-        <code> &lt;Button label="danger" type="danger" /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-danger">danger</button>
+        </div>
+        <pre>&lt;Button label="danger" type="danger" /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Button with Icon and Label</h4>
-        <code>
-          &lt;Button<br />
-          &nbsp;&nbsp;icon={&lt;Alert inheritFontColor inheritFontSize /&gt;}<br />
-          &nbsp;&nbsp;label="Alarm"<br />
-          &nbsp;&nbsp;type="primary"<br />
-          /&gt;
-        </code>
+        <div class="button-example">
+          <button class="btn btn-primary">
+            <span class="btn-icon">⚠️</span>
+            Alarm
+          </button>
+        </div>
+        <pre>
+&lt;Button
+  icon={&lt;Alert inheritFontColor inheritFontSize /&gt;}
+  label="Alarm"
+  type="primary"
+/&gt;</pre
+        >
+      </div>
 
+      <div class="example">
         <h4>Link Button</h4>
-        <code>
-          &lt;Button label="link button" type="link" href="/dummylink" /&gt;
-        </code>
+        <div class="button-example">
+          <a href="#" class="btn btn-link">link button</a>
+        </div>
+        <pre>
+&lt;Button label="link button" type="link" href="/dummylink" /&gt;</pre
+        >
       </div>
 
-      <div class="example">
-        <h3>Button States</h3>
+      <h3>Button States</h3>
 
+      <div class="example">
         <h4>Disabled Primary Button</h4>
-        <code> &lt;Button label="click me" type="primary" disabled /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-primary" disabled>click me</button>
+        </div>
+        <pre>&lt;Button label="click me" type="primary" disabled /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Disabled Secondary Button</h4>
-        <code> &lt;Button label="secondary" disabled /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-secondary" disabled>secondary</button>
+        </div>
+        <pre>&lt;Button label="secondary" disabled /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Disabled Link Button</h4>
-        <code>
-          &lt;Button label="link button" type="link" href="/dummylink" disabled
-          /&gt;
-        </code>
+        <div class="button-example">
+          <a
+            href="#"
+            class="btn btn-link"
+            style="opacity: 0.65; pointer-events: none"
+            >link button</a
+          >
+        </div>
+        <pre>
+&lt;Button label="link button" type="link" href="/dummylink" disabled /&gt;</pre
+        >
       </div>
 
-      <div class="example">
-        <h3>Button Sizes</h3>
+      <h3>Button Sizes</h3>
 
+      <div class="example">
         <h4>Small Button</h4>
-        <code>
-          &lt;Button label="Small Button" type="primary" size="sm" /&gt;
-        </code>
+        <div class="button-example">
+          <button class="btn btn-primary btn-sm">Small Button</button>
+        </div>
+        <pre>
+&lt;Button label="Small Button" type="primary" size="sm" /&gt;</pre
+        >
+      </div>
 
+      <div class="example">
         <h4>Regular Button</h4>
-        <code> &lt;Button label="Regular Button" type="primary" /&gt; </code>
+        <div class="button-example">
+          <button class="btn btn-primary">Regular Button</button>
+        </div>
+        <pre>&lt;Button label="Regular Button" type="primary" /&gt;</pre>
+      </div>
 
+      <div class="example">
         <h4>Large Button</h4>
-        <code>
-          &lt;Button label="Large Button" type="primary" size="lg" /&gt;
-        </code>
+        <div class="button-example">
+          <button class="btn btn-primary btn-lg">Large Button</button>
+        </div>
+        <pre>
+&lt;Button label="Large Button" type="primary" size="lg" /&gt;</pre
+        >
       </div>
 
       <div class="example">
-        <h3>Button with Block Style (Full Width)</h3>
-        <code>
-          &lt;Button label="Block Button" type="primary" block /&gt;
-        </code>
+        <h4>Button with Block Style (Full Width)</h4>
+        <div class="button-example" style="width: 100%">
+          <button class="btn btn-primary btn-block">Block Button</button>
+        </div>
+        <pre>&lt;Button label="Block Button" type="primary" block /&gt;</pre>
       </div>
 
       <div class="example">
-        <h3>Button with Icon Only</h3>
-        <code> &lt;Button icon={&lt;Filter inheritFontColor /&gt;} /&gt; </code>
+        <h4>Button with Icon Only</h4>
+        <div class="button-example">
+          <button class="btn btn-secondary">
+            <span>🔍</span>
+          </button>
+        </div>
+        <pre>&lt;Button icon={&lt;Filter inheritFontColor /&gt;} /&gt;</pre>
       </div>
 
       <div class="example">
-        <h3>Success Button</h3>
-        <code>
-          &lt;Button<br />
-          &nbsp;&nbsp;label="Success Filled"<br />
-          &nbsp;&nbsp;type="primary"<br />
-          &nbsp;&nbsp;isSuccess={true}<br />
-          /&gt;<br />
-          &lt;Button<br />
-          &nbsp;&nbsp;label="Success Outlined"<br />
-          &nbsp;&nbsp;type="secondary"<br />
-          &nbsp;&nbsp;isSuccess={true}<br />
-          /&gt;
-        </code>
-      </div>
-
-      <div class="example">
-        <h3>Button Events</h3>
-
         <h4>Button Click Event</h4>
-        <code>
-          &lt;Button label="click me" onClick={this.handleClick} /&gt;
-        </code>
+        <div class="button-example">
+          <button class="btn btn-secondary">click me</button>
+        </div>
+        <pre>&lt;Button label="click me" onClick={this.handleClick} /&gt;</pre>
       </div>
     </div>
 

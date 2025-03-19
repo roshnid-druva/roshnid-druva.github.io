@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoSuggest Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+        margin: 0;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>AutoSuggest Component</h1>
+      <p>
+        A component that provides suggestions as the user types in an input
+        field, with support for grouping, highlighting matches, and custom
+        rendering.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import AutoSuggest from "orion/lib/autoSuggest"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>data</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of options for suggestions. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>defaultValue</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Default value for the input field</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Placeholder text for the input</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the container</td>
+          </tr>
+          <tr>
+            <td>renderMenuItem</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for menu items</td>
+          </tr>
+          <tr>
+            <td>getItemValue</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to determine the input value after selection</td>
+          </tr>
+          <tr>
+            <td>filterItem</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom filtering function for suggestions</td>
+          </tr>
+          <tr>
+            <td>onFocus</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when input receives focus (event, value)</td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when input value changes (value)</td>
+          </tr>
+          <tr>
+            <td>onClear</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when the input is cleared</td>
+          </tr>
+          <tr>
+            <td>onBlur</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when input loses focus (event, value)</td>
+          </tr>
+          <tr>
+            <td>onEnter</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when Enter key is pressed (value)</td>
+          </tr>
+          <tr>
+            <td>onItemSelect</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when an item is selected (selectedItem)</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the input field</td>
+          </tr>
+          <tr>
+            <td>showEmptyMessage</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows a message when no matching results are found</td>
+          </tr>
+          <tr>
+            <td>maxResultsLimit</td>
+            <td>Number</td>
+            <td>10</td>
+            <td>Maximum number of results to display</td>
+          </tr>
+          <tr>
+            <td>minChars</td>
+            <td>Number</td>
+            <td>1</td>
+            <td>Minimum characters required before showing suggestions</td>
+          </tr>
+          <tr>
+            <td>highlightMatches</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Highlights matching text in results</td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>Number</td>
+            <td>300</td>
+            <td>Height of the results container in pixels</td>
+          </tr>
+          <tr>
+            <td>async</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>For asynchronous data loading</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-autosuggest"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Data Format</h2>
+      <p>The <code>data</code> prop accepts the following formats:</p>
+
+      <div class="example">
+        <h3>Simple Options</h3>
+        <pre>
+[{ label: "Linux" }, { label: "Microsoft Windows" }, { label: "SQL Server" }];
+</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Grouped Options</h3>
+        <pre>
+[
+  {
+    label: "Operating Systems",
+    items: [{ label: "Linux" }, { label: "Microsoft Windows" }],
+  },
+  {
+    label: "Databases",
+    items: [{ label: "SQL Server" }, { label: "Oracle" }],
+  },
+];</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Mixed Options (both grouped and non-grouped)</h3>
+        <pre>
+[
+  {
+    label: "Operating Systems",
+    items: [{ label: "Linux" }, { label: "Microsoft Windows" }],
+  },
+  { label: "SQL Server" },
+  { label: "Oracle" },
+];</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage with Simple Options</h3>
+        <pre>
+const data = [
+  { label: "Linux" },
+  { label: "Microsoft Windows" },
+  { label: "SQL Server" },
+  { label: "Oracle" },
+];
+
+&lt;AutoSuggest data={data} showEmptyMessage /&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Grouped Options</h3>
+        <pre>
+const data = [
+  {
+    label: "Druva Phoenix Data Sources",
+    items: [
+      { label: "Linux" },
+      { label: "Microsoft Windows" },
+      { label: "SQL Server" },
+    ],
+  },
+  {
+    label: "Druva InSync Data Sources",
+    items: [
+      { label: "Salesforce" },
+      { label: "Office365" },
+      { label: "GSuite" },
+    ],
+  },
+];
+
+&lt;AutoSuggest data={data} /&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Default Value</h3>
+        <pre>
+&lt;AutoSuggest defaultValue="Microsoft Windows" data={data} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Asynchronous Data Loading</h3>
+        <pre>
+&lt;AutoSuggest
+  async
+  data={asyncData}
+  onChange={(value) => {
+    // Fetch data based on value
+    setTimeout(() => {
+      setAsyncData(fetchedData);
+    }, 500);
+  }}
+  onItemSelect={() => setAsyncData([])}
+  onBlur={() => setAsyncData([])}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Highlighting Matches</h3>
+        <pre>&lt;AutoSuggest data={data} highlightMatches /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>Custom Menu Item Renderer</h3>
+        <pre>
+const data = [
+  { label: "Linux", percentage: 30 },
+  { label: "Microsoft Windows", percentage: 60 },
+  { label: "SQL Server", percentage: 50 },
+];
+
+&lt;AutoSuggest
+  data={data}
+  renderMenuItem={(item, renderHighlightedText) => (
+    &lt;div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    &gt;
+      &lt;span&gt;{renderHighlightedText(item.label)}&lt;/span&gt;
+      &lt;span&gt;{`${item.percentage}%`}&lt;/span&gt;
+    &lt;/div&gt;
+  )}
+/&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The component filters options as the user types, matching against the
+          <code>label</code> property by default
+        </li>
+        <li>
+          Grouping is supported by adding an <code>items</code> array to an
+          option
+        </li>
+        <li>
+          When async is true, filtering must be handled externally through the
+          onChange handler
+        </li>
+        <li>
+          The <code>renderHighlightedText</code> function passed to
+          <code>renderMenuItem</code> handles highlighting matched text
+        </li>
+        <li>
+          When <code>highlightMatches</code> is true, matching portions of text
+          are emphasized
+        </li>
+        <li>
+          The <code>onEnter</code> handler is called when Enter is pressed with
+          no selection; if an item is highlighted, <code>onItemSelect</code> is
+          called instead
+        </li>
+        <li>
+          Items with matching text are shown until the
+          <code>maxResultsLimit</code> is reached
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Badge Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        background-color: #e9ecef;
+        color: #495057;
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      .badge-success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .badge-warning {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .badge-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .badge-custom {
+        background-color: #f0dcdb;
+        color: #935f5c;
+      }
+      .badge-icon {
+        margin-right: 4px;
+      }
+      .badge-icon-right {
+        margin-left: 4px;
+        margin-right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Badge Component</h1>
+      <p>
+        A component to display informational labels with optional icons and
+        interactive capabilities.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Badge from "orion/lib/badge"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Label to the badge. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>style</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>
+              A provision to customize the badge style. Currently only 'color'
+              and 'backgroundColor' are customizable. Example:
+              <code>{ color: "#935F5C", backgroundColor: "#F0DCDB" }</code>
+            </td>
+          </tr>
+          <tr>
+            <td>clickable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Flag to set the interactivity with the badge.</td>
+          </tr>
+          <tr>
+            <td>onClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              A function to handle badge click. Arguments
+              <code>badge props</code> and <code>event</code> are passed to this
+              function.
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+          <tr>
+            <td>icon</td>
+            <td>React Node</td>
+            <td>-</td>
+            <td>Icon imported from Orion Icons Library.</td>
+          </tr>
+          <tr>
+            <td>alignIcon</td>
+            <td>String</td>
+            <td>"left"</td>
+            <td>Alignment of the icon with respect to the label.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-badge"</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
+          </tr>
+          <tr>
+            <td>active</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Show the active state of the badge component.</td>
+          </tr>
+          <tr>
+            <td>variant</td>
+            <td>"success" | "warning" | "danger"</td>
+            <td>-</td>
+            <td>
+              Badge Variant. Specificity of variant will be higher than the
+              style prop.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Badge</h3>
+        <div>
+          <span class="badge">+ 4</span>
+        </div>
+        <code> &lt;Badge label="+ 4" clickable={false} /&gt; </code>
+      </div>
+
+      <div class="example">
+        <h3>Clickable Badge with Icon</h3>
+        <div>
+          <span class="badge">
+            Show More
+            <span class="badge-icon-right">ℹ️</span>
+          </span>
+        </div>
+        <code>
+          &lt;Badge<br />
+          &nbsp;&nbsp;icon={&lt;InfoIcon inheritFontColor width={12} height={12}
+          /&gt;}<br />
+          &nbsp;&nbsp;alignIcon="right"<br />
+          &nbsp;&nbsp;label="Show More"<br />
+          &nbsp;&nbsp;onClick={() => alert("Now I can show more details.")}<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Custom Styled Badge</h3>
+        <div>
+          <span class="badge badge-custom">Failure</span>
+        </div>
+        <code>
+          &lt;Badge<br />
+          &nbsp;&nbsp;label="Failure"<br />
+          &nbsp;&nbsp;clickable={false}<br />
+          &nbsp;&nbsp;style={{ color: "#935F5C", backgroundColor: "#F0DCDB"
+          }}<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Badge with Icon and Custom Style</h3>
+        <div>
+          <span class="badge badge-custom">
+            <span class="badge-icon">❌</span>
+            Not Configured
+          </span>
+        </div>
+        <code>
+          &lt;Badge<br />
+          &nbsp;&nbsp;icon={&lt;FailureIcon inheritFontColor /&gt;}<br />
+          &nbsp;&nbsp;label="Not Configured"<br />
+          &nbsp;&nbsp;clickable={false}<br />
+          &nbsp;&nbsp;style={{ color: "#935F5C", backgroundColor: "#F0DCDB"
+          }}<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Badge with Variants</h3>
+        <div>
+          <span class="badge badge-success">
+            <span class="badge-icon">✓</span>
+            Success
+          </span>
+          <span class="badge badge-warning">
+            Warning
+            <span class="badge-icon-right">⚠️</span>
+          </span>
+          <span class="badge badge-danger">
+            <span class="badge-icon">❌</span>
+            Danger
+          </span>
+        </div>
+        <code>
+          &lt;Badge<br />
+          &nbsp;&nbsp;icon={&lt;SuccessIcon inheritFontColor width={12}
+          height={12} /&gt;}<br />
+          &nbsp;&nbsp;label="Success"<br />
+          &nbsp;&nbsp;clickable={false}<br />
+          &nbsp;&nbsp;variant="success"<br />
+          /&gt;<br />
+          <br />
+          &lt;Badge<br />
+          &nbsp;&nbsp;icon={&lt;WarningYellowOutline inheritFontColor width={12}
+          height={12} /&gt;}<br />
+          &nbsp;&nbsp;label="Warning"<br />
+          &nbsp;&nbsp;alignIcon="right"<br />
+          &nbsp;&nbsp;clickable={false}<br />
+          &nbsp;&nbsp;variant="warning"<br />
+          /&gt;<br />
+          <br />
+          &lt;Badge<br />
+          &nbsp;&nbsp;label="Danger"<br />
+          &nbsp;&nbsp;icon={&lt;FailureIcon inheritFontColor width={12}
+          height={12} /&gt;}<br />
+          &nbsp;&nbsp;clickable={false}<br />
+          &nbsp;&nbsp;variant="danger"<br />
+          /&gt;
+        </code>
+      </div>
+    </div>
+  </body>
+</html>
