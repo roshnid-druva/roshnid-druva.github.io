@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataGrid Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .components-section {
+        margin-bottom: 30px;
+      }
+      .components-section ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      .components-section li {
+        margin-bottom: 15px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+      }
+      .components-section h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #3498db;
+      }
+      .components-section p {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>DataGrid Component</h1>
+      <p>
+        A powerful, customizable table component with features like selection,
+        expandable rows, sorting, fixed columns, and infinite scrolling.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>
+import DataGrid from "orion/lib/dataGrid";
+import { useTableState } from "orion/lib/dataGrid";</pre
+      >
+    </div>
+
+    <div class="section components-section">
+      <h2>Components</h2>
+      <ul>
+        <li>
+          <h4>DataGrid</h4>
+          <p>
+            The main container component that provides context and functionality
+            to all child components.
+          </p>
+        </li>
+        <li>
+          <h4>DataGrid.Table</h4>
+          <p>
+            The actual table component that renders the data in a tabular
+            format.
+          </p>
+        </li>
+        <li>
+          <h4>DataGrid.Button</h4>
+          <p>A button that can access the selected rows data.</p>
+        </li>
+        <li>
+          <h4>DataGrid.ConfirmButton</h4>
+          <p>
+            A button with confirmation dialog that can access the selected rows
+            data.
+          </p>
+        </li>
+        <li>
+          <h4>DataGrid.ActionButton</h4>
+          <p>
+            A button that shows a dropdown menu of actions, each of which can
+            access the selected rows data.
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>DataGrid Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>tableId</td>
+            <td>String</td>
+            <td>data-grid</td>
+            <td>Unique identifier for the table</td>
+          </tr>
+          <tr>
+            <td>columnsDef</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Column definitions <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>data</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>Data array to display</td>
+          </tr>
+          <tr>
+            <td>responsive</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes the table responsive</td>
+          </tr>
+          <tr>
+            <td>hideHeader</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Hides the table header</td>
+          </tr>
+          <tr>
+            <td>fixSelectionColumn</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Fixes the selection column so it stays visible during scroll
+            </td>
+          </tr>
+          <tr>
+            <td>isSelectable</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes rows selectable with checkboxes</td>
+          </tr>
+          <tr>
+            <td>multiSelect</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Allows selecting multiple rows</td>
+          </tr>
+          <tr>
+            <td>isExpandable</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes rows expandable</td>
+          </tr>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows loading state</td>
+          </tr>
+          <tr>
+            <td>loadingMoreText</td>
+            <td>String</td>
+            <td>"Loading..."</td>
+            <td>Text to display while loading more data</td>
+          </tr>
+          <tr>
+            <td>onRowExpand</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when a row is expanded</td>
+          </tr>
+          <tr>
+            <td>sortBy</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Field to sort by</td>
+          </tr>
+          <tr>
+            <td>sortOrder</td>
+            <td>String</td>
+            <td>asc</td>
+            <td>Sort order (asc or desc)</td>
+          </tr>
+          <tr>
+            <td>onSort</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when a column is sorted</td>
+          </tr>
+          <tr>
+            <td>onRowSelectionChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when row selection changes</td>
+          </tr>
+          <tr>
+            <td>getSelectionInputTooltip</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to generate tooltip for selection checkbox</td>
+          </tr>
+          <tr>
+            <td>footerHeight</td>
+            <td>Number</td>
+            <td>0</td>
+            <td>Height of the table footer in pixels</td>
+          </tr>
+          <tr>
+            <td>footerRenderer</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom footer renderer</td>
+          </tr>
+          <tr>
+            <td>rowRenderer</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom row renderer</td>
+          </tr>
+          <tr>
+            <td>estimatedRowHeight</td>
+            <td>Number</td>
+            <td>40</td>
+            <td>Estimated height of each row for virtualization</td>
+          </tr>
+          <tr>
+            <td>getRowClassName</td>
+            <td>Function or String</td>
+            <td>-</td>
+            <td>Function to determine row class names</td>
+          </tr>
+          <tr>
+            <td>onLoadMore</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function called to load more data for infinite scrolling</td>
+          </tr>
+          <tr>
+            <td>enableConfiguration</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enables the column configuration menu</td>
+          </tr>
+          <tr>
+            <td>resetColumnWidthOnWindowResize</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Reset column widths when window is resized</td>
+          </tr>
+          <tr>
+            <td>enableFullScreen</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enables full screen mode</td>
+          </tr>
+          <tr>
+            <td>enableExportToCsv</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enables CSV export</td>
+          </tr>
+          <tr>
+            <td>csvFileName</td>
+            <td>String</td>
+            <td>data-grid</td>
+            <td>Filename for the CSV export</td>
+          </tr>
+          <tr>
+            <td>selectedRowsCountText</td>
+            <td>String</td>
+            <td>selected</td>
+            <td>Text to display next to selected rows count</td>
+          </tr>
+          <tr>
+            <td>emptyRenderer</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom empty state renderer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Column Definition</h2>
+      <p>
+        Each column in the columnsDef array can have the following properties:
+      </p>
+      <pre>
+{
+  key: String,                  // Unique key for the column
+  title: String,                // Display title for the column
+  dataKey: String,              // Key to access data from row objects
+  children: Array,              // For grouped columns
+  minWidth: Number,             // Minimum width for the column
+  maxWidth: Number,             // Maximum width for the column
+  width: Number,                // Fixed width for the column
+  flexGrow: Number,             // Flex growth factor
+  hidden: Boolean,              // Whether column is hidden
+  togglable: Boolean,           // Whether column can be toggled
+  fixable: Boolean,             // Whether column can be fixed
+  fixed: Boolean,               // Whether column is fixed
+  draggable: Boolean,           // Whether column can be dragged
+  sortable: Boolean,            // Whether column can be sorted
+  resizable: Boolean,           // Whether column can be resized
+  truncateText: Boolean,        // Whether to truncate text
+  tooltip: Function or Object,  // Tooltip configuration
+  dataGetter: Function,         // Custom function to get cell data
+  className: String             // Custom class for the column
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>useTableState Hook</h2>
+      <p>
+        The useTableState hook provides access to the table state and can be
+        used outside the DataGrid component.
+      </p>
+      <pre>
+const {
+  totalRows, // Total number of rows
+  selectedRowIds, // Array of selected row IDs
+  selectedRowItems, // Array of selected row objects
+  totalSelectedRows, // Count of selected rows
+  disabledRowIds, // Array of disabled row IDs
+  disabledRowItems, // Array of disabled row objects
+  totalDisabledRows, // Count of disabled rows
+  unSelectedRowIds, // Array of unselected row IDs
+  unSelectedRowItems, // Array of unselected row objects
+  totalUnselectedRows, // Count of unselected rows
+} = useTableState(tableId);</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+        <pre>
+import DataGrid from "orion/lib/dataGrid";
+
+const BasicDataGrid = () => {
+  const columnsDef = [
+    {
+      title: "Name",
+      dataKey: "name",
+      key: "name",
+      flexGrow: 1,
+      sortable: true,
+    },
+    {
+      title: "Email",
+      dataKey: "email",
+      key: "email",
+      flexGrow: 1,
+    },
+    {
+      title: "Country",
+      dataKey: "country",
+      key: "country",
+      flexGrow: 1,
+    },
+  ];
+
+  const data = [
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      country: "USA",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      country: "Canada",
+    },
+  ];
+
+  return (
+    &lt;DataGrid
+      columnsDef={columnsDef}
+      data={data}
+      tableId="basic-table"
+      responsive
+    &gt;
+      &lt;div style={{ height: "500px" }}&gt;
+        &lt;DataGrid.Table /&gt;
+      &lt;/div&gt;
+    &lt;/DataGrid&gt;
+  );
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Selection and Actions</h3>
+        <pre>
+import DataGrid from "orion/lib/dataGrid";
+
+const SelectableDataGrid = () => {
+  // Column and data setup...
+
+  return (
+    &lt;DataGrid
+      columnsDef={columnsDef}
+      data={data}
+      isSelectable
+      multiSelect
+      onRowSelectionChange={(ids) => console.log("Selected:", ids)}
+    &gt;
+      &lt;div&gt;
+        &lt;DataGrid.Button
+          label="Delete Selected"
+          onClick={(rowIds) => {
+            console.log("Delete:", rowIds);
+          }}
+        /&gt;
+
+        &lt;DataGrid.ConfirmButton
+          label="Approve Selected"
+          type="primary"
+          message="Are you sure you want to approve selected items?"
+          onContinue={(rowIds) => {
+            return new Promise((resolve) => {
+              // Async operation...
+              setTimeout(resolve, 1000);
+            });
+          }}
+        /&gt;
+
+        &lt;DataGrid.ActionButton
+          buttons={[
+            {
+              label: "View Details",
+              onClick: (rowIds) => console.log("View:", rowIds),
+            },
+            {
+              label: "Edit",
+              onClick: (rowIds) => console.log("Edit:", rowIds),
+            },
+            {
+              label: "Delete",
+              onClick: (rowIds) => console.log("Delete:", rowIds),
+            },
+          ]}
+        /&gt;
+      &lt;/div&gt;
+
+      &lt;div style={{ height: "500px" }}&gt;
+        &lt;DataGrid.Table /&gt;
+      &lt;/div&gt;
+    &lt;/DataGrid&gt;
+  );
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Expandable Rows</h3>
+        <pre>
+import DataGrid from "orion/lib/dataGrid";
+
+const ExpandableDataGrid = () => {
+  // Column and data setup...
+
+  const onRowExpand = ({ rowData }) => {
+    // Fetch or generate child data when row is expanded
+  };
+
+  const rowRenderer = (rowData, cells) => {
+    if (rowData.isChild) {
+      // Custom rendering for child rows
+      return (
+        &lt;div className="custom-expanded-row"&gt;
+          &lt;div&gt;Detail: {rowData.detail}&lt;/div&gt;
+        &lt;/div&gt;
+      );
+    }
+
+    // Return normal cells for parent rows
+    return cells;
+  };
+
+  return (
+    &lt;DataGrid
+      columnsDef={columnsDef}
+      data={data}
+      isExpandable
+      onRowExpand={onRowExpand}
+      rowRenderer={rowRenderer}
+    &gt;
+      &lt;div style={{ height: "500px" }}&gt;
+        &lt;DataGrid.Table /&gt;
+      &lt;/div&gt;
+    &lt;/DataGrid&gt;
+  );
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Infinite Scrolling</h3>
+        <pre>
+import DataGrid from "orion/lib/dataGrid";
+
+const InfiniteDataGrid = () => {
+  // Column and data setup...
+
+  const loadMoreData = () => {
+    return new Promise((resolve) => {
+      // Fetch more data
+      setTimeout(() => {
+        const newData = fetchMoreData();
+        resolve(newData);
+      }, 500);
+    });
+  };
+
+  return (
+    &lt;DataGrid
+      columnsDef={columnsDef}
+      data={data}
+      onLoadMore={loadMoreData}
+      loadingMoreText="Loading more records..."
+    &gt;
+      &lt;div style={{ height: "500px" }}&gt;
+        &lt;DataGrid.Table /&gt;
+      &lt;/div&gt;
+    &lt;/DataGrid&gt;
+  );
+};</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The DataGrid component uses virtualization for optimal performance
+          with large data sets
+        </li>
+        <li>
+          Columns can be grouped by using the children property in column
+          definitions
+        </li>
+        <li>
+          The rowRenderer function can be used to customize how rows are
+          displayed
+        </li>
+        <li>
+          The onLoadMore function is called when the user scrolls to the bottom
+          of the table in infinite scrolling mode
+        </li>
+        <li>
+          DataGrid.Button, DataGrid.ConfirmButton, and DataGrid.ActionButton
+          components receive the selected row IDs as arguments to their
+          callbacks
+        </li>
+        <li>The CSV export includes all visible columns by default</li>
+        <li>
+          The component supports both controlled and uncontrolled selection
+          modes
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,1 +1,688 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popover Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .popover-demo {
+        position: relative;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+      }
+      .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: #3498db;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .icon-btn:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+      }
+      .popover {
+        position: absolute;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        top: 100%;
+        left: 0;
+        margin-top: 8px;
+      }
+      .popover-xs {
+        width: 200px;
+      }
+      .popover-sm {
+        width: 250px;
+      }
+      .popover-md {
+        width: 300px;
+      }
+      .popover-lg {
+        width: 400px;
+      }
+      .popover-auto {
+        width: auto;
+      }
+      .popover-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+        font-weight: 500;
+      }
+      .popover-body {
+        padding: 12px 16px;
+      }
+      .popover-right {
+        left: auto;
+        right: 0;
+      }
+      .popover-filter-form {
+        width: 250px;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-label {
+        margin-bottom: 8px;
+        display: block;
+        font-weight: 500;
+      }
+      .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .form-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .placement-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .placement-option {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 13px;
+      }
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .info-table td {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      }
+      .info-table td:first-child {
+        width: 40%;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Popover Component</h1>
+      <p>
+        A component that displays content in a popup when a trigger element is
+        clicked.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Popover from "orion/lib/popover";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>title</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Popover title.</td>
+          </tr>
+          <tr>
+            <td>body</td>
+            <td>String/Function/Element</td>
+            <td>-</td>
+            <td>
+              The body section of the Popover component.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>"controlled"</td>
+            <td>Type of popover: "controlled" or "uncontrolled".</td>
+          </tr>
+          <tr>
+            <td>isOpen</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Toggles the popover visibility (for controlled popovers only).
+              <strong>(Required for controlled type)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>toggle</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function called when trigger is clicked (for controlled popovers
+              only). <strong>(Required for controlled type)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>hideOnOutsideClick</td>
+            <td>Boolean</td>
+            <td>-</td>
+            <td>
+              For controlled popovers, hides when clicked outside the popover.
+            </td>
+          </tr>
+          <tr>
+            <td>placement</td>
+            <td>String</td>
+            <td>"auto"</td>
+            <td>Position of the popover relative to the trigger.</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the popover functionality (not the trigger).</td>
+          </tr>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>"sm"</td>
+            <td>Width of the popover: "auto", "xs", "sm", "md", or "lg".</td>
+          </tr>
+          <tr>
+            <td>bodyClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom class for the popover body.</td>
+          </tr>
+          <tr>
+            <td>trigger</td>
+            <td>String</td>
+            <td>"click"</td>
+            <td>Event that triggers the popover, e.g., "click hover".</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom class for the popover container.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Types of Popovers</h2>
+
+      <h3>Controlled Popover</h3>
+      <ul>
+        <li>Requires managing the open/close state in your component</li>
+        <li>Used for interactive popovers (e.g., forms, filters)</li>
+        <li>Does not dismiss on blur by default</li>
+      </ul>
+
+      <h3>Uncontrolled Popover</h3>
+      <ul>
+        <li>Manages its own state internally</li>
+        <li>Used for displaying information</li>
+        <li>Automatically dismisses when clicked outside</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Placement Options</h2>
+      <p>Popover supports multiple placement options:</p>
+
+      <div class="placement-options">
+        <span class="placement-option">auto</span>
+        <span class="placement-option">auto-start</span>
+        <span class="placement-option">auto-end</span>
+        <span class="placement-option">top</span>
+        <span class="placement-option">top-start</span>
+        <span class="placement-option">top-end</span>
+        <span class="placement-option">right</span>
+        <span class="placement-option">right-start</span>
+        <span class="placement-option">right-end</span>
+        <span class="placement-option">bottom</span>
+        <span class="placement-option">bottom-start</span>
+        <span class="placement-option">bottom-end</span>
+        <span class="placement-option">left</span>
+        <span class="placement-option">left-start</span>
+        <span class="placement-option">left-end</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Controlled Popover</h3>
+        <p>Used for interactive content like forms or filters.</p>
+        <div class="popover-demo">
+          <button class="btn">
+            <span style="margin-right: 8px">
+              <svg
+                height="14"
+                width="14"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="currentColor"
+                  d="M4.25 5.61C6.57 8.59 10 13 10 13v5c0 1.1.9 2 2 2s2-.9 2-2v-5s3.43-4.41 5.75-7.39c.51-.66.04-1.61-.8-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
+                ></path>
+              </svg>
+            </span>
+            Filters
+          </button>
+          <div class="popover popover-sm">
+            <div class="popover-header">Filters</div>
+            <div class="popover-body">
+              <div class="popover-filter-form">
+                <div class="form-group">
+                  <label class="form-label">Policy</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter policy name"
+                  />
+                </div>
+                <div class="form-footer">
+                  <button
+                    class="btn"
+                    style="background-color: #f8f9fa; color: #333"
+                  >
+                    Cancel
+                  </button>
+                  <button class="btn">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    isOpen: false
+  };
+}
+
+toggle = () => {
+  this.setState({
+    isOpen: !this.state.isOpen
+  });
+};
+
+render() {
+  return (
+    &lt;Popover
+      title="Filters"
+      body={() => {
+        return (
+          &lt;Form
+            onSubmit={e => {
+              e.preventDefault();
+              this.toggle();
+            }}
+          &gt;
+            &lt;FormGroup row&gt;
+              &lt;Label for="policy" sm={4} text="Policy" /&gt;
+              &lt;Col sm={8}&gt;
+                &lt;Input type="text" name="policy" id="policy" /&gt;
+              &lt;/Col&gt;
+            &lt;/FormGroup&gt;
+            &lt;FormGroup footer className="oui-mb-0 oui-text-right"&gt;
+              &lt;Input
+                type="button"
+                label="Cancel"
+                onClick={this.toggle}
+              /&gt;
+              &lt;Input type="submit" label="Apply" /&gt;
+            &lt;/FormGroup&gt;
+          &lt;/Form&gt;
+        );
+      }}
+      isOpen={this.state.isOpen}
+      placement="bottom"
+      size="sm"
+      toggle={this.toggle}
+    &gt;
+      &lt;Button
+        icon={{
+          classes: "di di-filter"
+        }}
+      /&gt;
+    &lt;/Popover&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Uncontrolled Popover</h3>
+        <p>
+          Used for displaying information. Automatically manages its own state.
+        </p>
+        <div class="popover-demo" style="margin-bottom: 200px">
+          <button class="icon-btn">
+            <svg
+              height="20"
+              width="20"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1-8h-2V7h2v2z"
+              ></path>
+            </svg>
+          </button>
+          <div class="popover popover-md" style="left: 40px">
+            <div class="popover-header">More Info</div>
+            <div class="popover-body">
+              <table class="info-table">
+                <tr>
+                  <td>Site Title</td>
+                  <td>Mohit_PubO365Groups</td>
+                </tr>
+                <tr>
+                  <td>Site URL</td>
+                  <td>
+                    <a href="https://example.com" target="_blank"
+                      >https://example.com</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td>Enabled</td>
+                </tr>
+                <tr>
+                  <td>Added on</td>
+                  <td>Nov 12 2018, 07:30</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Popover
+  type="uncontrolled"
+  title="More Info"
+  body={() => {
+    return (
+      &lt;div&gt;
+        &lt;Row className="oui-mb-3"&gt;
+          &lt;Col sm={4}&gt;Site Title&lt;/Col&gt;
+          &lt;Col sm={8}&gt;Mohit_PubO365Groups&lt;/Col&gt;
+        &lt;/Row&gt;
+        &lt;Row className="oui-mb-3"&gt;
+          &lt;Col sm={4}&gt;Site URL&lt;/Col&gt;
+          &lt;Col sm={8}&gt;
+            &lt;a
+              rel="noopener noreferrer"
+              href="https://example.com"
+              target="_blank"
+            &gt;
+              https://example.com
+            &lt;/a&gt;
+          &lt;/Col&gt;
+        &lt;/Row&gt;
+        &lt;Row className="oui-mb-3"&gt;
+          &lt;Col sm={4}&gt;Status&lt;/Col&gt;
+          &lt;Col sm={8}&gt;Enabled&lt;/Col&gt;
+        &lt;/Row&gt;
+        &lt;Row className="oui-mb-3"&gt;
+          &lt;Col sm={4}&gt;Added on&lt;/Col&gt;
+          &lt;Col sm={8}&gt;Nov 12 2018, 07:30&lt;/Col&gt;
+        &lt;/Row&gt;
+      &lt;/div&gt;
+    );
+  }}
+  placement="right"
+  size="md"
+&gt;
+  &lt;Icon classes="di di-2 di-information" actionable /&gt;
+&lt;/Popover&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Different Sizes</h3>
+        <div
+          class="popover-demo"
+          style="flex-wrap: wrap; gap: 20px; margin-bottom: 150px"
+        >
+          <div style="position: relative">
+            <button class="btn">XS Popover</button>
+            <div
+              class="popover popover-xs"
+              style="position: relative; margin-top: 8px"
+            >
+              <div class="popover-header">XS Popover</div>
+              <div class="popover-body">This is an extra small popover</div>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <button class="btn">SM Popover</button>
+            <div
+              class="popover popover-sm"
+              style="position: relative; margin-top: 8px"
+            >
+              <div class="popover-header">Small Popover</div>
+              <div class="popover-body">This is a small popover</div>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <button class="btn">MD Popover</button>
+            <div
+              class="popover popover-md"
+              style="position: relative; margin-top: 8px"
+            >
+              <div class="popover-header">Medium Popover</div>
+              <div class="popover-body">This is a medium popover</div>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <button class="btn">LG Popover</button>
+            <div
+              class="popover popover-lg"
+              style="position: relative; margin-top: 8px"
+            >
+              <div class="popover-header">Large Popover</div>
+              <div class="popover-body">This is a large popover</div>
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <button class="btn">Auto Popover</button>
+            <div
+              class="popover popover-auto"
+              style="position: relative; margin-top: 8px"
+            >
+              <div class="popover-header">Auto Width Popover</div>
+              <div class="popover-body">Width adjusts to content</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+// Extra Small
+&lt;Popover
+  title="XS Popover"
+  body="This is an extra small popover"
+  size="xs"
+  type="uncontrolled"
+&gt;
+  &lt;Button label="XS Popover" /&gt;
+&lt;/Popover&gt;
+
+// Small (Default)
+&lt;Popover
+  title="Small Popover"
+  body="This is a small popover"
+  size="sm"
+  type="uncontrolled"
+&gt;
+  &lt;Button label="SM Popover" /&gt;
+&lt;/Popover&gt;
+
+// Medium
+&lt;Popover
+  title="Medium Popover"
+  body="This is a medium popover"
+  size="md"
+  type="uncontrolled"
+&gt;
+  &lt;Button label="MD Popover" /&gt;
+&lt;/Popover&gt;
+
+// Large
+&lt;Popover
+  title="Large Popover"
+  body="This is a large popover"
+  size="lg"
+  type="uncontrolled"
+&gt;
+  &lt;Button label="LG Popover" /&gt;
+&lt;/Popover&gt;
+
+// Auto (width based on content)
+&lt;Popover
+  title="Auto Width Popover"
+  body="Width adjusts to content"
+  size="auto"
+  type="uncontrolled"
+&gt;
+  &lt;Button label="Auto Popover" /&gt;
+&lt;/Popover&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          For form inputs inside popovers, use the controlled type to manage
+          form submission
+        </li>
+        <li>
+          The <code>body</code> prop can accept a function that returns JSX,
+          allowing dynamic content
+        </li>
+        <li>
+          When using controlled popovers with forms, remember to handle the form
+          submission and toggle the popover accordingly
+        </li>
+        <li>
+          The trigger element is provided as a child to the Popover component
+        </li>
+        <li>
+          For controlled popovers, you must provide the
+          <code>isOpen</code> state and the <code>toggle</code> function
+        </li>
+        <li>
+          Uncontrolled popovers are simpler to use as they manage their own
+          state
+        </li>
+        <li>
+          The placement option automatically adjusts if there's not enough space
+          in the specified direction
+        </li>
+        <li>
+          The popover can be triggered by different events by setting the
+          <code>trigger</code> prop (e.g., "click", "hover")
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

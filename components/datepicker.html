@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DatePicker Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .datepicker-visual {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 320px;
+        margin: 20px 0;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      }
+      .datepicker-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .datepicker-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .datepicker-nav-button {
+        background: none;
+        border: none;
+        color: #3498db;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .datepicker-month-year {
+        font-weight: 500;
+      }
+      .datepicker-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        padding: 10px;
+      }
+      .datepicker-day-header {
+        text-align: center;
+        font-weight: 500;
+        font-size: 12px;
+        color: #777;
+        padding: 5px 0;
+      }
+      .datepicker-day {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 14px;
+      }
+      .datepicker-day:hover {
+        background-color: #f0f0f0;
+      }
+      .datepicker-day.selected {
+        background-color: #3498db;
+        color: white;
+      }
+      .datepicker-day.highlighted {
+        position: relative;
+      }
+      .datepicker-day.highlighted::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        width: 4px;
+        height: 4px;
+        background-color: #4caf50;
+        border-radius: 50%;
+      }
+      .datepicker-day.disabled {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+      .datepicker-day.outside-month {
+        color: #aaa;
+      }
+      .datepicker-input-wrapper {
+        display: inline-block;
+        position: relative;
+      }
+      .datepicker-input {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 200px;
+      }
+      .datepicker-input:focus {
+        border-color: #3498db;
+        outline: none;
+      }
+      .datepicker-input.invalid {
+        border-color: #e74c3c;
+      }
+      .datepicker-clear {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>DatePicker Component</h1>
+      <p>
+        A simple calendar component for selecting dates without time or date
+        range support.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import DatePicker from "orion/lib/datePicker";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Name of the datepicker field. Useful for formik forms.</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>Date/String/Number/null</td>
+            <td>-</td>
+            <td>
+              Selected date value (native Date object, formatted string, or
+              epoch time).
+            </td>
+          </tr>
+          <tr>
+            <td>validationProps</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Formik validation props for form integration.</td>
+          </tr>
+          <tr>
+            <td>disableInputFeedback</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Prevents input error from showing when field is invalid.</td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when date changes. Receives (nativeDate, formattedDate).
+            </td>
+          </tr>
+          <tr>
+            <td>onFocus</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback for input focus event.</td>
+          </tr>
+          <tr>
+            <td>onMonthChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when month changes. Receives (nativeDate, formattedDate).
+            </td>
+          </tr>
+          <tr>
+            <td>onYearChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when year changes. Receives (nativeDate, formattedDate).
+            </td>
+          </tr>
+          <tr>
+            <td>placement</td>
+            <td>String</td>
+            <td>"bottom-start"</td>
+            <td>
+              Placement of datepicker popper (auto-start, top, bottom, etc.).
+            </td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Applies error styling to the input.</td>
+          </tr>
+          <tr>
+            <td>startYear</td>
+            <td>Number</td>
+            <td>1990</td>
+            <td>First year shown in the year dropdown.</td>
+          </tr>
+          <tr>
+            <td>endYear</td>
+            <td>Number</td>
+            <td>Current Year</td>
+            <td>Last year shown in the year dropdown.</td>
+          </tr>
+          <tr>
+            <td>dateFormat</td>
+            <td>String</td>
+            <td>"yyyy/MM/dd"</td>
+            <td>Custom date format using date-fns compatible format.</td>
+          </tr>
+          <tr>
+            <td>openToDate</td>
+            <td>Date Object</td>
+            <td>-</td>
+            <td>Force the datepicker to open at a particular date.</td>
+          </tr>
+          <tr>
+            <td>minDate</td>
+            <td>Date Object</td>
+            <td>-</td>
+            <td>Minimum selectable date.</td>
+          </tr>
+          <tr>
+            <td>maxDate</td>
+            <td>Date Object</td>
+            <td>-</td>
+            <td>Maximum selectable date.</td>
+          </tr>
+          <tr>
+            <td>highlightDates</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of dates to highlight with a green bullet.</td>
+          </tr>
+          <tr>
+            <td>excludeDates</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of dates to disable selection for.</td>
+          </tr>
+          <tr>
+            <td>customInput</td>
+            <td>Function/Class</td>
+            <td>-</td>
+            <td>React component to render as custom input.</td>
+          </tr>
+          <tr>
+            <td>getInputRef</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to get reference to the input element.</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Placeholder text for the input field.</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the datepicker.</td>
+          </tr>
+          <tr>
+            <td>isClearable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Allows clearing the selected date.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the calendar container.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-datepicker"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Simple DatePicker</h3>
+        <div>
+          <div class="datepicker-input-wrapper">
+            <input
+              type="text"
+              class="datepicker-input"
+              value="2023/08/15"
+              readonly
+            />
+          </div>
+          <div class="datepicker-visual">
+            <div class="datepicker-header">
+              <button class="datepicker-nav-button">&#9664;</button>
+              <div class="datepicker-month-year">August 2023</div>
+              <button class="datepicker-nav-button">&#9654;</button>
+            </div>
+            <div class="datepicker-grid">
+              <div class="datepicker-day-header">Su</div>
+              <div class="datepicker-day-header">Mo</div>
+              <div class="datepicker-day-header">Tu</div>
+              <div class="datepicker-day-header">We</div>
+              <div class="datepicker-day-header">Th</div>
+              <div class="datepicker-day-header">Fr</div>
+              <div class="datepicker-day-header">Sa</div>
+
+              <div class="datepicker-day outside-month">30</div>
+              <div class="datepicker-day outside-month">31</div>
+              <div class="datepicker-day">1</div>
+              <div class="datepicker-day">2</div>
+              <div class="datepicker-day">3</div>
+              <div class="datepicker-day">4</div>
+              <div class="datepicker-day">5</div>
+
+              <div class="datepicker-day">6</div>
+              <div class="datepicker-day">7</div>
+              <div class="datepicker-day">8</div>
+              <div class="datepicker-day">9</div>
+              <div class="datepicker-day">10</div>
+              <div class="datepicker-day">11</div>
+              <div class="datepicker-day">12</div>
+
+              <div class="datepicker-day">13</div>
+              <div class="datepicker-day">14</div>
+              <div class="datepicker-day selected">15</div>
+              <div class="datepicker-day">16</div>
+              <div class="datepicker-day">17</div>
+              <div class="datepicker-day">18</div>
+              <div class="datepicker-day">19</div>
+
+              <div class="datepicker-day">20</div>
+              <div class="datepicker-day">21</div>
+              <div class="datepicker-day">22</div>
+              <div class="datepicker-day">23</div>
+              <div class="datepicker-day">24</div>
+              <div class="datepicker-day">25</div>
+              <div class="datepicker-day">26</div>
+
+              <div class="datepicker-day">27</div>
+              <div class="datepicker-day">28</div>
+              <div class="datepicker-day">29</div>
+              <div class="datepicker-day">30</div>
+              <div class="datepicker-day">31</div>
+              <div class="datepicker-day outside-month">1</div>
+              <div class="datepicker-day outside-month">2</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    selectedDate: new Date()
+  };
+}
+
+handleDateChange = (nativeDate, formattedDate) => {
+  this.setState({
+    selectedDate: nativeDate
+  });
+};
+
+render() {
+  return (
+    &lt;DatePicker
+      value={this.state.selectedDate}
+      onChange={this.handleDateChange}
+      dateFormat="yyyy/MM/dd"
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>DatePicker with Min and Max Dates</h3>
+        <div>
+          <div class="datepicker-input-wrapper">
+            <input
+              type="text"
+              class="datepicker-input"
+              value="2023/08/15"
+              readonly
+            />
+          </div>
+        </div>
+        <pre>
+&lt;DatePicker
+  value={this.state.selectedDate}
+  onChange={this.handleDateChange}
+  minDate={new Date("2023/01/01")}
+  maxDate={new Date("2023/12/31")}
+  dateFormat="yyyy/MM/dd"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>DatePicker with Highlighted Dates</h3>
+        <div>
+          <div class="datepicker-input-wrapper">
+            <input
+              type="text"
+              class="datepicker-input"
+              value="2023/08/15"
+              readonly
+            />
+          </div>
+          <div class="datepicker-visual">
+            <div class="datepicker-header">
+              <button class="datepicker-nav-button">&#9664;</button>
+              <div class="datepicker-month-year">August 2023</div>
+              <button class="datepicker-nav-button">&#9654;</button>
+            </div>
+            <div class="datepicker-grid">
+              <div class="datepicker-day-header">Su</div>
+              <div class="datepicker-day-header">Mo</div>
+              <div class="datepicker-day-header">Tu</div>
+              <div class="datepicker-day-header">We</div>
+              <div class="datepicker-day-header">Th</div>
+              <div class="datepicker-day-header">Fr</div>
+              <div class="datepicker-day-header">Sa</div>
+
+              <div class="datepicker-day outside-month">30</div>
+              <div class="datepicker-day outside-month">31</div>
+              <div class="datepicker-day">1</div>
+              <div class="datepicker-day">2</div>
+              <div class="datepicker-day">3</div>
+              <div class="datepicker-day">4</div>
+              <div class="datepicker-day">5</div>
+
+              <div class="datepicker-day">6</div>
+              <div class="datepicker-day">7</div>
+              <div class="datepicker-day">8</div>
+              <div class="datepicker-day">9</div>
+              <div class="datepicker-day">10</div>
+              <div class="datepicker-day">11</div>
+              <div class="datepicker-day">12</div>
+
+              <div class="datepicker-day">13</div>
+              <div class="datepicker-day">14</div>
+              <div class="datepicker-day selected">15</div>
+              <div class="datepicker-day">16</div>
+              <div class="datepicker-day highlighted">17</div>
+              <div class="datepicker-day highlighted">18</div>
+              <div class="datepicker-day highlighted">19</div>
+
+              <div class="datepicker-day">20</div>
+              <div class="datepicker-day">21</div>
+              <div class="datepicker-day">22</div>
+              <div class="datepicker-day">23</div>
+              <div class="datepicker-day">24</div>
+              <div class="datepicker-day">25</div>
+              <div class="datepicker-day">26</div>
+
+              <div class="datepicker-day">27</div>
+              <div class="datepicker-day">28</div>
+              <div class="datepicker-day">29</div>
+              <div class="datepicker-day">30</div>
+              <div class="datepicker-day">31</div>
+              <div class="datepicker-day outside-month">1</div>
+              <div class="datepicker-day outside-month">2</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;DatePicker
+  value={this.state.selectedDate}
+  onChange={this.handleDateChange}
+  highlightDates={[
+    new Date("2023/08/17"),
+    new Date("2023/08/18"),
+    new Date("2023/08/19"),
+  ]}
+  dateFormat="yyyy/MM/dd"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>DatePicker with Excluded Dates</h3>
+        <div>
+          <div class="datepicker-input-wrapper">
+            <input
+              type="text"
+              class="datepicker-input"
+              value="2023/08/15"
+              readonly
+            />
+          </div>
+          <div class="datepicker-visual">
+            <div class="datepicker-header">
+              <button class="datepicker-nav-button">&#9664;</button>
+              <div class="datepicker-month-year">August 2023</div>
+              <button class="datepicker-nav-button">&#9654;</button>
+            </div>
+            <div class="datepicker-grid">
+              <div class="datepicker-day-header">Su</div>
+              <div class="datepicker-day-header">Mo</div>
+              <div class="datepicker-day-header">Tu</div>
+              <div class="datepicker-day-header">We</div>
+              <div class="datepicker-day-header">Th</div>
+              <div class="datepicker-day-header">Fr</div>
+              <div class="datepicker-day-header">Sa</div>
+
+              <div class="datepicker-day outside-month">30</div>
+              <div class="datepicker-day outside-month">31</div>
+              <div class="datepicker-day">1</div>
+              <div class="datepicker-day">2</div>
+              <div class="datepicker-day">3</div>
+              <div class="datepicker-day">4</div>
+              <div class="datepicker-day">5</div>
+
+              <div class="datepicker-day">6</div>
+              <div class="datepicker-day">7</div>
+              <div class="datepicker-day">8</div>
+              <div class="datepicker-day">9</div>
+              <div class="datepicker-day disabled">10</div>
+              <div class="datepicker-day disabled">11</div>
+              <div class="datepicker-day disabled">12</div>
+
+              <div class="datepicker-day">13</div>
+              <div class="datepicker-day">14</div>
+              <div class="datepicker-day selected">15</div>
+              <div class="datepicker-day">16</div>
+              <div class="datepicker-day">17</div>
+              <div class="datepicker-day">18</div>
+              <div class="datepicker-day">19</div>
+
+              <div class="datepicker-day">20</div>
+              <div class="datepicker-day">21</div>
+              <div class="datepicker-day">22</div>
+              <div class="datepicker-day">23</div>
+              <div class="datepicker-day">24</div>
+              <div class="datepicker-day">25</div>
+              <div class="datepicker-day">26</div>
+
+              <div class="datepicker-day">27</div>
+              <div class="datepicker-day">28</div>
+              <div class="datepicker-day">29</div>
+              <div class="datepicker-day">30</div>
+              <div class="datepicker-day">31</div>
+              <div class="datepicker-day outside-month">1</div>
+              <div class="datepicker-day outside-month">2</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;DatePicker
+  value={this.state.selectedDate}
+  onChange={this.handleDateChange}
+  excludeDates={[
+    new Date("2023/08/10"),
+    new Date("2023/08/11"),
+    new Date("2023/08/12"),
+  ]}
+  dateFormat="yyyy/MM/dd"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Placement</h3>
+        <pre>
+&lt;DatePicker
+  value={this.state.selectedDate}
+  onChange={this.handleDateChange}
+  placement="top-end"
+  dateFormat="yyyy/MM/dd"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>DatePicker in a Modal</h3>
+        <pre>
+&lt;Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}&gt;
+  &lt;Modal.Header toggle={this.toggleModal}&gt;
+    &lt;Modal.Title&gt;Date Selection&lt;/Modal.Title&gt;
+  &lt;/Modal.Header&gt;
+  &lt;Modal.Body&gt;
+    &lt;DatePicker
+      value={this.state.selectedDate}
+      onChange={this.handleDateChange}
+      placement="auto"
+      dateFormat="yyyy/MM/dd"
+    /&gt;
+  &lt;/Modal.Body&gt;
+&lt;/Modal&gt;
+
+&lt;Button onClick={this.toggleModal}&gt;Open Modal with DatePicker&lt;/Button&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>DatePicker with Custom Input</h3>
+        <pre>
+const CustomInput = ({ value, onClick, onChange, disabled }) => (
+  &lt;div className="custom-input-wrapper"&gt;
+    &lt;Input
+      value={value}
+      onClick={onClick}
+      onChange={onChange}
+      disabled={disabled}
+      placeholder="Select a date"
+      addon={&lt;i className="di di-calendar" /&gt;}
+    /&gt;
+  &lt;/div&gt;
+);
+
+&lt;DatePicker
+  value={this.state.selectedDate}
+  onChange={this.handleDateChange}
+  customInput={CustomInput}
+  dateFormat="yyyy/MM/dd"
+/&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The DatePicker component works with native JavaScript Date objects
+          internally
+        </li>
+        <li>
+          Input values can be provided as native Date objects, EPOCH timestamps,
+          or correctly formatted date strings
+        </li>
+        <li>
+          When using custom input components, make sure to spread all provided
+          props to the input element
+        </li>
+        <li>
+          The placement property will adjust automatically if there's not enough
+          space in the specified direction
+        </li>
+        <li>Highlighted dates display a green bullet beneath the date</li>
+        <li>
+          Excluded dates are disabled and cannot be selected, even if they are
+          also highlighted
+        </li>
+        <li>
+          For form integration, use the <code>name</code> and
+          <code>validationProps</code> props with Formik
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
