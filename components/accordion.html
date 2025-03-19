@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Accordion Component</h1>
+      <p>
+        A component for displaying collapsible content sections, with only one
+        section expanded at a time.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Accordion from "orion/lib/accordion"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of item objects for the accordion.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>activeItemId</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              ID of the currently expanded item. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>onItemChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when item is clicked. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-accordion"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Item Object Structure</h3>
+      <pre>
+{
+  id: String,           // Unique identifier for the item
+  title: String,        // Header title for each accordion card
+  icon: React.Element,  // Optional icon from orion-icons library
+  component: Function,  // Function returning component to render in card body
+  noGutter: Boolean     // Optional, removes padding from card body when true
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Accordion</h3>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    activeItemId: "item1"
+  };
+
+  this.items = [
+    {
+      id: "item1",
+      noGutter: true,
+      title: "Windows",
+      component: () => &lt;div&gt;Windows component content&lt;/div&gt;
+    },
+    {
+      id: "item2",
+      title: "MacOS",
+      component: () => &lt;div&gt;MacOS component content&lt;/div&gt;
+    },
+    {
+      id: "item3",
+      title: "Exclusions",
+      component: () => &lt;div&gt;Exclusions component content&lt;/div&gt;
+    }
+  ];
+}
+
+onItemChange = (id) => {
+  this.setState({
+    activeItemId: id
+  });
+};
+
+render() {
+  return (
+    &lt;Accordion
+      items={this.items}
+      activeItemId={this.state.activeItemId}
+      onItemChange={this.onItemChange}
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Accordion with Icons</h3>
+        <pre>
+import Windows from "@druva-apps/orion-icons/lib/WindowsBlueFilled";
+import Mac from "@druva-apps/orion-icons/lib/MacMulticolorFilled";
+import SettingsBlue from "@druva-apps/orion-icons/lib/SettingsMultitoneFilled";
+
+constructor(props) {
+  super(props);
+  this.state = {
+    activeItemId: "item1"
+  };
+
+  this.itemsWithIcons = [
+    {
+      id: "item1",
+      icon: &lt;Windows /&gt;,
+      noGutter: true,
+      title: "Windows",
+      component: () => &lt;div&gt;Windows component content&lt;/div&gt;
+    },
+    {
+      id: "item2",
+      icon: &lt;Mac /&gt;,
+      title: "MacOS",
+      component: () => &lt;div&gt;MacOS component content&lt;/div&gt;
+    },
+    {
+      id: "item3",
+      icon: &lt;SettingsBlue /&gt;,
+      title: "Exclusions",
+      component: () => &lt;div&gt;Exclusions component content&lt;/div&gt;
+    }
+  ];
+}
+
+render() {
+  return (
+    &lt;Accordion
+      items={this.itemsWithIcons}
+      activeItemId={this.state.activeItemId}
+      onItemChange={this.onItemChange}
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Complex Content in Accordion</h3>
+        <pre>
+const WIN_COMPONENT = (
+  &lt;div className="oui-overflow-hidden"&gt;
+    &lt;Row&gt;
+      &lt;Col sm="3" className="oui-bg-light"&gt;
+        &lt;div className="oui-p-2"&gt;Data Sets&lt;/div&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Email&lt;/li&gt;
+          &lt;li&gt;My Video&lt;/li&gt;
+          &lt;li&gt;My Documents&lt;/li&gt;
+          &lt;li&gt;Desktop&lt;/li&gt;
+          &lt;li&gt;My Pictures&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/Col&gt;
+      &lt;Col sm="9"&gt;
+        &lt;div className="oui-p-3"&gt;
+          &lt;FormGroup row&gt;
+            &lt;Col sm="4"&gt;Data Set Name&lt;/Col&gt;
+            &lt;Col sm="8"&gt;All Drives&lt;/Col&gt;
+          &lt;/FormGroup&gt;
+          &lt;FormGroup row&gt;
+            &lt;Col sm="4"&gt;Display Name&lt;/Col&gt;
+            &lt;Col sm="8"&gt;
+              &lt;Input /&gt;
+            &lt;/Col&gt;
+          &lt;/FormGroup&gt;
+          &lt;FormGroup row&gt;
+            &lt;Col sm="4"&gt;Include files&lt;/Col&gt;
+            &lt;Col sm="8"&gt;
+              &lt;Input type="textarea" /&gt;
+            &lt;/Col&gt;
+          &lt;/FormGroup&gt;
+        &lt;/div&gt;
+      &lt;/Col&gt;
+    &lt;/Row&gt;
+  &lt;/div&gt;
+);
+
+// Update component in items array
+this.items = [
+  {
+    id: "item1",
+    title: "Windows",
+    component: () => WIN_COMPONENT,
+  },
+  // Other items...
+];</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>Only one card within the accordion can be expanded at a time</li>
+        <li>
+          Clicking on an already expanded card will collapse it (the
+          <code>onItemChange</code> callback will receive <code>null</code> as
+          the ID)
+        </li>
+        <li>The entire header section is clickable for toggling the card</li>
+        <li>Card headers can optionally include an icon</li>
+        <li>
+          By default, card bodies have padding, but this can be removed by
+          setting <code>noGutter: true</code> for an item
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

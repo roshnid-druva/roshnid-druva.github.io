@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alert Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      .alert-warning {
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      .alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Alert Component</h1>
+      <p>A component for displaying important messages or notifications.</p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Alert from "orion/lib/alert"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>message</td>
+            <td>String/Element</td>
+            <td>-</td>
+            <td>
+              The message to be displayed inside the Alert component.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>"danger"</td>
+            <td>
+              Type of alert message: "success", "warning", "danger", or "info".
+            </td>
+          </tr>
+          <tr>
+            <td>closable</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes the Alert closable with an (x) button.</td>
+          </tr>
+          <tr>
+            <td>onClose</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Alert close handler function.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-alert"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Alert Types</h2>
+
+      <div class="example">
+        <h3>Success Alert</h3>
+        <div class="alert-success">User has been created successfully.</div>
+        <code>
+          &lt;Alert message="User has been created successfully." type="success"
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Warning Alert</h3>
+        <div class="alert-warning">
+          You will not be able to recover the data once deleted.
+        </div>
+        <code>
+          &lt;Alert<br />
+          &nbsp;&nbsp;message="You will not be able to recover the data once
+          deleted."<br />
+          &nbsp;&nbsp;type="warning"<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Danger Alert</h3>
+        <div class="alert-danger">Error message</div>
+        <code> &lt;Alert message="Error message" type="danger" /&gt; </code>
+      </div>
+
+      <div class="example">
+        <h3>Information Alert</h3>
+        <div class="alert-info">
+          The reset password link has been sent to your email.
+        </div>
+        <code>
+          &lt;Alert<br />
+          &nbsp;&nbsp;message="The reset password link has been sent to your
+          email."<br />
+          &nbsp;&nbsp;type="info"<br />
+          /&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Alert Customization</h2>
+
+      <div class="example">
+        <h3>Alert with a Link</h3>
+        <div class="alert-danger">
+          An alert with <a href="/somewhere">an example link</a>. Give it a
+          click if you like.
+        </div>
+        <code>
+          &lt;Alert<br />
+          &nbsp;&nbsp;message={<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An alert with &lt;a
+          href="/somewhere"&gt;an example link&lt;/a&gt;. Give it a click if<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you like.<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+          &nbsp;&nbsp;}<br />
+          /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Alert with Custom HTML Structure</h3>
+        <div class="alert-danger">
+          <h4 style="margin-top: 0">Oh no!</h4>
+          <p>
+            Something terribly went wrong. Contact admin to resolve the issue.
+          </p>
+          <hr />
+          <div>
+            <ul>
+              <li>Error reason #1</li>
+              <li>Error reason #2</li>
+              <li>Error reason #3</li>
+            </ul>
+          </div>
+        </div>
+        <code>
+          &lt;Alert<br />
+          &nbsp;&nbsp;message={<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h4
+          className="oui-alert-heading"&gt;Oh no!&lt;/h4&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something terribly went
+          wrong. Contact admin to resolve the issue.&lt;/p&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;hr /&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div
+          className="oui-mb-0"&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Error
+          reason #1&lt;/li&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Error
+          reason #2&lt;/li&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Error
+          reason #3&lt;/li&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
+          &nbsp;&nbsp;}<br />
+          /&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Events</h2>
+
+      <div class="example">
+        <h3>Handling Alert Close Event</h3>
+        <code>
+          &lt;Alert<br />
+          &nbsp;&nbsp;message="Error message"<br />
+          &nbsp;&nbsp;closable<br />
+          &nbsp;&nbsp;onClose={(e) => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;// Handle alert close event<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;console.log("Alert closed");<br />
+          &nbsp;&nbsp;}}<br />
+          /&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Notes</h2>
+      <ul>
+        <li>
+          The alert type changes the background color and border color of the
+          alert
+        </li>
+        <li>
+          Set <code>closable</code> to true to show a close button that allows
+          users to dismiss the alert
+        </li>
+        <li>
+          The <code>message</code> prop can accept plain text or complex JSX
+          elements
+        </li>
+        <li>
+          When providing custom content, you can use classes like
+          <code>oui-alert-heading</code> for styled headers
+        </li>
+        <li>
+          Always provide an <code>onClose</code> handler when setting
+          <code>closable</code> to true
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

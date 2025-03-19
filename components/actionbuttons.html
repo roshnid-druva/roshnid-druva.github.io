@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ActionButtons Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .note {
+        background-color: #e8f4fd;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>ActionButtons Component</h1>
+      <p>
+        A component for displaying a group of action buttons that can be
+        configured to show some buttons directly and others in a dropdown menu.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import ActionButtons from "orion/lib/actionButtons"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>buttons</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              List of button objects to render into action buttons component.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>allInMore</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Show all buttons in a dropdown menu instead of showing the first
+              one separately
+            </td>
+          </tr>
+          <tr>
+            <td>rightAligned</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Controls the opening position of the dropdown menu</td>
+          </tr>
+          <tr>
+            <td>moreBtnSize</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>Size of the more button ("sm", "md", "lg")</td>
+          </tr>
+          <tr>
+            <td>disableMoreBtn</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disable the more button that shows the dropdown</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-action-buttons"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Button Object Properties</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>Button label or dropdown menu item label</td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>Button type ("primary" or "secondary")</td>
+          </tr>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>Button size ("sm", "md", "lg")</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>Flag to disable the button</td>
+          </tr>
+          <tr>
+            <td>onClick</td>
+            <td>Function</td>
+            <td>Click handler for the button or dropdown menu item</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>With Three Buttons</h3>
+        <code>
+          const buttons = [<br />
+          &nbsp;&nbsp;{ label: "Create", type: "primary" },<br />
+          &nbsp;&nbsp;{ label: "Edit" },<br />
+          &nbsp;&nbsp;{ label: "Delete" },<br />
+          ];<br />
+          <br />
+          &lt;ActionButtons buttons={buttons} /&gt;;
+        </code>
+        <p>
+          By default, the first button will be displayed directly, and the rest
+          will appear in a dropdown menu.
+        </p>
+      </div>
+
+      <div class="example">
+        <h3>With Two Buttons</h3>
+        <code>
+          const buttons = [<br />
+          &nbsp;&nbsp;{ label: "Create", type: "primary" },<br />
+          &nbsp;&nbsp;{ label: "Edit", type: "secondary" },<br />
+          ];<br />
+          <br />
+          &lt;ActionButtons buttons={buttons} /&gt;;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>With One Button</h3>
+        <code>
+          const buttons = [{ label: "Create", type: "primary" }];<br />
+          <br />
+          &lt;ActionButtons buttons={buttons} /&gt;;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>All Buttons in Dropdown Menu</h3>
+        <code>
+          const buttons = [<br />
+          &nbsp;&nbsp;{ label: "Create", type: "primary" },<br />
+          &nbsp;&nbsp;{ label: "Edit" },<br />
+          &nbsp;&nbsp;{ label: "Delete" },<br />
+          ];<br />
+          <br />
+          &lt;ActionButtons buttons={buttons} allInMore rightAligned={false}
+          /&gt;;
+        </code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          By default, the first button is displayed directly, and any additional
+          buttons appear in a dropdown menu
+        </li>
+        <li>
+          Setting <code>allInMore</code> to true places all buttons in the
+          dropdown menu
+        </li>
+        <li>
+          The dropdown menu is right-aligned by default but can be set to
+          left-aligned using <code>rightAligned={false}</code>
+        </li>
+        <li>
+          Each button can have its own type, size, disabled state, and click
+          handler
+        </li>
+        <li>
+          You can disable individual buttons by setting the
+          <code>disabled</code> property to true in the button object
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
