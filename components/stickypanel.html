@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StickyPanel Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* StickyPanel Demo Styles */
+      .sticky-panel-demo {
+        position: relative;
+        height: 400px;
+        border: 1px solid #ddd;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        overflow: hidden;
+      }
+      .sticky-panel {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .sticky-panel-header {
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .sticky-panel-body {
+        padding: 16px;
+        flex: 1;
+        overflow-y: auto;
+      }
+      .sticky-panel-footer {
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #eee;
+      }
+      .sticky-panel-controls {
+        display: flex;
+        align-items: center;
+      }
+      .sticky-panel-drag {
+        cursor: move;
+        margin-right: 8px;
+      }
+      .sticky-panel-collapse {
+        cursor: pointer;
+        margin-right: 8px;
+      }
+      .sticky-panel-close {
+        cursor: pointer;
+      }
+      .sticky-panel-title {
+        font-weight: 500;
+        margin: 0;
+      }
+      .bottom-right {
+        bottom: 10px;
+        right: 10px;
+      }
+      .bottom-left {
+        bottom: 10px;
+        left: 10px;
+      }
+      .top-right {
+        top: 10px;
+        right: 10px;
+      }
+      .top-left {
+        top: 10px;
+        left: 10px;
+      }
+      .avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 4px;
+      }
+      .bg-success {
+        background-color: #28a745;
+      }
+      .bg-warning {
+        background-color: #ffc107;
+        color: #343a40;
+      }
+      .progress-bar {
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        flex-grow: 1;
+        margin: 0 12px;
+      }
+      .progress-value {
+        height: 100%;
+        background-color: #007bff;
+        border-radius: 4px;
+      }
+      .progress-container {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+      }
+      .link-button {
+        color: #007bff;
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      .button {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: all 0.15s ease-in-out;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      .button:hover {
+        background-color: #0069d9;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>StickyPanel Component</h1>
+      <p>
+        A fixed position panel component that can be positioned at various
+        corners of the screen, collapsed, dragged, and resized.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import StickyPanel from "orion/lib/stickyPanel";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Components</h2>
+
+      <h3>StickyPanel</h3>
+      <p>The root component that provides the container for the panel.</p>
+
+      <h3>StickyPanel.Header</h3>
+      <p>Used to render the header section of the sticky panel.</p>
+
+      <h3>StickyPanel.Body</h3>
+      <p>Used to render the main content section of the sticky panel.</p>
+
+      <h3>StickyPanel.Footer</h3>
+      <p>Used to render the footer section of the sticky panel.</p>
+    </div>
+
+    <div class="section">
+      <h2>StickyPanel Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>children</td>
+            <td>React Node</td>
+            <td>Empty</td>
+            <td>Content of the panel. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>show</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Controls the visibility of the sticky panel.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>width</td>
+            <td>Number</td>
+            <td>300</td>
+            <td>Width of the sticky panel in pixels</td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>Number</td>
+            <td>400</td>
+            <td>Height of the sticky panel in pixels</td>
+          </tr>
+          <tr>
+            <td>maxHeight</td>
+            <td>Number</td>
+            <td>500</td>
+            <td>Maximum height of the sticky panel in pixels</td>
+          </tr>
+          <tr>
+            <td>close</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to handle closing the panel</td>
+          </tr>
+          <tr>
+            <td>draggable</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enables dragging of the sticky panel</td>
+          </tr>
+          <tr>
+            <td>collapsible</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Allows the sticky panel to be collapsed</td>
+          </tr>
+          <tr>
+            <td>defaultCollapsed</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether the sticky panel should be collapsed by default</td>
+          </tr>
+          <tr>
+            <td>offsetX</td>
+            <td>Number</td>
+            <td>10</td>
+            <td>Horizontal offset from the edge of the screen</td>
+          </tr>
+          <tr>
+            <td>offsetY</td>
+            <td>Number</td>
+            <td>10</td>
+            <td>Vertical offset from the edge of the screen</td>
+          </tr>
+          <tr>
+            <td>position</td>
+            <td>String</td>
+            <td>bottom-right</td>
+            <td>
+              Position of the panel (top-left, top-right, bottom-left,
+              bottom-right)
+            </td>
+          </tr>
+          <tr>
+            <td>honourHeaderHeightOnResize</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to maintain the header height during resize</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>StickyPanel.Header Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>children</td>
+            <td>React Node</td>
+            <td>-</td>
+            <td>Content of the header. <strong>(Required)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>StickyPanel.Body Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>children</td>
+            <td>React Node</td>
+            <td>-</td>
+            <td>Content of the body. <strong>(Required)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>StickyPanel.Footer Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>children</td>
+            <td>React Node</td>
+            <td>-</td>
+            <td>Content of the footer. <strong>(Required)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Guidelines</h2>
+      <ul>
+        <li>
+          The StickyPanel component is designed to display floating panels that
+          can be positioned at different corners of the screen.
+        </li>
+        <li>
+          It's recommended to use the StickyPanel.Header, StickyPanel.Body, and
+          StickyPanel.Footer components in sequence for a standard layout.
+        </li>
+        <li>
+          These subcomponents must be direct children of StickyPanel without any
+          wrappers.
+        </li>
+        <li>
+          The first child is treated as the header, the second as the body, and
+          the third (optional) as the footer.
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+        <div class="sticky-panel-demo">
+          <div
+            class="sticky-panel bottom-right"
+            style="width: 400px; height: 300px"
+          >
+            <div class="sticky-panel-header">
+              <h4 class="sticky-panel-title">Panel Header</h4>
+              <div class="sticky-panel-controls">
+                <div class="sticky-panel-close">✕</div>
+              </div>
+            </div>
+            <div class="sticky-panel-body">
+              <p>This is the panel content</p>
+            </div>
+            <div class="sticky-panel-footer">
+              <button class="button">Action</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+import StickyPanel from "orion/lib/stickyPanel";
+import Button from "orion/lib/button";
+
+const StickyPanelExample = () => {
+  const [show, setShow] = React.useState(true);
+  const close = () => setShow(false);
+
+  return (
+    &lt;&gt;
+      &lt;Button
+        label={show ? "Hide Panel" : "Show Panel"}
+        onClick={() => setShow(!show)}
+      /&gt;
+
+      &lt;StickyPanel
+        width={400}
+        height={300}
+        show={show}
+        close={close}
+        position="bottom-right"
+      &gt;
+        &lt;StickyPanel.Header&gt;
+          &lt;h4&gt;Panel Header&lt;/h4&gt;
+        &lt;/StickyPanel.Header&gt;
+        &lt;StickyPanel.Body&gt;
+          &lt;p&gt;This is the panel content&lt;/p&gt;
+        &lt;/StickyPanel.Body&gt;
+        &lt;StickyPanel.Footer&gt;
+          &lt;Button label="Action" /&gt;
+        &lt;/StickyPanel.Footer&gt;
+      &lt;/StickyPanel&gt;
+    &lt;/&gt;
+  );
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Draggable and Collapsible Panel</h3>
+        <div class="sticky-panel-demo">
+          <div
+            class="sticky-panel top-right"
+            style="width: 500px; height: 300px"
+          >
+            <div class="sticky-panel-header">
+              <div class="sticky-panel-title">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                  "
+                >
+                  <h5 style="margin: 0">Progress Items</h5>
+                  <div>
+                    <span style="margin-right: 16px">
+                      <span class="avatar bg-success">1</span>
+                      Completed
+                    </span>
+                    <span style="margin-right: 16px">
+                      <span class="avatar bg-warning">2</span>
+                      In Progress
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="sticky-panel-controls">
+                <div class="sticky-panel-drag">⋮⋮</div>
+                <div class="sticky-panel-collapse">▲</div>
+                <div class="sticky-panel-close">✕</div>
+              </div>
+            </div>
+            <div class="sticky-panel-body">
+              <div>
+                <h6
+                  style="
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  "
+                >
+                  Restoring "Desktop" to DDSPL 18930
+                </h6>
+                <div class="progress-container">
+                  <div style="max-width: 45%; white-space: nowrap">10%</div>
+                  <div class="progress-bar">
+                    <div class="progress-value" style="width: 10%"></div>
+                  </div>
+                  <button class="link-button">Cancel</button>
+                </div>
+                <p>Restoring to Desktop/Mon May 11-08-01 2024</p>
+              </div>
+            </div>
+            <div class="sticky-panel-footer">Footer Content</div>
+          </div>
+        </div>
+        <pre>
+&lt;StickyPanel
+  width={500}
+  height={300}
+  show={true}
+  close={() => setShow(false)}
+  draggable={true}
+  collapsible={true}
+  defaultCollapsed={true}
+  offsetX={10}
+  offsetY={50}
+  position="top-right"
+&gt;
+  &lt;StickyPanel.Header&gt;
+    &lt;div className="oui-d-flex oui-justify-content-between"&gt;
+      &lt;h5&gt;Progress Items&lt;/h5&gt;
+      &lt;div&gt;
+        &lt;span className="oui-mr-2"&gt;
+          &lt;Avatar className="oui-bg-success oui-mr-1" label="1" size="sm" /&gt;
+          Completed
+        &lt;/span&gt;
+        &lt;span className="oui-mr-2"&gt;
+          &lt;Avatar className="oui-bg-warning oui-mr-1" label="2" size="sm" /&gt;
+          In Progress
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/StickyPanel.Header&gt;
+  &lt;StickyPanel.Body&gt;
+    &lt;div&gt;
+      &lt;h6 className="oui-text-truncate"&gt;Restoring "Desktop" to DDSPL 18930&lt;/h6&gt;
+      &lt;div className="oui-d-flex oui-align-items-center"&gt;
+        &lt;div className="oui-text-truncate" style={{ maxWidth: "45%" }}&gt;
+          10%
+        &lt;/div&gt;
+        &lt;div className="oui-flex-grow-1 oui-ml-2"&gt;
+          &lt;Progress value={10} max={100} size="sm" animate={true} /&gt;
+        &lt;/div&gt;
+        &lt;Button label="Cancel" type="link" /&gt;
+      &lt;/div&gt;
+      &lt;p&gt;Restoring to Desktop/Mon May 11-08-01 2024&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/StickyPanel.Body&gt;
+  &lt;StickyPanel.Footer&gt;Footer Content&lt;/StickyPanel.Footer&gt;
+&lt;/StickyPanel&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The StickyPanel can be positioned at any of the four corners of the
+          screen.
+        </li>
+        <li>
+          When draggable is enabled, users can move the panel around the screen.
+        </li>
+        <li>
+          When collapsible is enabled, the panel can be collapsed to show only
+          the header.
+        </li>
+        <li>
+          The close function controls the visibility of the panel and should
+          update the show prop.
+        </li>
+        <li>
+          Panel dimensions can be controlled through width, height, and
+          maxHeight props.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

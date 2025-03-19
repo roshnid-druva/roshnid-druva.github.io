@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sortable Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Sortable Demo Styles */
+      .sortable-demo {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        padding: 16px;
+        margin-bottom: 20px;
+      }
+      .sortable-item {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .sortable-item:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .drag-handle {
+        color: #6c757d;
+        margin-right: 12px;
+        cursor: grab;
+      }
+      .drag-handle svg {
+        width: 16px;
+        height: 16px;
+      }
+      .sortable-group {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .sortable-group-title {
+        font-weight: 500;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+      }
+      .custom-item {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .custom-item.dragging {
+        background-color: #e9f9e9;
+        border-color: #0288d1;
+      }
+      .custom-group {
+        background-color: #e9f9e9;
+        border-radius: 5px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .card {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        overflow: hidden;
+      }
+      .card-header {
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .card-title {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
+      .card-subtitle {
+        font-size: 12px;
+        color: #6c757d;
+      }
+      .card-body {
+        padding: 16px;
+      }
+      .collapse-icon {
+        cursor: pointer;
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Sortable Component</h1>
+      <p>
+        Components for creating drag-and-drop sortable lists and groups with
+        customizable item rendering.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import { Sortable, DragHandler } from "orion/lib/sortable";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Components</h2>
+
+      <h3>Sortable</h3>
+      <p>
+        The main component that provides drag-and-drop functionality for lists
+        and groups.
+      </p>
+
+      <h3>DragHandler</h3>
+      <p>
+        A component that renders the drag handle and handles the dragging
+        events.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Sortable Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array/Object</td>
+            <td>-</td>
+            <td>
+              Items to be displayed and sorted. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>setItems</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function to update items when their order changes.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>renderItem</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for individual items</td>
+          </tr>
+          <tr>
+            <td>renderGroup</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for groups</td>
+          </tr>
+          <tr>
+            <td>itemStyle</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Custom styles for each item</td>
+          </tr>
+          <tr>
+            <td>itemClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for items</td>
+          </tr>
+          <tr>
+            <td>groupStyle</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Custom styles for each group</td>
+          </tr>
+          <tr>
+            <td>groupClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for groups</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>DragHandler Props</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>dragHandlerProps</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Props from renderItem to enable dragging functionality</td>
+          </tr>
+          <tr>
+            <td>style</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Custom styles for the drag handler</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the drag handler</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Item Format</h2>
+      <p>Items can be in two formats:</p>
+
+      <h3>Simple List</h3>
+      <pre>
+[
+  {
+    id: "1", // Unique identifier (required)
+    label: "Item 1", // Item label (required unless using custom renderItem)
+    // Any other custom properties
+  },
+  {
+    id: "2",
+    label: "Item 2",
+  },
+];</pre
+      >
+
+      <h3>Grouped List</h3>
+      <pre>
+{
+  "group1": [
+    {
+      id: "item1",
+      label: "Group 1 Item 1"
+    },
+    {
+      id: "item2",
+      label: "Group 1 Item 2"
+    }
+  ],
+  "group2": [
+    {
+      id: "item3",
+      label: "Group 2 Item 1"
+    }
+  ]
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Sortable List</h3>
+        <div class="sortable-demo">
+          <div class="sortable-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>one</div>
+          </div>
+          <div class="sortable-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>two</div>
+          </div>
+          <div class="sortable-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>three</div>
+          </div>
+        </div>
+        <pre>
+const [items, setItems] = useState([
+  { id: "1", label: "one" },
+  { id: "2", label: "two" },
+  { id: "3", label: "three" },
+]);
+
+&lt;Sortable
+  items={items}
+  setItems={setItems}
+  itemStyle={{ backgroundColor: "#F9F9F9" }}
+  itemClassName="oui-border-1 oui-rounded oui-py-2"
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Item Rendering</h3>
+        <div class="sortable-demo">
+          <div class="custom-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>one</div>
+          </div>
+          <div class="custom-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>two</div>
+          </div>
+          <div class="custom-item">
+            <div class="drag-handle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </div>
+            <div>three</div>
+          </div>
+        </div>
+        <pre>
+const [items, setItems] = useState([
+  { id: "1", label: "one" },
+  { id: "2", label: "two" },
+  { id: "3", label: "three" },
+]);
+
+const ItemWithoutGroup = ({
+  item,
+  dragHandlerProps,
+  isDragging,
+  isDragOverlay,
+}) => {
+  return (
+    &lt;div
+      style={{
+        backgroundColor: isDragging || isDragOverlay ? "#E9F9E9" : "white",
+        border: "1px solid transparent",
+        borderColor: isDragOverlay ? "#0288d1" : "white",
+      }}
+      className="oui-d-flex oui-align-items-center oui-my-3 oui-border-1 oui-shadow-sm oui-rounded oui-py-2"
+    &gt;
+      &lt;DragHandler {...dragHandlerProps} style={{ marginLeft: "0.5rem" }} /&gt;
+      {item.label}
+    &lt;/div&gt;
+  );
+};
+
+&lt;Sortable
+  items={items}
+  setItems={setItems}
+  renderItem={(item, dragHandlerProps, _items, isDragging, isDragOverlay) => (
+    &lt;ItemWithoutGroup
+      item={item}
+      dragHandlerProps={dragHandlerProps}
+      isDragging={isDragging}
+      isDragOverlay={isDragOverlay}
+    /&gt;
+  )}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Grouped Sortable List</h3>
+        <div class="sortable-demo">
+          <div class="sortable-group">
+            <div class="sortable-group-title">group1</div>
+            <div class="sortable-item">
+              <div class="drag-handle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  ></path>
+                </svg>
+              </div>
+              <div>Item 1</div>
+            </div>
+            <div class="sortable-item">
+              <div class="drag-handle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  ></path>
+                </svg>
+              </div>
+              <div>Item 2</div>
+            </div>
+          </div>
+          <div class="sortable-group">
+            <div class="sortable-group-title">group2</div>
+            <div class="sortable-item">
+              <div class="drag-handle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  ></path>
+                </svg>
+              </div>
+              <div>Item 3</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+const [groups, setGroups] = useState({
+  group1: [
+    { id: "item1", label: "Item 1" },
+    { id: "item2", label: "Item 2" },
+  ],
+  group2: [{ id: "item3", label: "Item 3" }],
+});
+
+&lt;Sortable
+  items={groups}
+  setItems={setGroups}
+  itemStyle={{ backgroundColor: "white" }}
+  itemClassName="oui-border-1"
+  groupStyle={{ backgroundColor: "#F9F9F9" }}
+  groupClassName="oui-border-1"
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Group and Item Rendering</h3>
+        <div class="sortable-demo">
+          <div class="custom-group">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="drag-handle" style="color: #0288d1">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                      ></path>
+                    </svg>
+                  </div>
+                  Card Title group-item-1
+                </div>
+                <div class="collapse-icon">▼</div>
+              </div>
+              <div class="card-body">
+                <div>Description 1</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="drag-handle" style="color: #0288d1">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                      ></path>
+                    </svg>
+                  </div>
+                  Card Title group-item-2
+                </div>
+                <div class="collapse-icon">▼</div>
+              </div>
+              <div class="card-body">
+                <div>Description 2</div>
+              </div>
+            </div>
+          </div>
+          <div class="custom-group">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="drag-handle" style="color: #0288d1">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                      ></path>
+                    </svg>
+                  </div>
+                  Card Title group-item-3
+                </div>
+                <div class="collapse-icon">▼</div>
+              </div>
+              <div class="card-body">
+                <div>Description 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+const [groups, setGroups] = useState({
+  group1: [
+    {
+      id: "group-item-1",
+      label: "Group 1 Item 1",
+      description: "Description 1",
+    },
+    {
+      id: "group-item-2",
+      label: "Group 1 Item 2",
+      description: "Description 2",
+    },
+  ],
+  group2: [
+    {
+      id: "group-item-3",
+      label: "Group 2 Item 1",
+      description: "Description 3",
+    },
+  ],
+});
+
+const Group = ({ items }) => {
+  return (
+    &lt;div
+      style={{
+        background: "#E9F9E9",
+        padding: "1rem",
+        marginBottom: "1rem",
+        borderRadius: "5px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+      }}
+    &gt;
+      {items}
+    &lt;/div&gt;
+  );
+};
+
+const GroupItem = ({
+  item,
+  dragHandlerProps,
+  items,
+  isDragOverlay,
+  isDragging,
+}) => {
+  return (
+    &lt;div
+      style={{
+        border: "1px solid transparent",
+        borderColor: isDragOverlay ? "#0288d1" : "white",
+      }}
+    &gt;
+      &lt;Card
+        collapsedByDefault
+        title={() => (
+          &lt;&gt;
+            {items.length > 1 && (
+              &lt;DragHandler style={{ color: "#0288d1" }} {...dragHandlerProps} /&gt;
+            )}
+            {`Card Title ${item.id}`}
+          &lt;/&gt;
+        )}
+        subtitle="Card Subtitle"
+        collapsible
+        body={() => {
+          return &lt;div&gt;{item.description}&lt;/div&gt;;
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+};
+
+&lt;Sortable
+  items={groups}
+  setItems={setGroups}
+  renderItem={(item, dragHandlerProps, items, isDragging, isDragOverlay) => (
+    &lt;GroupItem
+      item={item}
+      dragHandlerProps={dragHandlerProps}
+      items={items}
+      isDragging={isDragging}
+      isDragOverlay={isDragOverlay}
+    /&gt;
+  )}
+  renderGroup={(items) => &lt;Group items={items} /&gt;}
+/&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The Sortable component supports both simple lists and grouped lists.
+        </li>
+        <li>
+          Items can be dragged and dropped to change their order within a list
+          or between groups.
+        </li>
+        <li>
+          Each item must have a unique <code>id</code> property to properly
+          track its position during sorting.
+        </li>
+        <li>
+          The <code>setItems</code> callback is called when items are reordered
+          to update the parent state.
+        </li>
+        <li>
+          Custom rendering can be provided for both items and groups using the
+          <code>renderItem</code> and <code>renderGroup</code> props.
+        </li>
+        <li>
+          The DragHandler component provides the visual handle and functionality
+          for dragging items.
+        </li>
+        <li>
+          When using custom rendering, the dragHandlerProps must be passed to
+          the DragHandler component to enable dragging.
+        </li>
+        <li>
+          The component provides information about drag state through isDragging
+          and isDragOverlay parameters in the renderItem function.
+        </li>
+        <li>
+          Custom styles and class names can be applied to both items and groups
+          for consistent styling.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

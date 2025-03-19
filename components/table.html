@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Table Demo Styles */
+      .table-demo {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      .table-demo th {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: left;
+        font-weight: 500;
+        border-bottom: 2px solid #e9ecef;
+      }
+      .table-demo td {
+        padding: 10px;
+        border-bottom: 1px solid #e9ecef;
+      }
+      .table-demo tr:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      .table-demo .selection-column {
+        width: 40px;
+        text-align: center;
+      }
+      .checkbox {
+        width: 16px;
+        height: 16px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        display: inline-block;
+        position: relative;
+        background-color: white;
+      }
+      .checkbox.checked:after {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 8px;
+        border: solid #007bff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        left: 5px;
+        top: 2px;
+      }
+      .custom-select {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+      }
+      .tooltip {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+      }
+      .truncated {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .header-action {
+        margin-left: 4px;
+        color: #6c757d;
+        cursor: pointer;
+      }
+      .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+      .no-data {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+      }
+      .table-container {
+        position: relative;
+      }
+      .secondary-label {
+        display: block;
+        font-size: 12px;
+        color: #6c757d;
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Table Component</h1>
+      <p>
+        A flexible data table component that supports sorting, selection, custom
+        cell rendering and more.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Table from "orion/lib/table";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>columns</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of column configuration objects. Each column should have
+              dataKey and may include label, width, flexGrow, sortable,
+              headerAction, cellRenderer, etc.
+            </td>
+          </tr>
+          <tr>
+            <td>dataList</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of data objects to be displayed in the table.</td>
+          </tr>
+          <tr>
+            <td>selectedRows</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of selected row IDs.</td>
+          </tr>
+          <tr>
+            <td>selectAll</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Indicates if all rows are selected.</td>
+          </tr>
+          <tr>
+            <td>multiSelect</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Allows selection of multiple rows when true.</td>
+          </tr>
+          <tr>
+            <td>showSelection</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Shows selection column when true.</td>
+          </tr>
+          <tr>
+            <td>rowHeight</td>
+            <td>Number</td>
+            <td>40</td>
+            <td>Height of each row in pixels.</td>
+          </tr>
+          <tr>
+            <td>headerHeight</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Height of the header row in pixels.</td>
+          </tr>
+          <tr>
+            <td>alignItems</td>
+            <td>String</td>
+            <td>"center"</td>
+            <td>Vertical alignment of cell content.</td>
+          </tr>
+          <tr>
+            <td>textAlign</td>
+            <td>String</td>
+            <td>"left"</td>
+            <td>Horizontal alignment of cell content.</td>
+          </tr>
+          <tr>
+            <td>enableInfiniteLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enables infinite loading for large datasets.</td>
+          </tr>
+          <tr>
+            <td>useDynamicRowHeight</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Allows rows to have dynamic heights based on content.</td>
+          </tr>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows loading state when true.</td>
+          </tr>
+          <tr>
+            <td>getSelectionTooltip</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Returns tooltip text or object for selection checkboxes. Function
+              receives rowData as an argument.
+            </td>
+          </tr>
+          <tr>
+            <td>onRowClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback for row selection. Receives event containing rowData.
+            </td>
+          </tr>
+          <tr>
+            <td>onSelectAll</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback for header checkbox click.</td>
+          </tr>
+          <tr>
+            <td>sort</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function to sort the data. Receives sortBy and sortDirection
+              arguments.
+            </td>
+          </tr>
+          <tr>
+            <td>sortBy</td>
+            <td>String</td>
+            <td>-</td>
+            <td>The dataKey of the column being sorted.</td>
+          </tr>
+          <tr>
+            <td>sortDirection</td>
+            <td>String</td>
+            <td>"DESC"</td>
+            <td>Direction of sort: "ASC" or "DESC".</td>
+          </tr>
+          <tr>
+            <td>uniqueDataKey</td>
+            <td>String</td>
+            <td>"id"</td>
+            <td>The property used to uniquely identify rows.</td>
+          </tr>
+          <tr>
+            <td>noDataMessage</td>
+            <td>String/Element</td>
+            <td>"No Data Found"</td>
+            <td>Message shown when no data is available.</td>
+          </tr>
+          <tr>
+            <td>innerRef</td>
+            <td>Ref</td>
+            <td>-</td>
+            <td>Ref to access the Table component's methods.</td>
+          </tr>
+          <tr>
+            <td>recomputeRowHeights</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Method to recalculate row heights when using dynamic row heights.
+            </td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Sets the table to an invalid state.</td>
+          </tr>
+          <tr>
+            <td>scrollToIndex</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Jumps to a particular row (0-indexed).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Column Configuration</h2>
+      <p>
+        Each column object in the columns array can have the following
+        properties:
+      </p>
+      <pre>
+{
+  dataKey: "name",         // Required. Property from data object to display
+  label: "Name",           // Column header text
+  width: 0,                // Base width (0 means use flexGrow)
+  flexGrow: 3,             // Relative growth factor for the column
+  sortable: true,          // Whether column is sortable
+  sortDisabled: false,     // Temporarily disable sorting
+  sortDisabledTooltip: "", // Tooltip when sorting is disabled
+  secondaryLabel: "",      // Additional label shown below the main label
+  headerAction: () => {},  // Element to show in header (like an info icon)
+  cellRenderer: (data) => {} // Custom cell rendering function
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Table</h3>
+        <div class="table-container">
+          <table class="table-demo">
+            <thead>
+              <tr>
+                <th class="selection-column">
+                  <div class="checkbox"></div>
+                </th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="selection-column">
+                  <div class="checkbox checked"></div>
+                </td>
+                <td>1</td>
+                <td>Alba Eaton</td>
+                <td>27</td>
+                <td>female</td>
+                <td>albaeaton@example.com</td>
+              </tr>
+              <tr>
+                <td class="selection-column">
+                  <div class="checkbox"></div>
+                </td>
+                <td>2</td>
+                <td>Inez Gallegos</td>
+                <td>32</td>
+                <td>female</td>
+                <td>inezgallegos@example.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre>
+const columns = [
+  { dataKey: "id" },
+  {
+    dataKey: "name",
+    label: "Name",
+    flexGrow: 3,
+    sortable: true,
+  },
+  { dataKey: "age", label: "Age", flexGrow: 1 },
+  { dataKey: "gender", label: "Gender", flexGrow: 2 },
+  { dataKey: "email", label: "Email", flexGrow: 4 },
+];
+
+const data = [
+  {
+    id: "1",
+    name: "Alba Eaton",
+    age: 27,
+    gender: "female",
+    email: "albaeaton@example.com",
+  },
+  {
+    id: "2",
+    name: "Inez Gallegos",
+    age: 32,
+    gender: "female",
+    email: "inezgallegos@example.com",
+  },
+];
+
+&lt;Table
+  columns={columns}
+  dataList={data}
+  selectedRows={["1"]}
+  multiSelect={true}
+  onRowClick={this.onRowClick}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Table with Custom Cell Rendering</h3>
+        <div class="table-container">
+          <table class="table-demo">
+            <thead>
+              <tr>
+                <th class="selection-column">
+                  <div class="checkbox"></div>
+                </th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>
+                  Address
+                  <span class="secondary-label">Permanent Postal Address</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="selection-column">
+                  <div class="checkbox"></div>
+                </td>
+                <td>Alba Eaton</td>
+                <td>
+                  <select class="custom-select">
+                    <option value="male">male</option>
+                    <option value="female" selected>female</option>
+                  </select>
+                </td>
+                <td>
+                  <div
+                    class="tooltip truncated"
+                    title="123 Main St, Suite 101, San Francisco, CA 94103"
+                  >
+                    123 Main St, Suite 101, San Francisco, CA 94103
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="selection-column">
+                  <div class="checkbox"></div>
+                </td>
+                <td>Inez Gallegos</td>
+                <td>
+                  <select class="custom-select">
+                    <option value="male">male</option>
+                    <option value="female" selected>female</option>
+                  </select>
+                </td>
+                <td>
+                  <div
+                    class="tooltip truncated"
+                    title="456 Oak Ave, Apt 78, Los Angeles, CA 90001"
+                  >
+                    456 Oak Ave, Apt 78, Los Angeles, CA 90001
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pre>
+const columns = [
+  // ...other columns
+  {
+    dataKey: "gender",
+    label: "Gender",
+    flexGrow: 3,
+    cellRenderer: (data) => (
+      &lt;div onClick={(e) => e.stopPropagation()}&gt;
+        &lt;Select
+          menuPosition="fixed"
+          type="select"
+          options={[
+            { value: "male", label: "male" },
+            { value: "female", label: "female" },
+          ]}
+          value={{ value: data.rowData.gender, label: data.rowData.gender }}
+        /&gt;
+      &lt;/div&gt;
+    ),
+  },
+  {
+    dataKey: "address",
+    label: "Address",
+    flexGrow: 4,
+    secondaryLabel: "Permanent Postal Address",
+    cellRenderer: (data) => (
+      &lt;Tooltip text={data.cellData}&gt;
+        &lt;div className="oui-text-truncate"&gt;{data.cellData}&lt;/div&gt;
+      &lt;/Tooltip&gt;
+    ),
+  },
+];</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Row Selection Handling</h3>
+        <pre>
+onRowClick = (event) => {
+  let rowId = event.rowData.id;
+  let selectedRows = [];
+  const rowIndex = this.state.selectedRows.indexOf(rowId);
+
+  if (rowIndex === -1) {
+    // Select the row
+    selectedRows = this.state.multiSelect
+      ? [...this.state.selectedRows, rowId]
+      : [rowId];
+  } else {
+    // Deselect the row
+    selectedRows = [...this.state.selectedRows];
+    selectedRows.splice(rowIndex, 1);
+  }
+
+  this.setState({
+    selectedRows: selectedRows,
+    selectAll: selectedRows.length === data.length,
+  });
+};
+
+onSelectAll = () => {
+  if (this.state.selectAll) {
+    // Deselect all (except disabled rows)
+    let selectedDisabledRows = intersection(
+      this.state.selectedRows,
+      disabledRows
+    );
+
+    this.setState({
+      selectedRows: selectedDisabledRows,
+      selectAll: false,
+    });
+  } else {
+    // Select all (except disabled rows that should remain unselected)
+    let selectedDisabledRows = intersection(
+      this.state.selectedRows,
+      disabledRows
+    );
+    let unSelectedDisabledRows = difference(disabledRows, selectedDisabledRows);
+    let rows = [];
+    data.forEach((d) => rows.push(d.id));
+    rows = difference(rows, unSelectedDisabledRows);
+
+    this.setState({
+      selectedRows: rows,
+      selectAll: true,
+    });
+  }
+};</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          Use <code>headerAction</code> to add tooltips or other elements to
+          column headers
+        </li>
+        <li>
+          For infinite loading tables, the row height is fixed by default unless
+          <code>useDynamicRowHeight</code> is set to true
+        </li>
+        <li>
+          To implement custom cell content, use the
+          <code>cellRenderer</code> property in column configuration
+        </li>
+        <li>
+          When using dynamic row heights, you may need to call
+          <code>recomputeRowHeights</code> when content changes
+        </li>
+        <li>
+          The <code>onRowClick</code> callback is responsible for managing the
+          selection state of rows
+        </li>
+        <li>
+          The table component uses virtualization for efficient rendering of
+          large datasets
+        </li>
+        <li>
+          The <code>cellRenderer</code> function receives a data object
+          containing rowData, cellData, columnData, and rowIndex properties
+        </li>
+        <li>
+          When implementing a custom cellRenderer, use
+          <code>e.stopPropagation()</code> if you have interactive elements
+          inside cells to prevent triggering row selection
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

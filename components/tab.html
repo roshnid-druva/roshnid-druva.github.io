@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Tab Demo Styles */
+      .tab-demo {
+        margin-bottom: 20px;
+      }
+      .tab-header {
+        display: flex;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .tab-header-item {
+        padding: 10px 16px;
+        margin-right: 2px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        user-select: none;
+      }
+      .tab-header-item:hover {
+        border-bottom-color: #ddd;
+      }
+      .tab-header-item.active {
+        border-bottom-color: #007bff;
+        font-weight: 500;
+      }
+      .tab-content {
+        padding: 20px 0;
+      }
+      .tab-header-item.invalid {
+        position: relative;
+      }
+      .tab-header-item.invalid::after {
+        content: "*";
+        color: #dc3545;
+        position: absolute;
+        top: 5px;
+        right: 8px;
+      }
+
+      /* Widget Style */
+      .tab-header.widget {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+      }
+      .tab-header.widget .tab-header-item {
+        padding: 8px 16px;
+        border-bottom: none;
+      }
+      .tab-header.widget .tab-header-item.active {
+        background-color: white;
+        border-radius: 4px 4px 0 0;
+        border-top: 2px solid #007bff;
+      }
+      .tab-content.widget {
+        border: 1px solid #dee2e6;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        padding: 16px;
+      }
+
+      /* Classic Style */
+      .tab-header.classic {
+        border-bottom: none;
+      }
+      .tab-header.classic .tab-header-item {
+        padding: 8px 16px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        margin-right: 4px;
+      }
+      .tab-header.classic .tab-header-item.active {
+        background-color: white;
+        border-bottom-color: white;
+      }
+      .tab-content.classic {
+        border: 1px solid #dee2e6;
+        border-radius: 0 0 4px 4px;
+        padding: 16px;
+      }
+
+      /* Tabbar Style */
+      .tabbar {
+        display: flex;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .tabbar-item {
+        padding: 10px 16px;
+        margin-right: 2px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        user-select: none;
+      }
+      .tabbar-item:hover {
+        border-bottom-color: #ddd;
+      }
+      .tabbar-item.active {
+        border-bottom-color: #007bff;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Tab Component</h1>
+      <p>
+        A component for organizing content into tabs that can be selected to
+        display corresponding content.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Tab from "orion/lib/tab";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>List of tab detail objects. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>activeTabId</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Tab ID for the active tab.</td>
+          </tr>
+          <tr>
+            <td>tabbar</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              If true, only tab triggers will be rendered without the content
+              components.
+            </td>
+          </tr>
+          <tr>
+            <td>onTabClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when a new tab is clicked.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom class for the component.</td>
+          </tr>
+          <tr>
+            <td>variant</td>
+            <td>String</td>
+            <td>"default"</td>
+            <td>Style variant: "default", "classic", or "widget".</td>
+          </tr>
+          <tr>
+            <td>borderBottom</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Adds border bottom to the tabbar header.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-tabs"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Tab Item Object</h2>
+      <p>
+        Each object in the <code>items</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  id: string,          // Unique identifier for the tab
+  title: string,       // Title of the tab
+  isInvalid: boolean,  // Flag to indicate invalid content
+  component: function, // Function that returns content to render
+  renderComponent: function // Function to create custom tab links
+}</pre
+      >
+      <ul>
+        <li><strong>id</strong>: Unique identifier for the tab</li>
+        <li><strong>title</strong>: Title displayed in the tab</li>
+        <li>
+          <strong>isInvalid</strong>: Boolean flag indicating the tab contains
+          invalid form fields
+        </li>
+        <li>
+          <strong>component</strong>: Callback function that returns the
+          component to be rendered in the tab container
+        </li>
+        <li>
+          <strong>renderComponent</strong>: Use this to create links using
+          custom components or router libraries like react-router
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Tab</h3>
+        <div class="tab-demo">
+          <div class="tab-header">
+            <div class="tab-header-item active">Tab 1</div>
+            <div class="tab-header-item invalid">Tab 2</div>
+            <div class="tab-header-item">Tab 3</div>
+          </div>
+          <div class="tab-content">
+            <div>
+              <h6>Tab Content 1 with some lorem ipsum text</h6>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                auctor, nisl ut commodo suscipit, massa justo lobortis tortor,
+                et varius nisl leo at nunc.
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+this.state = {
+  activeTabId: "tab_id_1"
+}
+
+onTabClick = (newTab) => {
+  this.setState({
+    activeTabId: newTab.id
+  })
+}
+
+const tabItems = [
+  {
+    title: "Tab 1",
+    id: "tab_id_1",
+    component: () => (
+      &lt;div&gt;
+        &lt;h6&gt;Tab Content 1 with some lorem ipsum text&lt;/h6&gt;
+        &lt;div&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit...&lt;/div&gt;
+      &lt;/div&gt;
+    )
+  },
+  {
+    title: "Tab 2",
+    id: "tab_id_2",
+    isInvalid: true,
+    component: () => (
+      &lt;div&gt;
+        &lt;h6&gt;Tab Content 2 with some lorem ipsum text&lt;/h6&gt;
+        &lt;div&gt;Pellentesque lobortis at justo at consequat...&lt;/div&gt;
+        &lt;br /&gt;
+        This tab contains some invalid content.
+      &lt;/div&gt;
+    )
+  },
+  {
+    title: "Tab 3",
+    id: "tab_id_3",
+    component: () => (
+      &lt;div&gt;
+        &lt;h6&gt;Tab Content 3 with some lorem ipsum text&lt;/h6&gt;
+        &lt;div&gt;Duis tortor odio, auctor vitae rhoncus id...&lt;/div&gt;
+      &lt;/div&gt;
+    )
+  }
+]
+
+&lt;Tab
+  items={tabItems}
+  variant="default"
+  activeTabId={this.state.activeTabId}
+  onTabClick={this.onTabClick}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tabbar Example</h3>
+        <p>
+          The Tabbar is a variation of the Tab component that only provides the
+          tab navigation without rendering the content components.
+        </p>
+        <div class="tab-demo">
+          <div class="tabbar">
+            <div class="tabbar-item active">Tab 1</div>
+            <div class="tabbar-item">Tab 2</div>
+            <div class="tabbar-item">Tab 3</div>
+          </div>
+        </div>
+        <pre>
+this.state = {
+  activeTabBarId: "tab_id_1",
+};
+
+const tabBarItems = [
+  { title: "Tab 1", id: "tab_id_1" },
+  { title: "Tab 2", id: "tab_id_2" },
+  { title: "Tab 3", id: "tab_id_3" },
+];
+
+onTabBarClick = (newTab) => {
+  this.setState({
+    activeTabBarId: newTab.id,
+  });
+};
+
+&lt;Tab
+  tabbar
+  items={tabBarItems}
+  activeTabId={this.state.activeTabBarId}
+  onTabClick={this.onTabBarClick}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tab with Different Variants</h3>
+        <p>The Tab component supports three different style variants:</p>
+
+        <h4>Default Variant</h4>
+        <div class="tab-demo">
+          <div class="tab-header">
+            <div class="tab-header-item active">Tab 1</div>
+            <div class="tab-header-item">Tab 2</div>
+            <div class="tab-header-item">Tab 3</div>
+          </div>
+          <div class="tab-content">
+            <div>
+              <h6>Tab Content 1 with some lorem ipsum text</h6>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4>Classic Variant</h4>
+        <div class="tab-demo">
+          <div class="tab-header classic">
+            <div class="tab-header-item active">Tab 1</div>
+            <div class="tab-header-item">Tab 2</div>
+            <div class="tab-header-item">Tab 3</div>
+          </div>
+          <div class="tab-content classic">
+            <div>
+              <h6>Tab Content 1 with some lorem ipsum text</h6>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4>Widget Variant</h4>
+        <div class="tab-demo">
+          <div class="tab-header widget">
+            <div class="tab-header-item active">Tab 1</div>
+            <div class="tab-header-item">Tab 2</div>
+            <div class="tab-header-item">Tab 3</div>
+          </div>
+          <div class="tab-content widget">
+            <div>
+              <h6>Tab Content 1 with some lorem ipsum text</h6>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <pre>
+// Default variant
+&lt;Tab
+  items={tabItems}
+  variant="default"
+  activeTabId={this.state.activeTabId}
+  onTabClick={this.onTabClick}
+/&gt;
+
+// Classic variant
+&lt;Tab
+  items={tabItems}
+  variant="classic"
+  activeTabId={this.state.activeTabId}
+  onTabClick={this.onTabClick}
+/&gt;
+
+// Widget variant
+&lt;Tab
+  items={tabItems}
+  variant="widget"
+  activeTabId={this.state.activeTabId}
+  onTabClick={this.onTabClick}
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The Tab component does not provide any styling (not even padding) to
+          the Tab content area, except for the "classic" variant.
+        </li>
+        <li>
+          When using <code>renderComponent</code>, make sure to use the provided
+          <code>otherClasses</code> and <code>activeClass</code> parameters to
+          maintain proper styling.
+        </li>
+        <li>
+          The <code>isInvalid</code> property can be used to indicate that a tab
+          contains invalid form fields.
+        </li>
+        <li>
+          The Tab component requires controlled state management. You must
+          provide the <code>activeTabId</code> and handle tab switching through
+          the <code>onTabClick</code> callback.
+        </li>
+        <li>
+          Tab switching is the responsibility of the parent component. The Tab
+          component does not handle the tab switching internally.
+        </li>
+        <li>
+          When <code>tabbar</code> is true, only the tab navigation is rendered,
+          and content components are ignored.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
