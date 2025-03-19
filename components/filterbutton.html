@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FilterButton Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .filter-button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+      .filter-button:hover {
+        background-color: #e9ecef;
+      }
+      .filter-icon {
+        margin-right: 6px;
+      }
+      .filter-label {
+        margin-right: 8px;
+      }
+      .filter-badge {
+        background-color: #3498db;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+      .filter-tooltip {
+        max-width: 300px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .filter-tooltip-heading {
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .filter-item {
+        display: flex;
+        margin-bottom: 5px;
+      }
+      .filter-item-label {
+        font-weight: 500;
+        width: 100px;
+        flex-shrink: 0;
+      }
+      .filter-item-value {
+        flex: 1;
+      }
+      .filter-popover {
+        max-width: 400px;
+        padding: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .filter-popover-header {
+        font-weight: 500;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .filter-popover-body {
+        margin-bottom: 15px;
+      }
+      .filter-popover-footer {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+      }
+      .filter-form-group {
+        margin-bottom: 15px;
+      }
+      .filter-form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+      .filter-form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+      .filter-form-select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+      .btn-primary {
+        color: #fff;
+        background-color: #3498db;
+        border-color: #3498db;
+      }
+      .btn-secondary {
+        color: #333;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>FilterButton Component</h1>
+      <p>
+        A button component for implementing filters with a popover containing
+        form elements.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import FilterButton from "orion/lib/filterButton"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>filters</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of filter objects that define the filters.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>renderFilters</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Render prop function to generate filter form content. Receives
+              FormikProps as argument. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>appliedFilters</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>Array of objects with initial filter values.</td>
+          </tr>
+          <tr>
+            <td>filterTitle</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Title of the filter popover.</td>
+          </tr>
+          <tr>
+            <td>popoverPlacement</td>
+            <td>String</td>
+            <td>"bottom-end"</td>
+            <td>Placement of the popover in filter button.</td>
+          </tr>
+          <tr>
+            <td>popoverSize</td>
+            <td>String</td>
+            <td>"sm"</td>
+            <td>Size of popover: "xs", "sm", "md", or "lg".</td>
+          </tr>
+          <tr>
+            <td>tooltipGroups</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Groups for showing multiple fields under a single title in the
+              tooltip.
+            </td>
+          </tr>
+          <tr>
+            <td>validationSchema</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function that returns Yup validation schema for form validation.
+            </td>
+          </tr>
+          <tr>
+            <td>onSubmit</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback function when filters are applied, returns an object with
+              filter values.
+            </td>
+          </tr>
+          <tr>
+            <td>onReset</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback function when filters are reset. Receives event as
+              argument.
+            </td>
+          </tr>
+          <tr>
+            <td>shouldDisableApply</td>
+            <td>Function</td>
+            <td>() => false</td>
+            <td>
+              Function to determine if the Apply button should be disabled.
+              Receives formikProps, initialValues, and lastAppliedValues.
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom class for the Filter Button.</td>
+          </tr>
+          <tr>
+            <td>popoverClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom class for the popover.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-filter-button"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+          <tr>
+            <td>onOpen</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when filters popover opens.</td>
+          </tr>
+          <tr>
+            <td>onClose</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when filters popover closes.</td>
+          </tr>
+          <tr>
+            <td>hideFooter</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>When true, hides the footer buttons of the filter.</td>
+          </tr>
+          <tr>
+            <td>buttonRef</td>
+            <td>React.CreateRef()</td>
+            <td>-</td>
+            <td>Ref for the filter button component.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Filter Object Structure</h2>
+      <p>
+        Each filter in the <code>filters</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  fieldName: String, // Required - Field name of the filter
+  title: String,     // Required - Filter title to show in popover and tooltip
+  value: Any,        // Optional - Default value of the filter
+  valueRenderer: Function // Optional - Custom value renderer function
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Applied Filter Object Structure</h2>
+      <p>
+        Each filter in the <code>appliedFilters</code> array should have the
+        following structure:
+      </p>
+      <pre>
+{
+  fieldName: String, // Required - Field name of the filter
+  value: Any         // Required - Initial filter value
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Tooltip Groups Structure</h2>
+      <p>
+        Each group in the <code>tooltipGroups</code> array should have the
+        following structure:
+      </p>
+      <pre>
+{
+  groupName: String,    // Name of the group
+  fields: [String],     // Array of field names to show under this group
+  groupRenderer: Function // Optional - Custom renderer for the group values
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Filter Button</h3>
+        <div class="filter-button">
+          <span class="filter-icon">🔍</span>
+          <span class="filter-label">Filter</span>
+          <span class="filter-badge">0</span>
+        </div>
+        <pre>
+const filters = [
+  {
+    title: "Name",
+    fieldName: "name",
+  },
+  {
+    title: "Theme",
+    fieldName: "theme",
+  },
+  {
+    title: "Going With",
+    fieldName: "with",
+  },
+];
+
+const renderFilters = (formikProps) => {
+  return (
+    &lt;React.Fragment&gt;
+      &lt;FormGroup&gt;
+        &lt;Label text="Name" /&gt;
+        &lt;Input
+          type="text"
+          name="name"
+          placeholder="Enter Name here"
+          validationProps={formikProps}
+          value={formikProps.values.name}
+        /&gt;
+      &lt;/FormGroup&gt;
+      &lt;FormGroup&gt;
+        &lt;Label text="Travel Theme" /&gt;
+        &lt;Select
+          name="theme"
+          type="select"
+          isMulti
+          options={[
+            { value: "luxury", label: "Luxury" },
+            { value: "adventure", label: "Adventure" },
+            { value: "leisure", label: "Leisure" },
+          ]}
+          placeholder="Please Select Theme"
+          value={formikProps.values.theme}
+          validationProps={formikProps}
+        /&gt;
+      &lt;/FormGroup&gt;
+      &lt;FormGroup&gt;
+        &lt;Label text="Going With" /&gt;
+        &lt;Select
+          name="with"
+          type="select"
+          options={[
+            { value: "friends", label: "Friends" },
+            { value: "family", label: "Family" },
+            { value: "colleague", label: "Colleague" },
+          ]}
+          placeholder="Going with?"
+          value={formikProps.values.with}
+          validationProps={formikProps}
+        /&gt;
+      &lt;/FormGroup&gt;
+    &lt;/React.Fragment&gt;
+  );
+};
+
+&lt;FilterButton
+  filters={filters}
+  renderFilters={renderFilters}
+  onSubmit={(values) => console.log(values)}
+/&gt;</pre
+        >
+        <div class="filter-popover" style="display: none">
+          <div class="filter-popover-header">Filters</div>
+          <div class="filter-popover-body">
+            <div class="filter-form-group">
+              <label class="filter-form-label">Name</label>
+              <input
+                type="text"
+                class="filter-form-input"
+                placeholder="Enter Name here"
+              />
+            </div>
+            <div class="filter-form-group">
+              <label class="filter-form-label">Travel Theme</label>
+              <select class="filter-form-select" multiple>
+                <option value="luxury">Luxury</option>
+                <option value="adventure">Adventure</option>
+                <option value="leisure">Leisure</option>
+              </select>
+            </div>
+            <div class="filter-form-group">
+              <label class="filter-form-label">Going With</label>
+              <select class="filter-form-select">
+                <option value="">Going with?</option>
+                <option value="friends">Friends</option>
+                <option value="family">Family</option>
+                <option value="colleague">Colleague</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-popover-footer">
+            <button class="btn btn-secondary">Reset</button>
+            <button class="btn btn-primary">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example">
+        <h3>Filter Button with Default Values</h3>
+        <div class="filter-button">
+          <span class="filter-icon">🔍</span>
+          <span class="filter-label">Filter</span>
+          <span class="filter-badge">2</span>
+        </div>
+        <div class="filter-tooltip">
+          <div class="filter-tooltip-heading">Applied Filters</div>
+          <div class="filter-item">
+            <div class="filter-item-label">Name:</div>
+            <div class="filter-item-value">John Doe</div>
+          </div>
+          <div class="filter-item">
+            <div class="filter-item-label">Theme:</div>
+            <div class="filter-item-value">Luxury</div>
+          </div>
+        </div>
+        <pre>
+const filters = [
+  {
+    title: "Name",
+    fieldName: "name",
+    value: "John Doe",
+  },
+  {
+    title: "Theme",
+    fieldName: "theme",
+    value: [{ value: "luxury", label: "Luxury" }],
+  },
+];
+
+&lt;FilterButton
+  filters={filters}
+  renderFilters={renderFilters}
+  onSubmit={(values) => console.log(values)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Filter Button with Applied Filters</h3>
+        <div class="filter-button">
+          <span class="filter-icon">🔍</span>
+          <span class="filter-label">Filter</span>
+          <span class="filter-badge">2</span>
+        </div>
+        <pre>
+const filters = [
+  {
+    title: "Name",
+    fieldName: "name",
+  },
+  {
+    title: "Theme",
+    fieldName: "theme",
+  },
+];
+
+const appliedFilters = [
+  {
+    fieldName: "name",
+    value: "John Doe",
+  },
+  {
+    fieldName: "theme",
+    value: [{ value: "luxury", label: "Luxury" }],
+  },
+];
+
+&lt;FilterButton
+  filters={filters}
+  appliedFilters={appliedFilters}
+  renderFilters={renderFilters}
+  onSubmit={(values) => console.log(values)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Filter Button with Validation</h3>
+        <pre>
+import * as Yup from "yup";
+
+const validationSchema = () => {
+  return Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    theme: Yup.array().min(1, "Select at least one theme"),
+  });
+};
+
+&lt;FilterButton
+  filters={filters}
+  renderFilters={renderFilters}
+  validationSchema={validationSchema}
+  onSubmit={(values) => console.log(values)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Filter Button with Tooltip Groups</h3>
+        <div class="filter-button">
+          <span class="filter-icon">🔍</span>
+          <span class="filter-label">Filter</span>
+          <span class="filter-badge">1</span>
+        </div>
+        <div class="filter-tooltip">
+          <div class="filter-tooltip-heading">Applied Filters</div>
+          <div class="filter-item">
+            <div class="filter-item-label">Date Range:</div>
+            <div class="filter-item-value">2023-01-01 - 2023-01-31</div>
+          </div>
+        </div>
+        <pre>
+const tooltipGroups = [
+  {
+    groupName: "Date Range",
+    fields: ["fromDate", "toDate"],
+    groupRenderer: (fields) => {
+      const { fromDate, toDate } = fields;
+      return `${fromDate.value} - ${toDate.value}`;
+    },
+  },
+];
+
+&lt;FilterButton
+  filters={filters}
+  renderFilters={renderFilters}
+  tooltipGroups={tooltipGroups}
+  onSubmit={(values) => console.log(values)}
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior</h2>
+      <ul>
+        <li>
+          Filter values in <code>filters</code> prop act as default values. On
+          Reset, filters will revert to these values.
+        </li>
+        <li>
+          <code>appliedFilters</code> is optional and controls only applied
+          filters on first load.
+        </li>
+        <li>Reset will not close the filter popover.</li>
+        <li>
+          Reset will only clear filter values. To save filter state, the user
+          needs to click the Apply button.
+        </li>
+        <li>
+          <code>onSubmit</code> callback returns an object with fieldName as key
+          and filter value as value.
+        </li>
+        <li>
+          If a filter is not applied, its value will be an empty string ("").
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
