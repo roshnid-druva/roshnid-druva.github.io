@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wizard Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .wizard-demo {
+        position: relative;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+      }
+      .wizard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .wizard-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .wizard-close {
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        padding: 0 5px;
+      }
+      .wizard-steps {
+        display: flex;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: #fff;
+      }
+      .wizard-step {
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+      }
+      .wizard-step-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        color: #666;
+        font-size: 12px;
+        font-weight: 600;
+        margin-right: 8px;
+      }
+      .wizard-step-active .wizard-step-number {
+        background-color: #2196f3;
+        color: white;
+      }
+      .wizard-step-completed .wizard-step-number {
+        background-color: #4caf50;
+        color: white;
+      }
+      .wizard-step-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .wizard-step-active .wizard-step-title {
+        color: #2196f3;
+        font-weight: 600;
+      }
+      .wizard-body {
+        padding: 20px;
+        min-height: 200px;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+      .wizard-alert {
+        margin-bottom: 20px;
+        padding: 12px 16px;
+        border-radius: 4px;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+      .wizard-alert-closable {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .wizard-alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+      .wizard-alert-warning {
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+        color: #856404;
+      }
+      .wizard-alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+      }
+      .wizard-content {
+        font-size: 14px;
+      }
+      .wizard-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-top: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+      }
+      .wizard-buttons {
+        display: flex;
+        gap: 10px;
+      }
+      .wizard-button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: #f8f9fa;
+      }
+      .wizard-button-primary {
+        background-color: #2196f3;
+        color: white;
+        border-color: #2196f3;
+      }
+      .wizard-button-disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .form-field {
+        margin-bottom: 16px;
+      }
+      .form-label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+      }
+      .form-input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .form-required {
+        color: #dc3545;
+        margin-left: 3px;
+      }
+      .form-help {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Wizard Component</h1>
+      <p>
+        A step-by-step interface component for guiding users through complex
+        processes.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Wizard from "orion/lib/wizard";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of step items for the wizard. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>currentStepIndex</td>
+            <td>Number</td>
+            <td>0</td>
+            <td>
+              Index of the current active step. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>toggle</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function to toggle wizard visibility. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>header</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Header text for the wizard. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>isOpen</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Controls whether the wizard is displayed.</td>
+          </tr>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>"xxl"</td>
+            <td>Size of the wizard modal: "sm", "md", "lg", "xl", or "xxl".</td>
+          </tr>
+          <tr>
+            <td>closeOnEscape</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to close the wizard when the escape key is pressed.</td>
+          </tr>
+          <tr>
+            <td>onPrevClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback for when the previous button is clicked.</td>
+          </tr>
+          <tr>
+            <td>onNextClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback for when the next button is clicked.</td>
+          </tr>
+          <tr>
+            <td>onFinishClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback for when the finish button is clicked.</td>
+          </tr>
+          <tr>
+            <td>onOpened</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when the wizard is fully opened.</td>
+          </tr>
+          <tr>
+            <td>onClosed</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when the wizard is fully closed.</td>
+          </tr>
+          <tr>
+            <td>docUrl</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              URL for help documentation (displays an icon in the header).
+            </td>
+          </tr>
+          <tr>
+            <td>docUrlTooltipText</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Tooltip text for the documentation link icon.</td>
+          </tr>
+          <tr>
+            <td>alert</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Wizard-level alert/notification configuration.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the wizard container.</td>
+          </tr>
+          <tr>
+            <td>disableFinish</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the finish button.</td>
+          </tr>
+          <tr>
+            <td>disableNext</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the next button.</td>
+          </tr>
+          <tr>
+            <td>disablePrev</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the previous button.</td>
+          </tr>
+          <tr>
+            <td>bodyClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the wizard modal body.</td>
+          </tr>
+          <tr>
+            <td>bodyHeight</td>
+            <td>String/Number</td>
+            <td>-</td>
+            <td>
+              Height of the wizard body in pixels (constrained by viewport
+              height).
+            </td>
+          </tr>
+          <tr>
+            <td>wizardBodyClassName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the steps container.</td>
+          </tr>
+          <tr>
+            <td>prevLabel</td>
+            <td>String</td>
+            <td>"Previous"</td>
+            <td>Custom text for the previous button.</td>
+          </tr>
+          <tr>
+            <td>nextLabel</td>
+            <td>String</td>
+            <td>"Next"</td>
+            <td>Custom text for the next button.</td>
+          </tr>
+          <tr>
+            <td>finishLabel</td>
+            <td>String</td>
+            <td>"Finish"</td>
+            <td>Custom text for the finish button.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-wizard"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Item Object Structure</h2>
+      <p>
+        Each item in the <code>items</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  title: String,       // Title displayed in the wizard steps
+  component: Function  // Function that returns the component to render for this step
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Alert Object Structure</h2>
+      <p>
+        The <code>alert</code> prop accepts an object with the following
+        structure:
+      </p>
+      <pre>
+{
+  show: Boolean,                    // Whether to display the alert
+  closable: Boolean,                // Whether the alert can be closed
+  onClose: Function,                // Callback when alert is closed
+  message: String | React.Element,  // Alert content
+  type: String                      // Alert type: "success", "warning", "danger", or "info"
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Wizard</h3>
+        <div class="wizard-demo">
+          <div class="wizard-header">
+            <div class="wizard-title">Configuration Wizard</div>
+            <div class="wizard-close">×</div>
+          </div>
+          <div class="wizard-steps">
+            <div class="wizard-step wizard-step-completed">
+              <div class="wizard-step-number">✓</div>
+              <div class="wizard-step-title">Plan Details</div>
+            </div>
+            <div class="wizard-step wizard-step-active">
+              <div class="wizard-step-number">2</div>
+              <div class="wizard-step-title">VM Selection</div>
+            </div>
+            <div class="wizard-step">
+              <div class="wizard-step-number">3</div>
+              <div class="wizard-step-title">Failover Settings</div>
+            </div>
+          </div>
+          <div class="wizard-body">
+            <div class="wizard-content">
+              <div class="form-field">
+                <label class="form-label"
+                  >Select Virtual Machines
+                  <span class="form-required">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Search VMs"
+                />
+                <div class="form-help">
+                  Select one or more virtual machines to include in this plan
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label">VM Group</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter a group name (optional)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="wizard-footer">
+            <div>
+              <button class="wizard-button">Previous</button>
+            </div>
+            <div class="wizard-buttons">
+              <button class="wizard-button">Cancel</button>
+              <button class="wizard-button wizard-button-primary">Next</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    currentStepIndex: 0,
+    isWizardOpen: false,
+    alert: {
+      show: false,
+      message: ""
+    }
+  };
+
+  this.items = [
+    {
+      title: "Plan Details",
+      component: () => &lt;PlanDetailsComponent /&gt;
+    },
+    {
+      title: "VM Selection",
+      component: () => &lt;VMSelectionComponent /&gt;
+    },
+    {
+      title: "Failover Settings",
+      component: () => &lt;FailoverSettingsComponent /&gt;
+    }
+  ];
+}
+
+toggleWizard = () => {
+  this.setState({
+    isWizardOpen: !this.state.isWizardOpen
+  });
+};
+
+handlePrevClick = () => {
+  this.setState({
+    currentStepIndex: this.state.currentStepIndex - 1
+  });
+};
+
+handleNextClick = () => {
+  this.setState({
+    currentStepIndex: this.state.currentStepIndex + 1
+  });
+};
+
+handleFinishClick = () => {
+  // Handle finish action
+  this.toggleWizard();
+};
+
+render() {
+  return (
+    &lt;&gt;
+      &lt;Button
+        label="Launch Wizard"
+        type="primary"
+        onClick={this.toggleWizard}
+      /&gt;
+      &lt;Wizard
+        isOpen={this.state.isWizardOpen}
+        toggle={this.toggleWizard}
+        header="Configuration Wizard"
+        items={this.items}
+        currentStepIndex={this.state.currentStepIndex}
+        onPrevClick={this.handlePrevClick}
+        onNextClick={this.handleNextClick}
+        onFinishClick={this.handleFinishClick}
+      /&gt;
+    &lt;/&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Wizard with Alert Message</h3>
+        <div class="wizard-demo">
+          <div class="wizard-header">
+            <div class="wizard-title">Configuration Wizard</div>
+            <div class="wizard-close">×</div>
+          </div>
+          <div class="wizard-steps">
+            <div class="wizard-step wizard-step-active">
+              <div class="wizard-step-number">1</div>
+              <div class="wizard-step-title">Plan Details</div>
+            </div>
+            <div class="wizard-step">
+              <div class="wizard-step-number">2</div>
+              <div class="wizard-step-title">VM Selection</div>
+            </div>
+            <div class="wizard-step">
+              <div class="wizard-step-number">3</div>
+              <div class="wizard-step-title">Failover Settings</div>
+            </div>
+          </div>
+          <div class="wizard-body">
+            <div class="wizard-alert wizard-alert-closable">
+              <div>
+                <ul style="margin: 0; padding-left: 20px">
+                  <li>Required fields are missing</li>
+                  <li>Invalid format detected</li>
+                </ul>
+              </div>
+              <div class="wizard-close">×</div>
+            </div>
+            <div class="wizard-content">
+              <div class="form-field">
+                <label class="form-label"
+                  >Plan Name <span class="form-required">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter plan name"
+                />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Description</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter description"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="wizard-footer">
+            <div>
+              <button class="wizard-button wizard-button-disabled" disabled>
+                Previous
+              </button>
+            </div>
+            <div class="wizard-buttons">
+              <button class="wizard-button">Cancel</button>
+              <button class="wizard-button wizard-button-primary">Next</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+handleNextClick = () => {
+  // Check for validation errors
+  const hasErrors = this.validateCurrentStep();
+
+  if (hasErrors) {
+    this.setState({
+      alert: {
+        show: true,
+        closable: true,
+        type: "danger",
+        message: (
+          &lt;ul className="oui-mb-0"&gt;
+            &lt;li&gt;Required fields are missing&lt;/li&gt;
+            &lt;li&gt;Invalid format detected&lt;/li&gt;
+          &lt;/ul&gt;
+        ),
+      },
+    });
+  } else {
+    this.setState({
+      currentStepIndex: this.state.currentStepIndex + 1,
+      alert: {
+        show: false,
+      },
+    });
+  }
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Full-Size Wizard with Documentation Link</h3>
+        <pre>
+&lt;Wizard
+  size="xxl"
+  isOpen={this.state.isWizardOpen}
+  toggle={this.toggleWizard}
+  header="Recovery Plan Configuration"
+  docUrl="https://docs.example.com/recovery-plans"
+  docUrlTooltipText="View documentation"
+  items={this.items}
+  currentStepIndex={this.state.currentStepIndex}
+  onPrevClick={this.handlePrevClick}
+  onNextClick={this.handleNextClick}
+  onFinishClick={this.handleFinishClick}
+  bodyHeight={500}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Button Labels</h3>
+        <pre>
+&lt;Wizard
+  isOpen={this.state.isWizardOpen}
+  toggle={this.toggleWizard}
+  header="Setup Wizard"
+  items={this.items}
+  currentStepIndex={this.state.currentStepIndex}
+  onPrevClick={this.handlePrevClick}
+  onNextClick={this.handleNextClick}
+  onFinishClick={this.handleFinishClick}
+  prevLabel="Back"
+  nextLabel="Continue"
+  finishLabel="Complete"
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The wizard uses a modal interface with navigation between steps.
+        </li>
+        <li>
+          The <code>currentStepIndex</code> controls which step is currently
+          displayed.
+        </li>
+        <li>
+          You must handle the step navigation logic in your component by
+          updating the <code>currentStepIndex</code> prop.
+        </li>
+        <li>The final step shows a "Finish" button instead of "Next".</li>
+        <li>
+          For smaller wizards (size "sm"), some steps might not be displayed in
+          the header.
+        </li>
+        <li>
+          The <code>bodyHeight</code> prop allows controlling the content area
+          height, but is constrained by the viewport height.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

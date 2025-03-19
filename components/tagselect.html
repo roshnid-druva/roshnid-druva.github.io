@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TagSelect Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* TagSelect Demo Styles */
+      .tagselect-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        min-height: 38px;
+        padding: 2px 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+        margin-bottom: 20px;
+      }
+      .tagselect-container.invalid {
+        border-color: #dc3545;
+      }
+      .tagselect-tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        padding: 2px 8px;
+        margin-right: 8px;
+        margin-bottom: 6px;
+        margin-top: 6px;
+        font-size: 14px;
+      }
+      .tagselect-key {
+        color: #666;
+        font-weight: 500;
+        margin-right: 4px;
+      }
+      .tagselect-key::after {
+        content: ":";
+        margin-left: 2px;
+      }
+      .tagselect-value {
+        font-weight: 400;
+      }
+      .tagselect-remove {
+        margin-left: 6px;
+        color: #999;
+        cursor: pointer;
+      }
+      .tagselect-input {
+        flex: 1;
+        border: none;
+        padding: 8px 4px;
+        min-width: 80px;
+        outline: none;
+      }
+      .tagselect-dropdown {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 4px;
+        position: relative;
+      }
+      .tagselect-dropdown-item {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      .tagselect-dropdown-item:hover {
+        background-color: #f8f9fa;
+      }
+      .tagselect-placeholder {
+        color: #6c757d;
+        padding: 8px 4px;
+      }
+      .tagselect-icon {
+        margin-right: 6px;
+        display: inline-flex;
+        vertical-align: middle;
+      }
+      .tagselect-custom {
+        padding: 8px 12px;
+        border-top: 1px solid #e9ecef;
+        color: #007bff;
+        font-style: italic;
+      }
+      .tagselect-step {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .tagselect-step-number {
+        background-color: #007bff;
+        color: white;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+      .tagselect-step-content {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>TagSelect Component</h1>
+      <p>A component for selecting key-value pair tags or simple value tags.</p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import TagSelect from "orion/lib/tagSelect";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of selected tags. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when tags change.</td>
+          </tr>
+          <tr>
+            <td>allowCustomKey</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Allows creating custom keys not in the list.</td>
+          </tr>
+          <tr>
+            <td>allowCustomValue</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Allows creating custom values not in the list.</td>
+          </tr>
+          <tr>
+            <td>hideDownArrow</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Hides the dropdown arrow in selects.</td>
+          </tr>
+          <tr>
+            <td>isClearable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Allows clearing all selected tags.</td>
+          </tr>
+          <tr>
+            <td>isDisabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the component.</td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Sets the component to invalid state.</td>
+          </tr>
+          <tr>
+            <td>keyOptions</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Static list of key options to select from.</td>
+          </tr>
+          <tr>
+            <td>loadKeyOptions</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function that returns a Promise with key options.</td>
+          </tr>
+          <tr>
+            <td>loadValueOptions</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function that returns a Promise with value options.</td>
+          </tr>
+          <tr>
+            <td>keyPlaceholder</td>
+            <td>String</td>
+            <td>"Select Key"</td>
+            <td>Placeholder text for key select.</td>
+          </tr>
+          <tr>
+            <td>valuePlaceholder</td>
+            <td>String</td>
+            <td>"Select Value"</td>
+            <td>Placeholder text for value select.</td>
+          </tr>
+          <tr>
+            <td>maxMenuHeight</td>
+            <td>Number</td>
+            <td>200</td>
+            <td>Max height of dropdown menu.</td>
+          </tr>
+          <tr>
+            <td>onKeySelect</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Called when a key is selected, should return Promise with values.
+            </td>
+          </tr>
+          <tr>
+            <td>onRemoveTag</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when a tag is removed.</td>
+          </tr>
+          <tr>
+            <td>onCreateTag</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Called when a new tag is created.</td>
+          </tr>
+          <tr>
+            <td>renderMenuItemKey</td>
+            <td>Function</td>
+            <td><code>item => item.label</code></td>
+            <td>Custom renderer for key menu items.</td>
+          </tr>
+          <tr>
+            <td>renderMenuItemValue</td>
+            <td>Function</td>
+            <td><code>item => item.label</code></td>
+            <td>Custom renderer for value menu items.</td>
+          </tr>
+          <tr>
+            <td>renderTagKey</td>
+            <td>Function</td>
+            <td><code>item => item.label</code></td>
+            <td>Custom renderer for key part of tag.</td>
+          </tr>
+          <tr>
+            <td>renderTagValue</td>
+            <td>Function</td>
+            <td><code>item => item.label</code></td>
+            <td>Custom renderer for value part of tag.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Tag Item Format</h2>
+      <pre>
+// Key-value pair tag
+{
+  key: {
+    label: String,       // Display text for key
+    value: String/Number, // Value of key
+    selectedItem: Object  // Original selected item (undefined for custom)
+  },
+  value: {
+    label: String,       // Display text for value
+    value: String/Number, // Value of value
+    selectedItem: Object  // Original selected item (undefined for custom)
+  }
+}
+
+// Simple value tag (no key)
+{
+  value: String          // Text to display
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage with Static Key-Value Options</h3>
+        <p>Select a key, then select a corresponding value to create a tag.</p>
+
+        <div class="tagselect-step">
+          <div class="tagselect-step-number">1</div>
+          <div class="tagselect-step-content">
+            <h4>Initial state</h4>
+            <div class="tagselect-container">
+              <div class="tagselect-placeholder">Select Key</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tagselect-step">
+          <div class="tagselect-step-number">2</div>
+          <div class="tagselect-step-content">
+            <h4>Select a key</h4>
+            <div class="tagselect-container">
+              <div class="tagselect-placeholder">Name</div>
+            </div>
+            <div class="tagselect-dropdown">
+              <div class="tagselect-dropdown-item">Name</div>
+              <div class="tagselect-dropdown-item">Date</div>
+              <div class="tagselect-dropdown-item">Type</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tagselect-step">
+          <div class="tagselect-step-number">3</div>
+          <div class="tagselect-step-content">
+            <h4>Select a value</h4>
+            <div class="tagselect-container">
+              <div class="tagselect-placeholder">Select Value</div>
+            </div>
+            <div class="tagselect-dropdown">
+              <div class="tagselect-dropdown-item">Phoenix QA EC2</div>
+              <div class="tagselect-dropdown-item">Build instance</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tagselect-step">
+          <div class="tagselect-step-number">4</div>
+          <div class="tagselect-step-content">
+            <h4>Result</h4>
+            <div class="tagselect-container">
+              <div class="tagselect-tag">
+                <span class="tagselect-key">Name</span>
+                <span class="tagselect-value">Phoenix QA EC2</span>
+                <span class="tagselect-remove">×</span>
+              </div>
+              <div class="tagselect-placeholder">Select Key</div>
+            </div>
+          </div>
+        </div>
+
+        <pre>
+const keyOptions = [
+  { label: "Name", value: "name" },
+  { label: "Date", value: "date" },
+  { label: "Type", value: "type" }
+];
+
+const valueOptionsMapping = {
+  name: [
+    { label: "Phoenix QA EC2", value: 100 },
+    { label: "Build instance", value: 101 }
+  ],
+  date: [
+    { label: "24/10/2020", value: "24/10/2020" },
+    { label: "27/10/2020", value: "27/10/2020" }
+  ],
+  type: [
+    { label: "Dynamo", value: "dynamo" },
+    { label: "EC2", value: "ec2" }
+  ]
+};
+
+constructor(props) {
+  super(props);
+  this.state = {
+    items: []
+  };
+}
+
+onKeySelect = (partialKey) => {
+  const { value } = partialKey;
+  return Promise.resolve(valueOptionsMapping[value] || []);
+}
+
+render() {
+  return (
+    &lt;TagSelect
+      keyOptions={keyOptions}
+      onKeySelect={this.onKeySelect}
+      value={this.state.items}
+      onChange={(items) => this.setState({ items })}
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Custom Keys and Values</h3>
+        <div class="tagselect-container">
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Custom Key</span>
+            <span class="tagselect-value">Custom Value</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-placeholder">Select Key</div>
+        </div>
+        <div class="tagselect-dropdown">
+          <div class="tagselect-dropdown-item">Name</div>
+          <div class="tagselect-dropdown-item">Date</div>
+          <div class="tagselect-dropdown-item">Type</div>
+          <div class="tagselect-custom">+ Create "Custom Key"</div>
+        </div>
+        <pre>
+&lt;TagSelect
+  allowCustomKey={true}
+  allowCustomValue={true}
+  keyOptions={keyOptions}
+  onKeySelect={this.onKeySelect}
+  value={this.state.items}
+  onChange={(items) => this.setState({ items })}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Asynchronous Loading</h3>
+        <div class="tagselect-container">
+          <div class="tagselect-placeholder">Search...</div>
+        </div>
+        <pre>
+loadKeyOptions = (inputValue) => {
+  // Filter or fetch keys based on input
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = keyOptions.filter((option) =>
+        option.label.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      resolve(filtered);
+    }, 300);
+  });
+};
+
+loadValueOptions = (inputValue, partialKey) => {
+  // Load values based on selected key
+  const { value } = partialKey;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const options = valueOptionsMapping[value] || [];
+      const filtered = options.filter((option) =>
+        option.label.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      resolve(filtered);
+    }, 300);
+  });
+};
+
+&lt;TagSelect
+  loadKeyOptions={this.loadKeyOptions}
+  loadValueOptions={this.loadValueOptions}
+  value={this.state.items}
+  onChange={(items) => this.setState({ items })}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Pre-selected Values</h3>
+        <div class="tagselect-container">
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Name</span>
+            <span class="tagselect-value">Phoenix QA EC2</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Date</span>
+            <span class="tagselect-value">24/10/2020</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-placeholder">Select Key</div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    items: [
+      {
+        key: { label: "Name", value: "name" },
+        value: { label: "Phoenix QA EC2", value: 100 }
+      },
+      {
+        key: { label: "Date", value: "date" },
+        value: { label: "24/10/2020", value: "24/10/2020" }
+      }
+    ]
+  };
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Mixed Tags (With and Without Keys)</h3>
+        <div class="tagselect-container">
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Name</span>
+            <span class="tagselect-value">Phoenix QA EC2</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-tag">
+            <span class="tagselect-value">Tag Without Key</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Date</span>
+            <span class="tagselect-value">24/10/2020</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-placeholder">Select Key</div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    items: [
+      {
+        key: { label: "Name", value: "name" },
+        value: { label: "Phoenix QA EC2", value: 100 }
+      },
+      {
+        value: "Tag Without Key"
+      },
+      {
+        key: { label: "Date", value: "date" },
+        value: { label: "24/10/2020", value: "24/10/2020" }
+      }
+    ]
+  };
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Rendering</h3>
+        <div class="tagselect-container">
+          <div class="tagselect-tag">
+            <span class="tagselect-key">Name</span>
+            <span class="tagselect-value">📌 Phoenix QA EC2</span>
+            <span class="tagselect-remove">×</span>
+          </div>
+          <div class="tagselect-placeholder">Select Key</div>
+        </div>
+        <div class="tagselect-dropdown">
+          <div class="tagselect-dropdown-item">
+            <span class="tagselect-icon">🔖</span>Name
+          </div>
+          <div class="tagselect-dropdown-item">
+            <span class="tagselect-icon">🔖</span>Date
+          </div>
+          <div class="tagselect-dropdown-item">
+            <span class="tagselect-icon">🔖</span>Type
+          </div>
+        </div>
+        <pre>
+renderMenuItemKey = (item) => (
+  &lt;div style={{ display: "flex", alignItems: "center" }}&gt;
+    &lt;span className="di di-tag" style={{ marginRight: "8px" }}&gt;&lt;/span&gt;
+    {item.label}
+  &lt;/div&gt;
+);
+
+renderTagValue = (item) => {
+  return `📌 ${item.label}`;
+};
+
+&lt;TagSelect
+  keyOptions={keyOptions}
+  onKeySelect={this.onKeySelect}
+  value={this.state.items}
+  onChange={(items) => this.setState({ items })}
+  renderMenuItemKey={this.renderMenuItemKey}
+  renderTagValue={this.renderTagValue}
+/&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The component supports both key-value pair tags and simple value tags
+        </li>
+        <li>
+          When <code>allowCustomKey</code> is true, users can type and create
+          keys not in the options list
+        </li>
+        <li>
+          When <code>allowCustomValue</code> is true, users can type and create
+          values not in the options list
+        </li>
+        <li>
+          For dependent dropdowns, use the <code>onKeySelect</code> function to
+          return values based on the selected key
+        </li>
+        <li>
+          Use the render functions to customize the appearance of menu items and
+          tags
+        </li>
+        <li>
+          The component follows a two-step process for creating key-value tags:
+          first select a key, then select a value
+        </li>
+        <li>
+          When a tag is selected, it becomes part of the
+          <code>value</code> array which is accessible via the
+          <code>onChange</code> callback
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

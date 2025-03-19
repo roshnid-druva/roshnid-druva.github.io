@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tag Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Tag Demo Styles */
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        padding: 2px 8px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        max-width: 100%;
+      }
+      .tag-label {
+        color: #666;
+        font-size: 12px;
+        margin-right: 4px;
+      }
+      .tag-value {
+        font-weight: 500;
+      }
+      .tag-close {
+        margin-left: 6px;
+        color: #999;
+        cursor: pointer;
+        padding: 0 3px;
+      }
+      .tag-close:hover {
+        color: #333;
+      }
+      .tag-icon {
+        margin-right: 6px;
+        display: flex;
+        align-items: center;
+      }
+      .tag-success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .tag-success .tag-label {
+        color: #155724;
+        opacity: 0.8;
+      }
+      .tag-success .tag-close {
+        color: #155724;
+      }
+      .tag-warning {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .tag-warning .tag-label {
+        color: #856404;
+        opacity: 0.8;
+      }
+      .tag-warning .tag-close {
+        color: #856404;
+      }
+      .tag-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .tag-danger .tag-label {
+        color: #721c24;
+        opacity: 0.8;
+      }
+      .tag-danger .tag-close {
+        color: #721c24;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Tag Component</h1>
+      <p>
+        A component for displaying tag/label elements, optionally with closable
+        functionality.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Tag from "orion/lib/tag";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Tag value. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Optional label for the tag.</td>
+          </tr>
+          <tr>
+            <td>closable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether the tag is closable or not.</td>
+          </tr>
+          <tr>
+            <td>onClose</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function called when tag is closed. Receives tag props as
+              argument.
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-tag"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+          <tr>
+            <td>icon</td>
+            <td>JSX</td>
+            <td>-</td>
+            <td>
+              React element from orion icons library to display as an icon.
+            </td>
+          </tr>
+          <tr>
+            <td>variant</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Tag variant: "success", "warning", or "danger". Takes precedence
+              over style prop.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Tag</h3>
+        <div class="tag-list">
+          <div class="tag">
+            <span class="tag-value">document</span>
+            <span class="tag-close">×</span>
+          </div>
+        </div>
+        <pre>
+&lt;Tag 
+  value="document" 
+  onClose={(tag) => alert(`closing tag '${tag.value}'`)} 
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Non-closable Tag</h3>
+        <div class="tag-list">
+          <div class="tag">
+            <span class="tag-value">document</span>
+          </div>
+        </div>
+        <pre>&lt;Tag value="document" closable={false} /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>Tag with Label</h3>
+        <div class="tag-list">
+          <div class="tag">
+            <span class="tag-label">type:</span>
+            <span class="tag-value">folder</span>
+            <span class="tag-close">×</span>
+          </div>
+        </div>
+        <pre>
+&lt;Tag
+  value="folder"
+  label="type"
+  onClose={(tag) => alert(`closing tag '${tag.value}'`)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tag with Icon</h3>
+        <div class="tag-list">
+          <div class="tag">
+            <span class="tag-icon">⚙️</span>
+            <span class="tag-value">document</span>
+            <span class="tag-close">×</span>
+          </div>
+        </div>
+        <pre>
+import SettingsBlue from "@druva-apps/orion-icons/lib/SettingsMultitoneFilled";
+
+&lt;Tag
+  icon={&lt;SettingsBlue /&gt;}
+  value="document"
+  onClose={(tag) => alert(`closing tag '${tag.value}'`)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tag Variants</h3>
+        <div class="tag-list">
+          <div class="tag tag-danger">
+            <span class="tag-label">type:</span>
+            <span class="tag-value">danger</span>
+            <span class="tag-close">×</span>
+          </div>
+          <div class="tag tag-success">
+            <span class="tag-label">type:</span>
+            <span class="tag-value">success</span>
+            <span class="tag-close">×</span>
+          </div>
+          <div class="tag tag-warning">
+            <span class="tag-label">type:</span>
+            <span class="tag-value">warning</span>
+            <span class="tag-close">×</span>
+          </div>
+        </div>
+        <pre>
+// Danger variant
+&lt;Tag
+  value="danger"
+  label="type"
+  onClose={tag => alert(`closing tag '${tag.value}'`)}
+  variant="danger"
+/&gt;
+
+// Success variant
+&lt;Tag
+  value="success"
+  label="type"
+  onClose={tag => alert(`closing tag '${tag.value}'`)}
+  variant="success"
+/&gt;
+
+// Warning variant
+&lt;Tag
+  value="warning"
+  label="type"
+  onClose={tag => alert(`closing tag '${tag.value}'`)}
+  variant="warning"
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          When <code>closable</code> is set to true, a close (x) button will
+          appear
+        </li>
+        <li>
+          The <code>onClose</code> handler receives the tag's props as an
+          argument
+        </li>
+        <li>
+          If both <code>icon</code> and <code>label</code> are provided, the
+          icon will appear before the label
+        </li>
+        <li>
+          Use the <code>variant</code> prop to apply predefined color schemes
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

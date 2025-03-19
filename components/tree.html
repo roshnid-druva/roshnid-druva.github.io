@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .tree-container {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 15px 0;
+        max-height: 300px;
+        overflow: auto;
+      }
+      .tree-node {
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+      }
+      .tree-node-children {
+        margin-left: 24px;
+      }
+      .tree-node-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tree-checkbox {
+        margin-right: 5px;
+      }
+      .tree-toggle {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tree-node-content {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+      }
+      .tree-node-label {
+        margin-right: 5px;
+      }
+      .tree-node-sublabel {
+        font-size: 0.85em;
+        color: #777;
+        margin-left: 5px;
+      }
+      .tree-node-action {
+        margin-left: auto;
+        font-size: 0.85em;
+        color: #777;
+      }
+      .folder-icon {
+        color: #ffc107;
+      }
+      .file-icon {
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Tree Component</h1>
+      <p>
+        A hierarchical component for displaying and selecting nested tree data,
+        with support for various customization options.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Tree from "orion/lib/tree";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>nodes</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of node objects to render in the tree.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>checked</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>Array of unique node IDs that should be selected.</td>
+          </tr>
+          <tr>
+            <td>expanded</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>Array of unique node IDs that should be expanded.</td>
+          </tr>
+          <tr>
+            <td>loading</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>
+              Array of unique node IDs that should show a loading spinner.
+            </td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the entire tree.</td>
+          </tr>
+          <tr>
+            <td>checkable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether nodes can be selected via checkboxes.</td>
+          </tr>
+          <tr>
+            <td>showNodeIcon</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to show icons for nodes.</td>
+          </tr>
+          <tr>
+            <td>expandDisabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Prevents nodes from being expanded.</td>
+          </tr>
+          <tr>
+            <td>showHiddenNodes</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Controls visibility of hidden nodes.</td>
+          </tr>
+          <tr>
+            <td>uniqueDataKey</td>
+            <td>String</td>
+            <td>"value"</td>
+            <td>Property name for the unique identifier of each node.</td>
+          </tr>
+          <tr>
+            <td>hiddenProp</td>
+            <td>String</td>
+            <td>"hidden"</td>
+            <td>Property name that identifies hidden nodes.</td>
+          </tr>
+          <tr>
+            <td>disabledProp</td>
+            <td>String</td>
+            <td>"disabled"</td>
+            <td>Property name that identifies disabled nodes.</td>
+          </tr>
+          <tr>
+            <td>labelProp</td>
+            <td>String</td>
+            <td>"label"</td>
+            <td>Property name for the node display text.</td>
+          </tr>
+          <tr>
+            <td>tooltipProp</td>
+            <td>String</td>
+            <td>"tooltipText"</td>
+            <td>Property name for the node tooltip text.</td>
+          </tr>
+          <tr>
+            <td>checkableProp</td>
+            <td>String</td>
+            <td>"checkable"</td>
+            <td>Property name that identifies if a node can be selected.</td>
+          </tr>
+          <tr>
+            <td>childrenProp</td>
+            <td>String</td>
+            <td>"children"</td>
+            <td>Property name for a node's child nodes.</td>
+          </tr>
+          <tr>
+            <td>childrenLevelMap</td>
+            <td>Object</td>
+            <td>null</td>
+            <td>
+              Map of level to children property name for non-consistent data
+              structures.
+            </td>
+          </tr>
+          <tr>
+            <td>isStaticData</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Optimizes for static trees without dynamic children loading.
+            </td>
+          </tr>
+          <tr>
+            <td>heading</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Optional heading text for the tree.</td>
+          </tr>
+          <tr>
+            <td>returnOnlyLeafNodes</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Only return leaf nodes in the checked array.</td>
+          </tr>
+          <tr>
+            <td>onCheck</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when node selection changes: (checked, node, nodes) =>
+              void
+            </td>
+          </tr>
+          <tr>
+            <td>onExpand</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when node expansion changes: (expanded, loading,
+              nodeState, node) => void
+            </td>
+          </tr>
+          <tr>
+            <td>renderIcon</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for node icons: (node) => React.Element</td>
+          </tr>
+          <tr>
+            <td>renderLabel</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for node labels: (node) => React.Element</td>
+          </tr>
+          <tr>
+            <td>renderSubLabel</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Custom renderer for secondary node labels: (node) => React.Element
+            </td>
+          </tr>
+          <tr>
+            <td>renderNodeAction</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Custom renderer for right-side node actions: (node) =>
+              React.Element
+            </td>
+          </tr>
+          <tr>
+            <td>getCheckboxTooltip</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function to get tooltip for node checkboxes: (node) => String or
+              Object
+            </td>
+          </tr>
+          <tr>
+            <td>noCascade</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              When true, parent and child selection states are independent.
+            </td>
+          </tr>
+          <tr>
+            <td>optimisticToggle</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Special selection behavior for restore use cases.</td>
+          </tr>
+          <tr>
+            <td>allowSelectAll</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Adds a select all checkbox to the header.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-tree"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Node Object Structure</h2>
+      <p>
+        Each node in the <code>nodes</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  label: String,              // Display text for the node
+  value: String,              // Unique identifier for the node
+  tooltipText: String,        // Optional tooltip text
+  children: Array,            // Child nodes
+  isLeaf: Boolean,            // Whether the node is a leaf node
+  isHidden: Boolean,          // Whether the node should be hidden
+  isDisabled: Boolean,        // Whether the node should be disabled
+  type: String,               // Optional type information (useful for icons)
+  renderComponent: Function,  // Optional function to render custom node content
+  className: String           // Optional CSS class for the node
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Tree</h3>
+        <div class="tree-container">
+          <div class="tree-node">
+            <div class="tree-toggle">-</div>
+            <div class="tree-checkbox">☑</div>
+            <div class="tree-node-icon folder-icon">📁</div>
+            <div class="tree-node-label">Documents</div>
+          </div>
+          <div class="tree-node-children">
+            <div class="tree-node">
+              <div class="tree-toggle">-</div>
+              <div class="tree-checkbox">☑</div>
+              <div class="tree-node-icon folder-icon">📁</div>
+              <div class="tree-node-label">Presentations</div>
+            </div>
+            <div class="tree-node-children">
+              <div class="tree-node">
+                <div class="tree-toggle" style="visibility: hidden">-</div>
+                <div class="tree-checkbox">☑</div>
+                <div class="tree-node-icon file-icon">📄</div>
+                <div class="tree-node-label">Tree.ppt</div>
+              </div>
+            </div>
+            <div class="tree-node">
+              <div class="tree-toggle" style="visibility: hidden">-</div>
+              <div class="tree-checkbox">☐</div>
+              <div class="tree-node-icon file-icon">📄</div>
+              <div class="tree-node-label">Grid Layout.doc</div>
+            </div>
+          </div>
+          <div class="tree-node">
+            <div class="tree-toggle">+</div>
+            <div class="tree-checkbox">☐</div>
+            <div class="tree-node-icon folder-icon">📁</div>
+            <div class="tree-node-label">Images</div>
+          </div>
+        </div>
+
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    expanded: ["node1"],
+    checked: ["node1-1", "node1-1-1"]
+  };
+
+  this.treeNodes = [
+    {
+      label: "Documents",
+      value: "node1",
+      tooltipText: "My Documents",
+      children: [
+        {
+          label: "Presentations",
+          value: "node1-1",
+          tooltipText: "My Presentations",
+          children: [
+            {
+              label: "Tree.ppt",
+              type: "ppt",
+              value: "node1-1-1",
+              children: [],
+              isLeaf: true
+            }
+          ]
+        },
+        {
+          label: "Grid Layout.doc",
+          type: "doc",
+          value: "node1-2",
+          children: [],
+          isLeaf: true
+        }
+      ]
+    },
+    {
+      label: "Images",
+      value: "node2",
+      tooltipText: "My Images",
+      children: [
+        {
+          label: "sample.png",
+          type: "img",
+          value: "node2-1",
+          children: [],
+          isLeaf: true
+        }
+      ]
+    }
+  ];
+}
+
+onNodeCheck = (checked, node, nodes) => {
+  this.setState({
+    checked
+  });
+};
+
+onNodeExpand = (expanded, loading, nodeState, node) => {
+  this.setState({
+    expanded
+  });
+};
+
+render() {
+  return (
+    &lt;div style={{ height: "300px" }}&gt;
+      &lt;Tree
+        nodes={this.treeNodes}
+        expanded={this.state.expanded}
+        onExpand={this.onNodeExpand}
+        checked={this.state.checked}
+        onCheck={this.onNodeCheck}
+      /&gt;
+    &lt;/div&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tree with Custom Icons and Node Actions</h3>
+        <div class="tree-container">
+          <div class="tree-node">
+            <div class="tree-toggle">-</div>
+            <div class="tree-checkbox">☑</div>
+            <div class="tree-node-icon folder-icon">📁</div>
+            <div class="tree-node-content">
+              <div class="tree-node-label">Documents</div>
+              <div class="tree-node-sublabel"></div>
+              <div class="tree-node-action"></div>
+            </div>
+          </div>
+          <div class="tree-node-children">
+            <div class="tree-node">
+              <div class="tree-toggle">-</div>
+              <div class="tree-checkbox">☑</div>
+              <div class="tree-node-icon" style="color: #ff8c00">📊</div>
+              <div class="tree-node-content">
+                <div class="tree-node-label">Presentations</div>
+                <div class="tree-node-sublabel">Type: ppt</div>
+                <div class="tree-node-action"></div>
+              </div>
+            </div>
+            <div class="tree-node-children">
+              <div class="tree-node">
+                <div class="tree-toggle" style="visibility: hidden">-</div>
+                <div class="tree-checkbox">☑</div>
+                <div class="tree-node-icon" style="color: #ff8c00">📊</div>
+                <div class="tree-node-content">
+                  <div class="tree-node-label">Tree.ppt</div>
+                  <div class="tree-node-sublabel">Type: ppt</div>
+                  <div class="tree-node-action">125.50 KB</div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-node">
+              <div class="tree-toggle" style="visibility: hidden">-</div>
+              <div class="tree-checkbox">☐</div>
+              <div class="tree-node-icon" style="color: #4169e1">📝</div>
+              <div class="tree-node-content">
+                <div class="tree-node-label">Grid Layout.doc</div>
+                <div class="tree-node-sublabel">Type: doc</div>
+                <div class="tree-node-action">85.75 KB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <pre>
+renderIcon = (node) => {
+  switch (node.type) {
+    case "ppt":
+      return &lt;Icon src={PptIcon} /&gt;;
+    case "doc":
+      return &lt;Icon src={DocIcon} /&gt;;
+    case "img":
+      return &lt;Icon src={ImageIcon} /&gt;;
+    default:
+      return &lt;Icon src={FolderIcon} /&gt;;
+  }
+};
+
+renderNodeAction = (node) => {
+  // Show file size for nodes that have it
+  return typeof node.size === "number"
+    ? `${parseFloat(node.size / 1024).toFixed(2)} KB`
+    : null;
+};
+
+renderSubLabel = (node) => {
+  return node.type ? `Type: ${node.type}` : null;
+};
+
+&lt;Tree
+  nodes={this.treeNodes}
+  expanded={this.state.expanded}
+  onExpand={this.onNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+  renderIcon={this.renderIcon}
+  renderNodeAction={this.renderNodeAction}
+  renderSubLabel={this.renderSubLabel}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Node Labels</h3>
+        <pre>
+renderLabel = (node) => {
+  if (node.isLink) {
+    return (
+      &lt;a href={`/${node.label}`} onClick={(e) => e.preventDefault()}&gt;
+        {node.label}
+      &lt;/a&gt;
+    );
+  } else if (node.isButton) {
+    return &lt;Button type="secondary" label={node.label} size="sm" /&gt;;
+  }
+  return node.label;
+};
+
+&lt;Tree
+  nodes={this.treeNodes}
+  expanded={this.state.expanded}
+  onExpand={this.onNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+  renderLabel={this.renderLabel}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tree with No Cascade Option</h3>
+        <p>
+          When <code>noCascade</code> is true, parent and child selection states
+          are independent.
+        </p>
+        <pre>
+&lt;Tree
+  noCascade
+  nodes={this.treeNodes}
+  expanded={this.state.expanded}
+  onExpand={this.onNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tree with Loading States</h3>
+        <pre>
+onLoadingNodeExpand = (expanded, loading, node) => {
+  if (!node.expanded) {
+    this.setState({ expanded });
+  } else {
+    this.setState({ loading }, () => {
+      // Simulate API call to fetch children
+      setTimeout(() => {
+        const nodeValue = node.value;
+        const index = this.state.loading.indexOf(nodeValue);
+        const newLoading = [...this.state.loading];
+        newLoading.splice(index, 1);
+        this.setState({
+          expanded,
+          loading: newLoading,
+        });
+      }, 1000);
+    });
+  }
+};
+
+&lt;Tree
+  nodes={this.treeNodes}
+  expanded={this.state.expanded}
+  onExpand={this.onLoadingNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+  loading={this.state.loading}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Data Structure with childrenLevelMap</h3>
+        <pre>
+const customTreeNodes = [
+  {
+    title: "Documents",
+    data: "node1",
+    tooltip: "My Documents",
+    vms: [
+      {
+        title: "Presentations",
+        data: "node1-1",
+        properties: [
+          {
+            title: "Tree.ppt",
+            type: "ppt",
+            data: "node1-1-1",
+            properties: [],
+            isLeaf: true,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+&lt;Tree
+  nodes={customTreeNodes}
+  uniqueDataKey="data"
+  labelProp="title"
+  tooltipProp="tooltip"
+  childrenLevelMap={{
+    0: "vms",
+    1: "properties",
+    2: "properties",
+  }}
+  expanded={this.state.expanded}
+  onExpand={this.onNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Select All Feature</h3>
+        <pre>
+&lt;Tree
+  nodes={this.treeNodes}
+  expanded={this.state.expanded}
+  onExpand={this.onNodeExpand}
+  checked={this.state.checked}
+  onCheck={this.onNodeCheck}
+  allowSelectAll
+  heading="File Browser"
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          When <code>optimisticToggle</code> is true, only explicitly checked
+          nodes are included in the checked array
+        </li>
+        <li>
+          The <code>childrenLevelMap</code> is useful for complex data
+          structures with different property names for children at each level
+        </li>
+        <li>
+          You can create custom pagination by using the
+          <code>renderComponent</code> and adding "Load More" nodes at
+          appropriate positions
+        </li>
+        <li>
+          The <code>getCheckboxTooltip</code> function can return a string for a
+          basic tooltip or an object that will be spread to the Tooltip
+          component
+        </li>
+        <li>
+          When <code>noCascade</code> is false (default), checking a parent
+          checks all children, and checking all children checks the parent
+        </li>
+        <li>
+          The tree component supports dynamically loading children by managing
+          the <code>loading</code> state and modifying the node data
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

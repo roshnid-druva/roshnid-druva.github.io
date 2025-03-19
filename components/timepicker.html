@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TimePicker Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* TimePicker Demo Styles */
+      .timepicker {
+        position: relative;
+        display: inline-block;
+        width: 200px;
+      }
+      .timepicker-input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+        background-color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .timepicker-input.invalid {
+        border-color: #dc3545;
+      }
+      .timepicker-input.disabled {
+        background-color: #f1f1f1;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      .timepicker-dropdown {
+        position: absolute;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        margin-top: 2px;
+      }
+      .timepicker-option {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      .timepicker-option:hover {
+        background-color: #f1f1f1;
+      }
+      .timepicker-option.selected {
+        background-color: #e7f5ff;
+        color: #007bff;
+      }
+      .timepicker-icon {
+        color: #6c757d;
+        margin-left: 8px;
+      }
+      .timepicker-placeholder {
+        color: #6c757d;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -10px;
+        margin-left: -10px;
+      }
+      .form-label {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        padding: 0 10px;
+        flex: 0 0 25%;
+        max-width: 25%;
+      }
+      .form-control {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>TimePicker Component</h1>
+      <p>
+        A component for selecting time from a dropdown list with customizable
+        intervals.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import TimePicker from "orion/lib/timePicker";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Time picker value. For 12-hour format: "12:00 AM" to "11:59 PM".
+              For 24-hour format: "00:00" to "23:59".
+            </td>
+          </tr>
+          <tr>
+            <td>interval</td>
+            <td>Number</td>
+            <td>15</td>
+            <td>Time interval in minutes.</td>
+          </tr>
+          <tr>
+            <td>use24Hours</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Show time picker in 24-hour format.</td>
+          </tr>
+          <tr>
+            <td>onTimeSelect</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when time is changed. Called only with valid time values.
+            </td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Adds an error class to the time picker.</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the time picker.</td>
+          </tr>
+          <tr>
+            <td>allowCustomTime</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>
+              Allows entering custom time. If false, invalid entries revert to
+              previous value.
+            </td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom placeholder text.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-timepicker"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic TimePicker</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span class="timepicker-placeholder">Select Time</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>
+&lt;TimePicker value={null} interval={15} use24Hours={false} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>24-Hour Format TimePicker</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span class="timepicker-placeholder">Select Time</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+          <div class="timepicker-dropdown">
+            <div class="timepicker-option">00:00</div>
+            <div class="timepicker-option">00:15</div>
+            <div class="timepicker-option">00:30</div>
+            <div class="timepicker-option">00:45</div>
+            <div class="timepicker-option">01:00</div>
+            <div class="timepicker-option selected">01:15</div>
+            <div class="timepicker-option">01:30</div>
+            <div class="timepicker-option">01:45</div>
+          </div>
+        </div>
+        <pre>
+&lt;TimePicker value={null} interval={15} use24Hours={true} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Interval TimePicker</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span>09:25 AM</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>
+&lt;TimePicker
+  value={null}
+  interval={5} // 5-minute intervals
+  use24Hours={false}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>TimePicker with Initial Value</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span>09:52 AM</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>&lt;TimePicker value="09:52 AM" interval={15} /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>Disable Custom Time Entry</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span class="timepicker-placeholder">Select</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>
+&lt;TimePicker
+  value={null}
+  interval={15}
+  use24Hours={false}
+  placeholder="Select"
+  allowCustomTime={false}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Invalid TimePicker</h3>
+        <div class="timepicker">
+          <div class="timepicker-input invalid">
+            <span>09:52 AM</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>&lt;TimePicker value="09:52 AM" interval={15} isInvalid /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>With Time Selection Callback</h3>
+        <div class="timepicker">
+          <div class="timepicker-input">
+            <span>09:52 AM</span>
+            <span class="timepicker-icon">▼</span>
+          </div>
+        </div>
+        <pre>
+&lt;TimePicker
+  value="09:52 AM"
+  interval={15}
+  onTimeSelect={(time) => console.log(`Selected time: ${time}`)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>TimePicker in a Form</h3>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="form-label">Meeting Time</div>
+            <div class="form-control">
+              <div class="timepicker">
+                <div class="timepicker-input">
+                  <span>09:52 AM</span>
+                  <span class="timepicker-icon">▼</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;FormGroup row&gt;
+  &lt;Label for="time" sm={2} text="Meeting Time" /&gt;
+  &lt;Col sm={4}&gt;
+    &lt;TimePicker
+      value={this.state.meetingTime}
+      interval={15}
+      use24Hours={false}
+      onTimeSelect={(time) => this.setState({ meetingTime: time })}
+    /&gt;
+  &lt;/Col&gt;
+&lt;/FormGroup&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>The component supports both 12-hour and 24-hour time formats</li>
+        <li>
+          When <code>allowCustomTime</code> is false, users can only select from
+          predefined time options
+        </li>
+        <li>
+          The dropdown shows times at regular intervals defined by the
+          <code>interval</code> prop
+        </li>
+        <li>
+          The component will validate time entries and revert to previous valid
+          values if needed
+        </li>
+        <li>
+          The <code>onTimeSelect</code> callback is only called when a valid
+          time is selected
+        </li>
+        <li>
+          When using a 12-hour format, the time includes AM/PM indicator (e.g.,
+          "09:15 AM")
+        </li>
+        <li>
+          When using a 24-hour format, the time is displayed without AM/PM
+          (e.g., "09:15")
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

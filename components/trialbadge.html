@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrialBadge Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .trial-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        font-size: 14px;
+        position: relative;
+        cursor: pointer;
+      }
+      .trial-badge-minimal {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: #e8f4fe;
+        border-radius: 4px;
+        border: 1px solid #c6e2f7;
+        font-size: 12px;
+        color: #0366d6;
+      }
+      .trial-progress {
+        width: 100%;
+        height: 8px;
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+      .trial-progress-inner {
+        height: 100%;
+        background-color: #2196f3;
+        width: 70%;
+      }
+      .expired-progress {
+        background-color: #f44336;
+        width: 100%;
+      }
+      .trial-group {
+        margin: 12px 0;
+        padding-left: 24px;
+        position: relative;
+      }
+      .trial-group-icon {
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #2196f3;
+        color: white;
+        border-radius: 50%;
+        font-size: 10px;
+      }
+      .trial-group-completed .trial-group-icon {
+        background-color: #4caf50;
+      }
+      .trial-group-name {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .trial-group-next {
+        font-size: 12px;
+        background-color: #e8f4fe;
+        color: #0366d6;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 8px;
+      }
+      .trial-steps {
+        margin-top: 8px;
+        margin-left: 16px;
+        font-size: 14px;
+      }
+      .trial-step {
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+      }
+      .trial-step-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .trial-step-completed .trial-step-icon {
+        color: #4caf50;
+      }
+      .trial-step-pending .trial-step-icon {
+        color: #9e9e9e;
+      }
+      .trial-step-next {
+        font-size: 12px;
+        background-color: #e8f4fe;
+        color: #0366d6;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 8px;
+      }
+      .trial-action {
+        margin-top: 16px;
+        text-align: center;
+      }
+      .upgrade-button {
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .trial-popover {
+        width: 320px;
+        padding: 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        margin-top: 12px;
+      }
+      .trial-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .trial-title {
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .trial-days {
+        color: #0366d6;
+        font-weight: 600;
+      }
+      .trial-expired {
+        color: #f44336;
+        font-weight: 600;
+      }
+      .product-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        margin: 0 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>TrialBadge Component</h1>
+      <p>
+        A component that displays trial status information, including progress
+        tracking, steps to complete, and trial expiration details.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import TrialBadge from "orion/lib/TrialBadge";</pre>
+      <p>
+        If you only want to show the trial groups without the trial status, you
+        can use the TrialProgress component:
+      </p>
+      <pre>
+import TrialProgress from "orion/lib/TrialProgress/TrialProgress";</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>variant</td>
+            <td>String</td>
+            <td>"minimal"</td>
+            <td>Display style: "full", "minimal", "product", or "badgeOnly"</td>
+          </tr>
+          <tr>
+            <td>placement</td>
+            <td>String</td>
+            <td>"bottom-end"</td>
+            <td>Popover placement (same as Popover component)</td>
+          </tr>
+          <tr>
+            <td>helpText</td>
+            <td>String</td>
+            <td>"Your trial status will appear here."</td>
+            <td>Help text shown in the badge (pass null to hide)</td>
+          </tr>
+          <tr>
+            <td>trialTotalDays</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Total days of the trial</td>
+          </tr>
+          <tr>
+            <td>trialRemainingDays</td>
+            <td>Number</td>
+            <td>0</td>
+            <td>Remaining days of the trial <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>trialExpiryDate</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Formatted expiry date of the trial <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>onUpgrade</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Click handler for upgrade button (shown when trial expired)</td>
+          </tr>
+          <tr>
+            <td>onOpen</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback called when tooltip mounts</td>
+          </tr>
+          <tr>
+            <td>onClose</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback called when tooltip unmounts</td>
+          </tr>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows a loader instead of groups</td>
+          </tr>
+          <tr>
+            <td>hideGroups</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Hides groups and trial message, shows only progress bar</td>
+          </tr>
+          <tr>
+            <td>groups</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of trial progress groups</td>
+          </tr>
+          <tr>
+            <td>products</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of products for the product variant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Group Object Structure</h2>
+      <p>
+        Each item in the <code>groups</code> array can have the following
+        properties:
+      </p>
+      <pre>
+{
+  icon: ReactElement,           // Icon to display next to group name
+  name: String,                 // Group name/title
+  tooltip: String,              // Tooltip text for the group
+  isCompleted: Boolean,         // Whether this group is completed
+  onTitleClick: Function,       // Click handler for group title
+  defaultExpand: Boolean,       // Whether steps should be expanded by default
+  supressNextLabel: Boolean,    // Hide the "Next" label
+  steps: [                      // Array of steps within this group
+    {
+      name: String,             // Step name
+      isCompleted: Boolean,     // Whether step is completed
+      tooltip: String           // Tooltip for the step
+    }
+  ]
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Trial Badge - Minimal Variant</h3>
+        <div class="trial-badge-minimal">
+          21 days left
+          <div class="trial-progress">
+            <div class="trial-progress-inner"></div>
+          </div>
+        </div>
+        <pre>
+import TrialBadge from "orion/lib/TrialBadge";
+
+&lt;TrialBadge
+  variant="minimal"
+  trialTotalDays={30}
+  trialRemainingDays={21}
+  trialExpiryDate="05/30/2023"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Full Badge with Groups and Steps</h3>
+        <div class="trial-badge">Trial Badge</div>
+        <div class="trial-popover">
+          <div class="trial-header">
+            <div class="trial-title">Trial Progress</div>
+            <div class="trial-days">21 days left</div>
+          </div>
+          <div class="trial-progress">
+            <div class="trial-progress-inner"></div>
+          </div>
+
+          <div class="trial-group trial-group-completed">
+            <div class="trial-group-icon">✓</div>
+            <div class="trial-group-name">Tenant Registration</div>
+          </div>
+
+          <div class="trial-group">
+            <div class="trial-group-icon">2</div>
+            <div class="trial-group-name">
+              Exchange Online
+              <span class="trial-group-next">Next</span>
+            </div>
+            <div class="trial-steps">
+              <div class="trial-step trial-step-completed">
+                <div class="trial-step-icon">✓</div>
+                <div>Backup Configuration</div>
+              </div>
+              <div class="trial-step trial-step-completed">
+                <div class="trial-step-icon">✓</div>
+                <div>First Backup</div>
+              </div>
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>First Restore</div>
+                <span class="trial-step-next">Next</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="trial-info">Expires on 05/30/2023</div>
+        </div>
+        <pre>
+import TrialBadge from "orion/lib/TrialBadge";
+import VmwareVmsblueMultitoneFilled from "@druva-apps/orion-icons/lib/VmwareVmsblueMultitoneFilled";
+
+&lt;TrialBadge
+  variant="full"
+  trialTotalDays={30}
+  trialRemainingDays={21}
+  trialExpiryDate="05/30/2023"
+  groups={[
+    {
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      name: "Tenant Registration",
+      isCompleted: true,
+    },
+    {
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      name: "Exchange Online",
+      defaultExpand: true,
+      steps: [
+        {
+          name: "Backup Configuration",
+          isCompleted: true,
+        },
+        {
+          name: "First Backup",
+          isCompleted: true,
+        },
+        {
+          name: "First Restore",
+          isCompleted: false,
+        },
+      ],
+    },
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Trial Expired with Upgrade Button</h3>
+        <div class="trial-badge">Trial Badge</div>
+        <div class="trial-popover">
+          <div class="trial-header">
+            <div class="trial-title">Trial Expired</div>
+            <div class="trial-expired">0 days left</div>
+          </div>
+          <div class="trial-progress">
+            <div class="trial-progress-inner expired-progress"></div>
+          </div>
+
+          <div class="trial-group trial-group-completed">
+            <div class="trial-group-icon">✓</div>
+            <div class="trial-group-name">Tenant Registration</div>
+          </div>
+
+          <div class="trial-group">
+            <div class="trial-group-icon">2</div>
+            <div class="trial-group-name">Exchange Online</div>
+            <div class="trial-steps">
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>Backup Configuration</div>
+              </div>
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>First Backup</div>
+              </div>
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>First Restore</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="trial-info">Expired on 04/15/2023</div>
+
+          <div class="trial-action">
+            <button class="upgrade-button">Upgrade Now</button>
+          </div>
+        </div>
+        <pre>
+&lt;TrialBadge
+  variant="full"
+  trialTotalDays={30}
+  trialRemainingDays={0}
+  trialExpiryDate="04/15/2023"
+  onUpgrade={() => console.log("Upgrade clicked")}
+  groups={[
+    {
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      name: "Tenant Registration",
+      isCompleted: true,
+    },
+    {
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      name: "Exchange Online",
+      steps: [
+        {
+          name: "Backup Configuration",
+          isCompleted: false,
+        },
+        {
+          name: "First Backup",
+          isCompleted: false,
+        },
+        {
+          name: "First Restore",
+          isCompleted: false,
+        },
+      ],
+    },
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>TrialProgress Component</h3>
+        <div
+          style="border: 1px solid #e0e0e0; padding: 16px; border-radius: 4px"
+        >
+          <div class="trial-group">
+            <div class="trial-group-icon">1</div>
+            <div class="trial-group-name">Oracle</div>
+            <div class="trial-steps">
+              <div class="trial-step trial-step-completed">
+                <div class="trial-step-icon">✓</div>
+                <div>Add/Import User</div>
+              </div>
+              <div class="trial-step trial-step-completed">
+                <div class="trial-step-icon">✓</div>
+                <div>Device Backup Enabled</div>
+              </div>
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>First Backup</div>
+                <span class="trial-step-next">Next</span>
+              </div>
+              <div class="trial-step trial-step-pending">
+                <div class="trial-step-icon">○</div>
+                <div>First Restore</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="trial-group">
+            <div class="trial-group-icon">2</div>
+            <div class="trial-group-name">VMWare</div>
+          </div>
+
+          <div class="trial-group">
+            <div class="trial-group-icon">3</div>
+            <div class="trial-group-name">NAS</div>
+          </div>
+        </div>
+        <pre>
+import TrialProgress from "orion/lib/TrialProgress/TrialProgress";
+import VmwareVmsblueMultitoneFilled from "@druva-apps/orion-icons/lib/VmwareVmsblueMultitoneFilled";
+
+&lt;TrialProgress
+  groups={[
+    {
+      name: "Oracle",
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      supressNextLabel: true,
+      tooltip: "Oracle Group Info",
+      steps: [
+        {
+          name: "Add/Import User",
+          isCompleted: true,
+          tooltip: "Add or import user",
+        },
+        {
+          name: "Device Backup Enabled",
+          isCompleted: true,
+        },
+        {
+          name: "First Backup",
+          isCompleted: false,
+        },
+        {
+          name: "First Restore",
+          isCompleted: false,
+        },
+      ],
+    },
+    {
+      name: "VMWare",
+      onTitleClick: () => console.log("navigate to VMWare Configuration"),
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+      isCompleted: false,
+    },
+    {
+      name: "NAS",
+      onTitleClick: () => console.log("navigate to NAS Configuration"),
+      icon: &lt;VmwareVmsblueMultitoneFilled /&gt;,
+    },
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Product Variant</h3>
+        <div class="trial-badge">Trial Badge</div>
+        <div class="trial-popover">
+          <div class="trial-header">
+            <div class="trial-title">Trial Progress</div>
+            <div class="trial-days">21 days left</div>
+          </div>
+          <div class="trial-progress">
+            <div class="trial-progress-inner"></div>
+          </div>
+
+          <div style="display: flex; justify-content: center; margin: 20px 0">
+            <div class="product-icon" style="background-color: #e3f2fd">🔄</div>
+            <div class="product-icon" style="background-color: #e8f5e9">📊</div>
+            <div class="product-icon" style="background-color: #fff3e0">💾</div>
+            <div class="product-icon" style="background-color: #f3e5f5">🔍</div>
+          </div>
+
+          <div class="trial-info">Expires on 05/30/2023</div>
+        </div>
+        <pre>
+&lt;TrialBadge
+  variant="product"
+  trialTotalDays={30}
+  trialRemainingDays={21}
+  trialExpiryDate="05/30/2023"
+  products={[
+    {
+      icon: &lt;SyncIcon /&gt;,
+      name: "Sync",
+      color: "#e3f2fd"
+    },
+    {
+      icon: &lt;AnalyticsIcon /&gt;,
+      name: "Analytics",
+      color: "#e8f5e9"
+    },
+    {
+      icon: &lt;BackupIcon /&gt;,
+      name: "Backup",
+      color: "#fff3e0"
+    },
+    {
+      icon: &lt;SearchIcon /&gt;,
+      name: "Search",
+      color: "#f3e5f5"
+    }
+  ]}
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The TrialBadge component is designed to guide users through the trial
+          experience by showing their progress and next steps.
+        </li>
+        <li>
+          The "full" variant shows both the trial progress bar and the
+          groups/steps to complete.
+        </li>
+        <li>The "minimal" variant shows only the trial progress bar.</li>
+        <li>
+          The "product" variant is designed to show product icons rather than
+          detailed steps.
+        </li>
+        <li>
+          The "badgeOnly" variant shows just the trial badge without any
+          additional information.
+        </li>
+        <li>
+          When the trial expires (trialRemainingDays is 0), it shows an expired
+          state and can display an upgrade button.
+        </li>
+        <li>
+          The component automatically highlights the next group/step to complete
+          with a "Next" label (unless suppressed).
+        </li>
+        <li>
+          Group titles can be made clickable by providing an onTitleClick
+          handler, useful for navigation to setup pages.
+        </li>
+        <li>Steps within groups can be expanded/collapsed to save space.</li>
+      </ul>
+    </div>
+  </body>
+</html>

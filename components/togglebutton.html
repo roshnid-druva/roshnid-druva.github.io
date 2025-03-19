@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToggleButton Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* ToggleButton Demo Styles */
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .toggle-button {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        border-radius: 24px;
+        transition: 0.3s;
+      }
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.3s;
+      }
+      .toggle-active .toggle-slider {
+        background-color: #007bff;
+      }
+      .toggle-active .toggle-slider:before {
+        transform: translateX(20px);
+      }
+      .toggle-disabled .toggle-slider {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+      }
+      .toggle-disabled.toggle-active .toggle-slider {
+        background-color: #92c5fd;
+      }
+      .toggle-label {
+        margin-left: 12px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .toggle-invalid .toggle-label {
+        color: #dc3545;
+      }
+      .toggle-disabled .toggle-label {
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>ToggleButton Component</h1>
+      <p>
+        A component for toggling between on and off states, optionally with a
+        label.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import ToggleButton from "orion/lib/toggleButton";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Name of the toggle button.</td>
+          </tr>
+          <tr>
+            <td>isActive</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Toggle button state (on/off).</td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Show toggle label as invalid. Useful for required toggles in
+              forms.
+            </td>
+          </tr>
+          <tr>
+            <td>onClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when toggle is clicked, receives (name, isActive, event).
+            </td>
+          </tr>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Label text to display next to the toggle.</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disable the toggle button.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the toggle button container.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-toggle-button"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Simple Toggle Button</h3>
+        <div class="toggle-container">
+          <div class="toggle-button">
+            <span class="toggle-slider"></span>
+          </div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    isActive: false
+  };
+}
+
+onClick = () => {
+  this.setState({ isActive: !this.state.isActive });
+}
+
+render() {
+  return (
+    &lt;ToggleButton
+      isActive={this.state.isActive}
+      onClick={this.onClick}
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Toggle Button with Label</h3>
+        <div class="toggle-container">
+          <div class="toggle-button toggle-active">
+            <span class="toggle-slider"></span>
+          </div>
+          <span class="toggle-label">Show Server Info</span>
+        </div>
+        <pre>
+&lt;ToggleButton
+  isActive={this.state.isActive}
+  onClick={this.onClick}
+  label="Show Server Info"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Invalid Toggle Button</h3>
+        <div class="toggle-container toggle-invalid">
+          <div class="toggle-button">
+            <span class="toggle-slider"></span>
+          </div>
+          <span class="toggle-label">Show Server Info</span>
+        </div>
+        <pre>
+&lt;ToggleButton
+  isActive={this.state.isActive}
+  onClick={this.onClick}
+  label="Show Server Info"
+  isInvalid={!this.state.isActive}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Using onClick Arguments</h3>
+        <div class="toggle-container">
+          <div class="toggle-button toggle-active">
+            <span class="toggle-slider"></span>
+          </div>
+          <span class="toggle-label">Show Servers</span>
+        </div>
+        <pre>
+&lt;ToggleButton
+  isActive={this.state.isActive}
+  onClick={(name, isActive, event) => {
+    console.log(name, isActive, event);
+    this.setState({ isActive });
+  }}
+  label="Show Servers"
+  name="showServers"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Disabled Toggle Buttons</h3>
+        <div class="toggle-container toggle-disabled">
+          <div class="toggle-button">
+            <span class="toggle-slider"></span>
+          </div>
+        </div>
+        <div class="toggle-container toggle-disabled">
+          <div class="toggle-button toggle-active">
+            <span class="toggle-slider"></span>
+          </div>
+          <span class="toggle-label">Show Server Info</span>
+        </div>
+        <pre>
+// Disabled in off state
+&lt;ToggleButton isActive={false} disabled /&gt;
+
+// Disabled in on state
+&lt;ToggleButton isActive={true} disabled /&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The component maintains its own visual state but requires the parent
+          component to manage the actual state
+        </li>
+        <li>
+          The <code>onClick</code> handler provides the new state value as its
+          second parameter
+        </li>
+        <li>
+          Setting <code>isInvalid</code> to true will style the label in an
+          error state
+        </li>
+        <li>
+          Use the <code>name</code> prop for form identification or when
+          managing multiple toggles
+        </li>
+        <li>
+          The toggle transitions smoothly between states with a sliding
+          animation
+        </li>
+        <li>
+          Clicking either the toggle switch or the label will trigger the
+          <code>onClick</code> callback
+        </li>
+        <li>
+          The disabled state preserves the toggle's current position but
+          prevents interaction
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

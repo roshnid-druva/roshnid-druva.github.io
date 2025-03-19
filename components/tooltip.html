@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tooltip Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Tooltip Demo Styles */
+      .tooltip-container {
+        position: relative;
+        display: inline-block;
+        margin: 20px 80px;
+      }
+      .tooltip-demo {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .tooltip-text {
+        position: absolute;
+        background-color: #333;
+        color: white;
+        text-align: left;
+        padding: 8px 10px;
+        border-radius: 4px;
+        z-index: 1;
+        max-width: 200px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .tooltip-top {
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .tooltip-top::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
+      .tooltip-bottom {
+        top: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .tooltip-bottom::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #333 transparent;
+      }
+      .tooltip-left {
+        right: 125%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .tooltip-left::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent #333;
+      }
+      .tooltip-right {
+        left: 125%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .tooltip-right::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent #333 transparent transparent;
+      }
+      .tooltip-center {
+        text-align: center;
+      }
+      .tooltip-right {
+        text-align: right;
+      }
+      .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #0069d9;
+      }
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+      }
+      .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+        border: 1px solid #ddd;
+        padding: 5px;
+      }
+      .custom-tooltip {
+        padding: 10px;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+      }
+      .custom-tooltip-header {
+        font-weight: bold;
+        border-bottom: 1px solid #555;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+      }
+      .custom-tooltip-row {
+        display: flex;
+        margin: 5px 0;
+      }
+      .custom-tooltip-label {
+        flex: 1;
+        text-align: right;
+        padding-right: 10px;
+        color: #aaa;
+      }
+      .custom-tooltip-value {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Tooltip Component</h1>
+      <p>
+        A component that displays additional information when hovering over an
+        element.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Tooltip from "orion/lib/tooltip";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>text</td>
+            <td>String/Function</td>
+            <td>-</td>
+            <td>
+              Text to be shown in the tooltip. A callback function can also be
+              provided to show a custom tooltip. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>placement</td>
+            <td>String</td>
+            <td>"top"</td>
+            <td>
+              Tooltip placement position: "auto", "top", "right", "bottom",
+              "left"
+            </td>
+          </tr>
+          <tr>
+            <td>textAlign</td>
+            <td>String</td>
+            <td>"left"</td>
+            <td>
+              Text alignment: "left", "center", "right" (Not applicable to
+              custom tooltips)
+            </td>
+          </tr>
+          <tr>
+            <td>maxWidth</td>
+            <td>String/Number</td>
+            <td>200</td>
+            <td>
+              Maximum width of the tooltip (Not applicable to custom tooltips)
+            </td>
+          </tr>
+          <tr>
+            <td>overflowOnly</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Show tooltip only when the tooltip target has overflow</td>
+          </tr>
+          <tr>
+            <td>showToolTip</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Conditionally control tooltip visibility</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Additional CSS classes for the tooltip (applied to the inner
+              wrapper div)
+            </td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-tooltip"</td>
+            <td>Data test ID for automation testing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Tooltip</h3>
+        <div class="tooltip-container">
+          <div class="tooltip-demo">Hover me</div>
+          <div class="tooltip-text tooltip-top">
+            Hello World, this is my tooltip component
+          </div>
+        </div>
+        <pre>
+&lt;p&gt;
+  You can see{" "}
+  &lt;Tooltip text="Hello World, this is my tooltip component"&gt;
+    &lt;a href="/"&gt;tooltip&lt;/a&gt;
+  &lt;/Tooltip&gt;{" "}
+  by hovering me.
+&lt;/p&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tooltip on a Button</h3>
+        <div class="tooltip-container">
+          <button class="btn">I have tooltip</button>
+          <div class="tooltip-text tooltip-top">
+            Tooltip can also be applied on a button component
+          </div>
+        </div>
+        <pre>
+&lt;Tooltip
+  text="Tooltip can also be applied on a button component"
+  placement="top"
+&gt;
+  &lt;Button label="I have tooltip" /&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Tooltip on an Icon</h3>
+        <div class="tooltip-container">
+          <div class="icon">🏠</div>
+          <div class="tooltip-text tooltip-right">Tooltip on icon/img</div>
+        </div>
+        <pre>
+&lt;Tooltip text="Tooltip on icon/img" placement="right"&gt;
+  &lt;Icon src={HomeIcon} width="24px" height="24px" /&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Overflow-Only Tooltip</h3>
+        <p>
+          Only shows the tooltip when the text content overflows its container.
+        </p>
+
+        <div class="tooltip-container" style="margin-top: 40px">
+          <div class="truncate">
+            This is an example of overflow only tooltip. Hover me to see tooltip
+            when text overflows the container.
+          </div>
+          <div class="tooltip-text tooltip-top">
+            This is an example of overflow only tooltip. Hover me to see tooltip
+            when text overflows the container.
+          </div>
+        </div>
+
+        <pre>
+&lt;Tooltip text="Tooltip will be shown only when the target is overflown." overflowOnly&gt;
+  &lt;div style={{ width: "400px", border: "1px solid gray" }} className="oui-text-truncate"&gt;
+    This is an example of overflow only tooltip. Hover me to see tooltip.
+  &lt;/div&gt;
+&lt;/Tooltip&gt;
+
+&lt;Tooltip text="Tooltip will be shown only when the target is overflown." overflowOnly&gt;
+  &lt;div style={{ width: "400px", border: "1px solid gray" }} className="oui-text-truncate"&gt;
+    No overflow, So no tooltip
+  &lt;/div&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Customizing Tooltip Placement</h3>
+        <div
+          style="display: flex; justify-content: space-around; flex-wrap: wrap"
+        >
+          <div class="tooltip-container">
+            <button class="btn">Top Tooltip</button>
+            <div class="tooltip-text tooltip-top">
+              This tooltip appears on the top
+            </div>
+          </div>
+          <div class="tooltip-container">
+            <button class="btn">Bottom Tooltip</button>
+            <div class="tooltip-text tooltip-bottom">
+              This tooltip appears on the bottom
+            </div>
+          </div>
+          <div class="tooltip-container">
+            <button class="btn">Left Tooltip</button>
+            <div class="tooltip-text tooltip-left">
+              This tooltip appears on the left
+            </div>
+          </div>
+          <div class="tooltip-container">
+            <button class="btn">Right Tooltip</button>
+            <div class="tooltip-text tooltip-right">
+              This tooltip appears on the right
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Tooltip text="This tooltip appears on the bottom" placement="bottom"&gt;
+  &lt;Button label="Bottom Tooltip" /&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Tooltip Content</h3>
+        <p>
+          You can use a function to return custom JSX for the tooltip content.
+        </p>
+        <div class="tooltip-container">
+          <div class="tooltip-demo">Custom Tooltip</div>
+          <div class="tooltip-text tooltip-top tooltip-center">
+            <strong>Hi</strong>&nbsp;
+            <i>I am</i>
+            <br />
+            <span style="color: #ff6b6b">custom tooltip.</span>
+          </div>
+        </div>
+        <pre>
+&lt;Tooltip
+  text={() => (
+    &lt;div className="oui-text-center"&gt;
+      &lt;strong&gt;Hi&lt;/strong&gt;&nbsp;
+      &lt;i&gt;I am&lt;/i&gt;
+      &lt;br /&gt;
+      &lt;span className="oui-text-danger"&gt;custom tooltip.&lt;/span&gt;
+    &lt;/div&gt;
+  )}
+  placement="top"
+&gt;
+  &lt;a href="/"&gt;tooltip&lt;/a&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Detailed Custom Tooltip</h3>
+        <div class="tooltip-container">
+          <div class="tooltip-demo">Detailed Custom Tooltip</div>
+          <div class="tooltip-text tooltip-top" style="width: 240px">
+            <div class="custom-tooltip">
+              <div class="custom-tooltip-header">Details</div>
+              <div class="custom-tooltip-row">
+                <div class="custom-tooltip-label">Name:</div>
+                <div class="custom-tooltip-value">Jack Sparrow</div>
+              </div>
+              <div class="custom-tooltip-row">
+                <div class="custom-tooltip-label">Ship:</div>
+                <div class="custom-tooltip-value">Black Pearl</div>
+              </div>
+              <div class="custom-tooltip-row">
+                <div class="custom-tooltip-label">Profession:</div>
+                <div class="custom-tooltip-value">Sea Pirate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Tooltip
+  text={() => (
+    &lt;div&gt;
+      &lt;Heading type="5" text="Details" /&gt;
+      &lt;Row&gt;
+        &lt;Col sm="6" className="oui-text-right"&gt;
+          Name:
+        &lt;/Col&gt;
+        &lt;Col sm="6"&gt;Jack Sparrow&lt;/Col&gt;
+      &lt;/Row&gt;
+      &lt;Row&gt;
+        &lt;Col sm="6" className="oui-text-right"&gt;
+          Ship:
+        &lt;/Col&gt;
+        &lt;Col sm="6"&gt;Black Pearl&lt;/Col&gt;
+      &lt;/Row&gt;
+      &lt;Row&gt;
+        &lt;Col sm="6" className="oui-text-right"&gt;
+          Profession:
+        &lt;/Col&gt;
+        &lt;Col sm="6"&gt;Sea Pirate&lt;/Col&gt;
+      &lt;/Row&gt;
+    &lt;/div&gt;
+  )}
+  placement="top"
+&gt;
+  &lt;a href="/"&gt;detailed tooltip&lt;/a&gt;
+&lt;/Tooltip&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          For non-custom tooltips (when <code>text</code> is a string), you can
+          control text alignment and max width using the
+          <code>textAlign</code> and <code>maxWidth</code> props.
+        </li>
+        <li>
+          When using custom tooltips (when <code>text</code> is a function), you
+          need to handle the styling within your custom component.
+        </li>
+        <li>
+          The <code>overflowOnly</code> prop is useful when you want to show
+          tooltips only for truncated text.
+        </li>
+        <li>
+          You can conditionally control tooltip visibility using the
+          <code>showToolTip</code> prop.
+        </li>
+        <li>
+          Tooltips are triggered on hover and will automatically position
+          themselves based on the <code>placement</code> prop.
+        </li>
+        <li>
+          For accessibility, tooltips are also shown when the element receives
+          keyboard focus.
+        </li>
+        <li>
+          The tooltip's position will adjust automatically if it would otherwise
+          be rendered outside the viewport.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

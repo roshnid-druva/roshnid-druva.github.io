@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toast Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Toast Demo Styles */
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        max-width: 350px;
+      }
+      .toast {
+        position: relative;
+        padding: 12px 16px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        animation: toast-in-right 0.7s;
+        max-width: 350px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      @keyframes toast-in-right {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      .toast-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .toast-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+      }
+      .toast-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .toast-message {
+        flex: 1;
+        margin-right: 10px;
+      }
+      .toast-close {
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        color: inherit;
+        opacity: 0.7;
+      }
+      .toast-close:hover {
+        opacity: 1;
+      }
+      .toast a {
+        color: inherit;
+        text-decoration: underline;
+      }
+      .toast a:hover {
+        text-decoration: none;
+      }
+      .button-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: all 0.15s ease-in-out;
+        cursor: pointer;
+      }
+      .btn-success {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+      .btn-warning {
+        color: #212529;
+        background-color: #ffc107;
+        border-color: #ffc107;
+      }
+      .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
+      .demo-container {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .demo-toast-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        max-width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Toast Component</h1>
+      <p>
+        A component that displays temporary notifications as toast messages.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Toast from "orion/lib/toast";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>alerts</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              List of alerts to be displayed as toasts.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>delay</td>
+            <td>Number</td>
+            <td>5000</td>
+            <td>
+              Time in milliseconds after which the toast message automatically
+              closes.
+            </td>
+          </tr>
+          <tr>
+            <td>onClose</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback function when a toast is closed.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-toast"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Alert Object</h2>
+      <p>
+        Each alert in the <code>alerts</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  message: String | React Element, // Content to display in the toast
+  type: String                     // "success", "warning", or "danger"
+}</pre
+      >
+      <ul>
+        <li>
+          <strong>message:</strong> The content to be displayed in the toast
+          (can be text or JSX)
+        </li>
+        <li>
+          <strong>type:</strong> The visual style of the toast ("success",
+          "warning", or "danger")
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+
+        <div class="demo-container">
+          <div class="button-container">
+            <button class="btn btn-success">Success Toast</button>
+            <button class="btn btn-warning">Warning Toast</button>
+            <button class="btn btn-danger">Danger Toast</button>
+          </div>
+
+          <div class="demo-toast-container">
+            <div class="toast toast-success">
+              <div class="toast-message">
+                This is success toast. <a href="#">Click Here</a> to check
+                status.
+              </div>
+              <div class="toast-close">×</div>
+            </div>
+            <div class="toast toast-warning">
+              <div class="toast-message">
+                This is warning toast. <a href="#">Click Here</a> to check
+                status.
+              </div>
+              <div class="toast-close">×</div>
+            </div>
+          </div>
+        </div>
+
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    alerts: [],
+    delay: 5000
+  };
+}
+
+onCreateToast = (type) => {
+  this.setState({
+    alerts: [
+      ...this.state.alerts,
+      {
+        type: type,
+        message: (
+          &lt;div&gt;
+            This is {type} toast. &lt;a href="#"&gt;Click Here&lt;/a&gt; to check status.
+          &lt;/div&gt;
+        )
+      }
+    ]
+  });
+};
+
+closeAlert = (alert) => {
+  let alerts = this.state.alerts.filter(alt => alert !== alt);
+  this.setState({
+    alerts: alerts
+  });
+};
+
+render() {
+  return (
+    &lt;div&gt;
+      &lt;Toast
+        alerts={this.state.alerts}
+        delay={this.state.delay}
+        onClose={this.closeAlert}
+      /&gt;
+
+      &lt;button
+        className="oui-btn oui-btn-success"
+        onClick={() => this.onCreateToast("success")}
+      &gt;
+        Success Toast
+      &lt;/button&gt;
+
+      &lt;button
+        className="oui-btn oui-btn-warning"
+        onClick={() => this.onCreateToast("warning")}
+      &gt;
+        Warning Toast
+      &lt;/button&gt;
+
+      &lt;button
+        className="oui-btn oui-btn-danger"
+        onClick={() => this.onCreateToast("danger")}
+      &gt;
+        Danger Toast
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Custom Delay</h3>
+        <pre>
+&lt;Toast
+  alerts={this.state.alerts}
+  delay={10000} // 10 seconds
+  onClose={this.closeAlert}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With ID for Tracking</h3>
+        <p>
+          It's recommended to include a unique identifier in your alert objects
+          to help with managing them:
+        </p>
+        <pre>
+onCreateToast = (type) => {
+  this.setState({
+    alerts: [
+      ...this.state.alerts,
+      {
+        id: Date.now(), // unique identifier
+        type: type,
+        message: `This is a ${type} toast message`,
+      },
+    ],
+  });
+};
+
+closeAlert = (alert) => {
+  let alerts = this.state.alerts.filter((alt) => alt.id !== alert.id);
+  this.setState({
+    alerts: alerts,
+  });
+};</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          Toasts will automatically disappear after the specified delay
+          (default: 5000ms)
+        </li>
+        <li>Users can manually close toasts by clicking the (x) button</li>
+        <li>
+          The <code>onClose</code> callback is triggered in both cases (timeout
+          or manual close)
+        </li>
+        <li>
+          You must handle removing the alert from your state in the
+          <code>onClose</code> function
+        </li>
+        <li>
+          It's recommended to add a unique identifier to each alert object to
+          make it easier to manage them
+        </li>
+        <li>
+          Toasts are displayed in the top-right corner of the screen by default
+        </li>
+        <li>
+          New toast messages appear with an animation sliding in from the right
+        </li>
+        <li>
+          Multiple toasts stack vertically with the most recent at the top
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

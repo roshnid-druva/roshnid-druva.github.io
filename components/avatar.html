@@ -42,6 +42,13 @@
         border-radius: 4px;
         font-family: monospace;
       }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
       .example {
         background-color: #f8f9fa;
         padding: 20px;
@@ -56,6 +63,51 @@
       }
       .back-link:hover {
         color: #2980b9;
+      }
+      .avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: 600;
+        color: white;
+        margin: 5px;
+      }
+      .avatar-sm {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+      .avatar-md {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+      }
+      .avatar-lg {
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+      }
+      .avatar-info {
+        background-color: #2196f3;
+      }
+      .avatar-success {
+        background-color: #4caf50;
+      }
+      .avatar-warning {
+        background-color: #ff9800;
+      }
+      .avatar-danger {
+        background-color: #f44336;
+      }
+      .avatar-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .avatar-label {
+        margin-left: 12px;
+        font-size: 14px;
       }
     </style>
   </head>
@@ -72,7 +124,7 @@
 
     <div class="section">
       <h2>Import</h2>
-      <code> import Avatar from "orion/lib/avatar"; </code>
+      <pre>import Avatar from "orion/lib/avatar";</pre>
     </div>
 
     <div class="section">
@@ -91,7 +143,7 @@
             <td>label</td>
             <td>String</td>
             <td>-</td>
-            <td>Label to the Avatar. (Required)</td>
+            <td>Label to the Avatar. <strong>(Required)</strong></td>
           </tr>
           <tr>
             <td>variant</td>
@@ -128,28 +180,87 @@
 
       <div class="example">
         <h3>Basic Usage</h3>
-        <code> &lt;Avatar label="Aadesh Chopade" /&gt; </code>
+        <div class="avatar-row">
+          <div class="avatar avatar-md avatar-info">AC</div>
+          <div class="avatar-label">Aadesh Chopade</div>
+        </div>
+        <pre>&lt;Avatar label="Aadesh Chopade" /&gt;</pre>
       </div>
 
       <div class="example">
         <h3>With Different Variants</h3>
-        <code>
-          &lt;Avatar label="Vishesh Sanghvi" variant="success" size="sm"
-          /&gt;<br />
-          &lt;Avatar label="Manish Jangir" variant="warning" /&gt;<br />
-          &lt;Avatar label="Sajid Sheikh" variant="danger" size="lg" /&gt;<br />
-          &lt;Avatar label="Saurabh" variant="success" /&gt;
-        </code>
+        <div class="avatar-row">
+          <div class="avatar avatar-sm avatar-success">VS</div>
+          <div class="avatar-label">
+            Vishesh Sanghvi (small success variant)
+          </div>
+        </div>
+        <div class="avatar-row">
+          <div class="avatar avatar-md avatar-warning">MJ</div>
+          <div class="avatar-label">Manish Jangir (medium warning variant)</div>
+        </div>
+        <div class="avatar-row">
+          <div class="avatar avatar-lg avatar-danger">SS</div>
+          <div class="avatar-label">Sajid Sheikh (large danger variant)</div>
+        </div>
+        <div class="avatar-row">
+          <div class="avatar avatar-md avatar-success">S</div>
+          <div class="avatar-label">Saurabh (medium success variant)</div>
+        </div>
+        <pre>
+&lt;Avatar label="Vishesh Sanghvi" variant="success" size="sm" /&gt;
+&lt;Avatar label="Manish Jangir" variant="warning" /&gt;
+&lt;Avatar label="Sajid Sheikh" variant="danger" size="lg" /&gt;
+&lt;Avatar label="Saurabh" variant="success" /&gt;</pre
+        >
       </div>
 
       <div class="example">
         <h3>Size Variations</h3>
-        <code>
-          &lt;Avatar label="User Name" variant="info" size="sm" /&gt;<br />
-          &lt;Avatar label="User Name" variant="info" size="md" /&gt;<br />
-          &lt;Avatar label="User Name" variant="info" size="lg" /&gt;
-        </code>
+        <div style="display: flex; align-items: center">
+          <div class="avatar-row" style="margin-right: 30px">
+            <div class="avatar avatar-sm avatar-info">UN</div>
+            <div class="avatar-label">Small (sm)</div>
+          </div>
+          <div class="avatar-row" style="margin-right: 30px">
+            <div class="avatar avatar-md avatar-info">UN</div>
+            <div class="avatar-label">Medium (md)</div>
+          </div>
+          <div class="avatar-row">
+            <div class="avatar avatar-lg avatar-info">UN</div>
+            <div class="avatar-label">Large (lg)</div>
+          </div>
+        </div>
+        <pre>
+&lt;Avatar label="User Name" variant="info" size="sm" /&gt;
+&lt;Avatar label="User Name" variant="info" size="md" /&gt;
+&lt;Avatar label="User Name" variant="info" size="lg" /&gt;</pre
+        >
       </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The Avatar component automatically extracts the first letters from
+          each word of the label to create the initials displayed in the avatar.
+        </li>
+        <li>For single-word labels, it uses the first letter only.</li>
+        <li>
+          For multi-word labels, it uses the first letter of the first and last
+          words.
+        </li>
+        <li>
+          The size property controls the dimensions of the avatar, with "sm"
+          being the smallest and "lg" being the largest.
+        </li>
+        <li>
+          The variant property changes the background color of the avatar, with
+          "info" (blue) being the default.
+        </li>
+        <li>Avatars are displayed as circles with centered text.</li>
+      </ul>
     </div>
   </body>
 </html>
