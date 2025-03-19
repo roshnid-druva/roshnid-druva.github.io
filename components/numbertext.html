@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NumberText Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* NumberText Demo Styles */
+      .number-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .number-col {
+        flex: 1;
+        min-width: 150px;
+      }
+      .number-text {
+        font-family: monospace;
+        margin: 0;
+      }
+
+      .weight-300 {
+        font-weight: 300;
+      }
+      .weight-400 {
+        font-weight: 400;
+      }
+      .weight-500 {
+        font-weight: 500;
+      }
+      .weight-600 {
+        font-weight: 600;
+      }
+      .weight-700 {
+        font-weight: 700;
+      }
+      .weight-800 {
+        font-weight: 800;
+      }
+
+      .size-xs {
+        font-size: 0.625rem;
+      }
+      .size-sm {
+        font-size: 0.75rem;
+      }
+      .size-md {
+        font-size: 0.875rem;
+      }
+      .size-lg {
+        font-size: 1rem;
+      }
+      .size-xl {
+        font-size: 1.125rem;
+      }
+      .size-2xl {
+        font-size: 1.25rem;
+      }
+      .size-3xl {
+        font-size: 1.375rem;
+      }
+      .size-4xl {
+        font-size: 1.5rem;
+      }
+      .size-5xl {
+        font-size: 1.75rem;
+      }
+      .size-6xl {
+        font-size: 2rem;
+      }
+
+      .custom-style {
+        color: blue;
+        letter-spacing: 0.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>NumberText Component</h1>
+      <p>
+        A specialized component for displaying numeric text with consistent
+        styling and various font weights and sizes.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import NumberText from "orion/lib/numberText";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>as</td>
+            <td>String</td>
+            <td>"span"</td>
+            <td>HTML element to render the component as</td>
+          </tr>
+          <tr>
+            <td>fontWeight</td>
+            <td>Number</td>
+            <td>400</td>
+            <td>Font weight (300, 400, 500, 600, 700, 800)</td>
+          </tr>
+          <tr>
+            <td>fontSize</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>Font size (xs, sm, md, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl)</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS classes to apply</td>
+          </tr>
+          <tr>
+            <td>style</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Inline styles to apply to the component</td>
+          </tr>
+          <tr>
+            <td>children</td>
+            <td>ReactNode</td>
+            <td>-</td>
+            <td>Content to render inside the component</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Font Size Options</h2>
+      <p>
+        The <code>fontSize</code> prop accepts the following values with
+        corresponding sizes:
+      </p>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>xs</td>
+            <td>0.625rem</td>
+          </tr>
+          <tr>
+            <td>sm</td>
+            <td>0.75rem</td>
+          </tr>
+          <tr>
+            <td>md</td>
+            <td>0.875rem</td>
+          </tr>
+          <tr>
+            <td>lg</td>
+            <td>1rem</td>
+          </tr>
+          <tr>
+            <td>xl</td>
+            <td>1.125rem</td>
+          </tr>
+          <tr>
+            <td>2xl</td>
+            <td>1.25rem</td>
+          </tr>
+          <tr>
+            <td>3xl</td>
+            <td>1.375rem</td>
+          </tr>
+          <tr>
+            <td>4xl</td>
+            <td>1.5rem</td>
+          </tr>
+          <tr>
+            <td>5xl</td>
+            <td>1.75rem</td>
+          </tr>
+          <tr>
+            <td>6xl</td>
+            <td>2rem</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Different Font Weights (with fixed font size)</h3>
+        <div class="number-row">
+          <div class="number-col">
+            <p class="number-text weight-300 size-lg">1234567890</p>
+            <p><code>fontWeight={300}</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-400 size-lg">1234567890</p>
+            <p><code>fontWeight={400}</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-lg">1234567890</p>
+            <p><code>fontWeight={500}</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-600 size-lg">1234567890</p>
+            <p><code>fontWeight={600}</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-700 size-lg">1234567890</p>
+            <p><code>fontWeight={700}</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-800 size-lg">1234567890</p>
+            <p><code>fontWeight={800}</code></p>
+          </div>
+        </div>
+        <pre>
+&lt;Row&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={300} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={400} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={600} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={700} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={800} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+&lt;/Row&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Different Font Sizes (with fixed font weight)</h3>
+        <div class="number-row">
+          <div class="number-col">
+            <p class="number-text weight-500 size-xs">1234567890</p>
+            <p><code>fontSize="xs"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-sm">1234567890</p>
+            <p><code>fontSize="sm"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-md">1234567890</p>
+            <p><code>fontSize="md"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-lg">1234567890</p>
+            <p><code>fontSize="lg"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-xl">1234567890</p>
+            <p><code>fontSize="xl"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-500 size-2xl">1234567890</p>
+            <p><code>fontSize="2xl"</code></p>
+          </div>
+        </div>
+        <pre>
+&lt;Row&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="xs"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="sm"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="md"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="lg"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="xl"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+  &lt;Col&gt;
+    &lt;NumberText fontWeight={500} fontSize="2xl"&gt;
+      1234567890
+    &lt;/NumberText&gt;
+  &lt;/Col&gt;
+&lt;/Row&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Using Different HTML Elements</h3>
+        <div class="number-row">
+          <div class="number-col">
+            <span class="number-text weight-400 size-lg">1234567890</span>
+            <p><code>as="span"</code></p>
+          </div>
+          <div class="number-col">
+            <div class="number-text weight-400 size-lg">1234567890</div>
+            <p><code>as="div"</code></p>
+          </div>
+          <div class="number-col">
+            <p class="number-text weight-400 size-lg">1234567890</p>
+            <p><code>as="p"</code></p>
+          </div>
+          <div class="number-col">
+            <strong class="number-text weight-400 size-lg">1234567890</strong>
+            <p><code>as="strong"</code></p>
+          </div>
+        </div>
+        <pre>
+&lt;NumberText as="span"&gt;1234567890&lt;/NumberText&gt;
+&lt;NumberText as="div"&gt;1234567890&lt;/NumberText&gt;
+&lt;NumberText as="p"&gt;1234567890&lt;/NumberText&gt;
+&lt;NumberText as="strong"&gt;1234567890&lt;/NumberText&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Custom Styling</h3>
+        <div class="number-row">
+          <div class="number-col">
+            <p class="number-text weight-600 size-xl custom-style">
+              1234567890
+            </p>
+          </div>
+        </div>
+        <pre>
+&lt;NumberText
+  fontWeight={600}
+  fontSize="xl"
+  style={{
+    color: "blue",
+    letterSpacing: "0.1em",
+  }}
+&gt;
+  1234567890
+&lt;/NumberText&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          NumberText applies a monospaced font style specifically designed for
+          numeric content
+        </li>
+        <li>It renders consistent number styles across the application</li>
+        <li>
+          The component can be rendered as any HTML element using the
+          <code>as</code> prop
+        </li>
+        <li>
+          Custom styles can be applied using the <code>style</code> prop or
+          <code>className</code>
+        </li>
+        <li>
+          The component is useful for dashboards, financial data, statistics and
+          anywhere consistent numeric presentation is needed
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

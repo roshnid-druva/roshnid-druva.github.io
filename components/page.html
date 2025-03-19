@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Page Demo Styles */
+      .page-layout {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        min-height: 300px;
+        position: relative;
+        overflow: hidden;
+      }
+      .page-main {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+      }
+      .page-header {
+        padding: 16px 24px;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: #f9f9f9;
+      }
+      .page-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        min-height: 28px;
+      }
+      .page-title-text {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .page-breadcrumb {
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #666;
+      }
+      .page-breadcrumb-link {
+        color: #3498db;
+        text-decoration: none;
+        margin: 0 4px;
+      }
+      .page-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .page-body {
+        padding: 24px;
+        flex: 1;
+        overflow-y: auto;
+        background-color: #fff;
+      }
+      .page-alert {
+        padding: 12px 24px;
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        font-size: 14px;
+      }
+      .page-tabs {
+        display: flex;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .page-tab {
+        padding: 12px 24px;
+        font-size: 14px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+      }
+      .page-tab.active {
+        border-bottom: 2px solid #3498db;
+        color: #3498db;
+      }
+      .page-tab-content {
+        padding: 24px;
+      }
+      .page-footer {
+        padding: 12px 24px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #e0e0e0;
+        font-size: 14px;
+        color: #666;
+        display: flex;
+        justify-content: space-between;
+      }
+      .page-footer-links {
+        display: flex;
+        gap: 16px;
+      }
+      .page-footer-link {
+        color: #3498db;
+        text-decoration: none;
+      }
+      .page-icon {
+        width: 20px;
+        height: 20px;
+        background-color: #ddd;
+        border-radius: 4px;
+        margin: 0 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+      .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-primary {
+        background-color: #3498db;
+        color: white;
+      }
+      .btn-secondary {
+        background-color: #f1f3f5;
+        color: #333;
+        border: 1px solid #e0e0e0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Page Component</h1>
+      <p>
+        A layout component that enforces consistent page structure across
+        products, handling headers, footers, navigation, and content areas.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Page from "orion/lib/page";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Components</h2>
+      <p>Page is composed of several sub-components:</p>
+      <ul>
+        <li><code>Page</code> - Root container</li>
+        <li><code>Page.Main</code> - Main content container</li>
+        <li><code>Page.Alert</code> - Displays alert messages</li>
+        <li><code>Page.Header</code> - Container for page header elements</li>
+        <li><code>Page.Title</code> - Container for page title elements</li>
+        <li>
+          <code>Page.TitleText</code> - Text component for consistent page
+          titles
+        </li>
+        <li>
+          <code>Page.Actions</code> - Container for header action buttons or
+          elements
+        </li>
+        <li><code>Page.Body</code> - Main content area</li>
+        <li><code>Page.Tabs</code> - Tab navigation for page content</li>
+        <li><code>Page.Footer</code> - Sticky footer component</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+
+      <h3>Page</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the root element</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Main</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the main container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-main"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Header</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the header</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-header"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Title</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the title container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-title"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.TitleText</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the title text</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-title-text"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Actions</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the actions container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-actions"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Body</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the body container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-body"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+          <tr>
+            <td>scrollable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether the body content is scrollable</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Tabs</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of tab items to render <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>children</td>
+            <td>ReactNode</td>
+            <td>-</td>
+            <td>Content when using tabbar mode</td>
+          </tr>
+          <tr>
+            <td>activeTabId</td>
+            <td>String</td>
+            <td>-</td>
+            <td>ID of the currently active tab</td>
+          </tr>
+          <tr>
+            <td>tabbar</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Use tabs as a navigation bar instead of tab panels</td>
+          </tr>
+          <tr>
+            <td>onTabClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Handler function when a tab is clicked</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS class for the tabs container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-page-tabs"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+          <tr>
+            <td>borderBottom</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether to show a border at the bottom of tabbar</td>
+          </tr>
+          <tr>
+            <td>variant</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Tab style variant ("default", "classic" or "widget")</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Page.Alert</h3>
+      <p>
+        Wrapper around the Alert component. Accepts all Alert component props.
+      </p>
+
+      <h3>Page.Footer</h3>
+      <p>
+        Wrapper around the GlobalFooter component. Accepts all GlobalFooter
+        component props.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Dashboard Layout (No Header)</h3>
+        <div class="page-layout">
+          <div class="page-main">
+            <div class="page-body">
+              <div style="color: #aaa; text-align: center">
+                Dashboard content area
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Body&gt;{/* Dashboard cards or other body content */}&lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Alert Message</h3>
+        <div class="page-layout">
+          <div class="page-alert">This is an info text</div>
+          <div class="page-main">
+            <div class="page-body">
+              <div style="color: #aaa; text-align: center">
+                Page content area
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Alert message="This is an info text" type="info" /&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Body&gt;{/* Page content */}&lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Basic Page with Title</h3>
+        <div class="page-layout">
+          <div class="page-main">
+            <div class="page-header">
+              <div class="page-title">
+                <div class="page-title-text">Backup And Restore</div>
+              </div>
+            </div>
+            <div class="page-body">
+              <div style="color: #aaa; text-align: center">
+                Page content area
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Header&gt;
+      &lt;Page.Title&gt;
+        &lt;Page.TitleText&gt;Backup And Restore&lt;/Page.TitleText&gt;
+      &lt;/Page.Title&gt;
+    &lt;/Page.Header&gt;
+    &lt;Page.Body&gt;{/* Body content */}&lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Complete Page Layout</h3>
+        <div class="page-layout">
+          <div class="page-main">
+            <div class="page-header">
+              <div class="page-breadcrumb">
+                <span>Home</span>
+                <span> / </span>
+                <a href="#" class="page-breadcrumb-link">Users</a>
+                <span> / </span>
+                <span>Profile</span>
+              </div>
+              <div class="page-title">
+                <span class="page-icon">←</span>
+                <div class="page-title-text">User Profile</div>
+                <span class="page-icon">i</span>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-secondary">Cancel</button>
+              </div>
+            </div>
+            <div class="page-body">
+              <div style="color: #aaa; text-align: center">
+                Page content area
+              </div>
+            </div>
+          </div>
+          <div class="page-footer">
+            <div class="page-footer-links">
+              <a href="#" class="page-footer-link">Terms</a>
+              <a href="#" class="page-footer-link">Privacy</a>
+            </div>
+            <div>2023 Company</div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Header&gt;
+      &lt;Breadcrumb items={breadcrumbItems} /&gt;
+      &lt;Page.Title&gt;
+        &lt;Icon src={BackIcon} className="oui-mr-1" clickable /&gt;
+        &lt;Page.TitleText&gt;User Profile&lt;/Page.TitleText&gt;
+        &lt;Icon src={InfoIcon} className="oui-ml-1" clickable /&gt;
+      &lt;/Page.Title&gt;
+      &lt;Page.Actions&gt;
+        &lt;Button type="primary" label="Save" /&gt;
+        &lt;Button type="secondary" label="Cancel" /&gt;
+      &lt;/Page.Actions&gt;
+    &lt;/Page.Header&gt;
+    &lt;Page.Body&gt;{/* Page content */}&lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+  &lt;Page.Footer links={footerLinks} copyrightText="2023 Company" /&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Tabs</h3>
+        <div class="page-layout">
+          <div class="page-main">
+            <div class="page-header">
+              <div class="page-title">
+                <div class="page-title-text">User Information</div>
+              </div>
+            </div>
+            <div class="page-body" style="padding: 0">
+              <div class="page-tabs">
+                <div class="page-tab active">Profile</div>
+                <div class="page-tab">Settings</div>
+              </div>
+              <div class="page-tab-content">
+                <div style="color: #aaa; text-align: center">
+                  Tab content area
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Header&gt;
+      &lt;Page.Title&gt;
+        &lt;Page.TitleText&gt;User Information&lt;/Page.TitleText&gt;
+      &lt;/Page.Title&gt;
+    &lt;/Page.Header&gt;
+    &lt;Page.Body&gt;
+      &lt;Page.Tabs
+        items={[
+          {
+            title: "Profile",
+            id: "profile",
+            component: () =&gt; &lt;ProfileComponent /&gt;,
+          },
+          {
+            title: "Settings",
+            id: "settings",
+            component: () =&gt; &lt;SettingsComponent /&gt;,
+          },
+        ]}
+      /&gt;
+    &lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Tab Bar</h3>
+        <div class="page-layout">
+          <div class="page-main">
+            <div class="page-header">
+              <div class="page-title">
+                <div class="page-title-text">User Information</div>
+              </div>
+            </div>
+            <div class="page-body" style="padding: 0">
+              <div class="page-tabs" style="border-bottom: 2px solid #e0e0e0">
+                <div class="page-tab active">Profile</div>
+                <div class="page-tab">Settings</div>
+              </div>
+              <div class="page-tab-content">
+                <div style="color: #aaa; text-align: center">
+                  Profile content area
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Page&gt;
+  &lt;Page.Main&gt;
+    &lt;Page.Header&gt;
+      &lt;Page.Title&gt;
+        &lt;Page.TitleText&gt;User Information&lt;/Page.TitleText&gt;
+      &lt;/Page.Title&gt;
+    &lt;/Page.Header&gt;
+    &lt;Page.Body&gt;
+      &lt;Page.Tabs
+        tabbar
+        borderBottom
+        activeTabId={activeTabId}
+        onTabClick={handleTabClick}
+        items={[
+          { title: "Profile", id: "profile" },
+          { title: "Settings", id: "settings" },
+        ]}
+      &gt;
+        {activeTabId === "profile" && &lt;ProfileComponent /&gt;}
+        {activeTabId === "settings" && &lt;SettingsComponent /&gt;}
+      &lt;/Page.Tabs&gt;
+    &lt;/Page.Body&gt;
+  &lt;/Page.Main&gt;
+&lt;/Page&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The Page component manages the layout and enforces consistent spacing
+        </li>
+        <li>
+          The Page.Body component is scrollable by default and sizes
+          automatically
+        </li>
+        <li>
+          When using Page.Tabs, tab content is managed automatically unless
+          using tabbar mode
+        </li>
+        <li>
+          The Page.Footer component renders a sticky footer at the bottom of the
+          page
+        </li>
+        <li>
+          Alert messages can be displayed either within Page.Main or outside for
+          full-width alerts
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

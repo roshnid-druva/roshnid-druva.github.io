@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagination Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Pagination Demo Styles */
+      .pagination-demo {
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 16px;
+      }
+      .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 14px;
+      }
+      .pagination-container.left {
+        justify-content: flex-start;
+      }
+      .pagination-info {
+        color: #6c757d;
+        margin-right: 16px;
+      }
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+      }
+      .pagination-button {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+        color: #212529;
+      }
+      .pagination-button.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .pagination-button:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+      .pagination-button:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      .pagination-input {
+        width: 50px;
+        height: 32px;
+        border: 1px solid #dee2e6;
+        text-align: center;
+        font-size: 14px;
+        color: #212529;
+        margin: 0 -1px;
+      }
+      .pagination-total {
+        margin: 0 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Pagination Component</h1>
+      <p>
+        A straightforward component for implementing pagination functionality
+        for tables and data grids.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Pagination from "orion/lib/pagination";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>currentPage</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>
+              Current page number being displayed. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>onPageChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback function when page changes</td>
+          </tr>
+          <tr>
+            <td>totalRecords</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Total number of records, used to calculate total pages</td>
+          </tr>
+          <tr>
+            <td>recordsPerPage</td>
+            <td>Number</td>
+            <td>10</td>
+            <td>Number of records shown per page</td>
+          </tr>
+          <tr>
+            <td>showFooterInfo</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to show the pagination information text</td>
+          </tr>
+          <tr>
+            <td>alignLeft</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Aligns pagination to the left (right by default)</td>
+          </tr>
+          <tr>
+            <td>getInfoText</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom function to generate information text</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Pagination (Infinite Pages)</h3>
+        <p>
+          When <code>totalRecords</code> is not provided, pagination can go
+          infinitely forward.
+        </p>
+        <div class="pagination-demo">
+          <div class="pagination-container">
+            <div class="pagination-controls">
+              <button class="pagination-button">←</button>
+              <input type="text" class="pagination-input" value="1" />
+              <button class="pagination-button">→</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Pagination
+  currentPage={this.state.currentPage}
+  onPageChange={(currentPage) => {
+    this.setState({ currentPage });
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Known Number of Records</h3>
+        <p>
+          When <code>totalRecords</code> is provided, the component calculates
+          available pages and disables the next button on the last page.
+        </p>
+        <div class="pagination-demo">
+          <div class="pagination-container">
+            <div class="pagination-info">1-10 of 64 records</div>
+            <div class="pagination-controls">
+              <button class="pagination-button">←</button>
+              <input type="text" class="pagination-input" value="1" />
+              <span class="pagination-total">of 7</span>
+              <button class="pagination-button">→</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Pagination
+  totalRecords={64}
+  currentPage={this.state.currentPage}
+  onPageChange={(currentPage) => {
+    this.setState({ currentPage });
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Records Per Page</h3>
+        <p>
+          Adjust the number of records shown per page with the
+          <code>recordsPerPage</code> prop.
+        </p>
+        <div class="pagination-demo">
+          <div class="pagination-container">
+            <div class="pagination-info">1-20 of 64 records</div>
+            <div class="pagination-controls">
+              <button class="pagination-button">←</button>
+              <input type="text" class="pagination-input" value="1" />
+              <span class="pagination-total">of 4</span>
+              <button class="pagination-button">→</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Pagination
+  totalRecords={64}
+  recordsPerPage={20}
+  currentPage={this.state.currentPage}
+  onPageChange={(currentPage) => {
+    this.setState({ currentPage });
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Left-Aligned Pagination</h3>
+        <p>
+          By default, pagination is right-aligned. Use <code>alignLeft</code> to
+          change this.
+        </p>
+        <div class="pagination-demo">
+          <div class="pagination-container left">
+            <div class="pagination-controls">
+              <button class="pagination-button">←</button>
+              <input type="text" class="pagination-input" value="1" />
+              <button class="pagination-button">→</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Pagination
+  alignLeft
+  currentPage={this.state.currentPage}
+  onPageChange={(currentPage) => {
+    this.setState({ currentPage });
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Information Text</h3>
+        <p>Customize the information text shown in pagination.</p>
+        <div class="pagination-demo">
+          <div class="pagination-container">
+            <div class="pagination-info">Showing items 1-10 of 100 results</div>
+            <div class="pagination-controls">
+              <button class="pagination-button">←</button>
+              <input type="text" class="pagination-input" value="1" />
+              <span class="pagination-total">of 10</span>
+              <button class="pagination-button">→</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Pagination
+  totalRecords={100}
+  currentPage={this.state.currentPage}
+  onPageChange={(currentPage) => {
+    this.setState({ currentPage });
+  }}
+  getInfoText={(from, to, total) =>
+    `Showing items ${from}-${to} of ${total} results`
+  }
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          By default, pagination is rendered on the right side of its container
+        </li>
+        <li>
+          When <code>totalRecords</code> is not provided, pagination can go
+          forward infinitely
+        </li>
+        <li>
+          When <code>totalRecords</code> is provided, a footer information text
+          is shown (e.g., "1-10 of 64 records")
+        </li>
+        <li>
+          The footer information text can be customized using the
+          <code>getInfoText</code> function or hidden using
+          <code>showFooterInfo={false}</code>
+        </li>
+        <li>
+          Total pages are calculated based on <code>totalRecords</code> and
+          <code>recordsPerPage</code>
+        </li>
+        <li>
+          The component provides navigation using previous and next buttons, as
+          well as direct input
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

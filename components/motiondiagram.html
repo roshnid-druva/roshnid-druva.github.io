@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MotionDiagram Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+      .animation-container {
+        height: 200px;
+        width: 100%;
+        max-width: 400px;
+        background-color: #f7f9fc;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .animation-container::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #3498db;
+        border-radius: 50%;
+        animation: bounce 2s infinite ease-in-out;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-50px);
+        }
+      }
+      .controls-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      .control-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .checkbox-input {
+        width: 18px;
+        height: 18px;
+      }
+      .slider-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      .slider {
+        width: 100%;
+        margin-top: 5px;
+      }
+      .slider-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+      .method-item {
+        margin-bottom: 10px;
+      }
+      .method-name {
+        font-weight: 600;
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>MotionDiagram Component</h1>
+      <p>
+        A component for rendering Lottie animations from Bodymovin JSON data.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import MotionDiagram from "orion/lib/motionDiagram";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>src</td>
+            <td>Bodymovin JSON data or URL to JSON</td>
+            <td>-</td>
+            <td>Animation source data. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>loop</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether to loop the animation</td>
+          </tr>
+          <tr>
+            <td>autoplay</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Autoplay animation on load</td>
+          </tr>
+          <tr>
+            <td>speed</td>
+            <td>Number</td>
+            <td>1</td>
+            <td>Control the animation playback speed</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the Lottie container</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Methods</h2>
+      <p>
+        When using a ref on the MotionDiagram component, you can access these
+        methods:
+      </p>
+      <div class="method-item">
+        <code class="method-name">setLoop(boolean)</code> - Enable or disable
+        animation looping
+      </div>
+      <div class="method-item">
+        <code class="method-name">setPlayerSpeed(number)</code> - Change the
+        animation playback speed
+      </div>
+      <div class="method-item">
+        <code class="method-name">play()</code> - Play the animation
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Events</h2>
+      <p>
+        The MotionDiagram component can emit events that you can handle with the
+        <code>onEvent</code> prop:
+      </p>
+      <ul>
+        <li>
+          <code>"complete"</code> - Fired when the animation completes (and will
+          not loop again)
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+        <div class="animation-container"></div>
+        <pre>
+import MotionDiagram from "orion/lib/motionDiagram";
+import animationData from "./animation.json";
+
+const BasicExample = () => {
+  return &lt;MotionDiagram src={animationData} autoplay loop /&gt;;
+};</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Controls</h3>
+        <div class="controls-container">
+          <div class="control-item">
+            <input type="checkbox" id="loop-checkbox" class="checkbox-input" />
+            <label for="loop-checkbox">Loop Animation</label>
+          </div>
+          <div class="slider-container">
+            <span class="slider-label">Animation Speed</span>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              id="speed-slider"
+            />
+            <div style="display: flex; justify-content: space-between">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+            </div>
+          </div>
+        </div>
+        <div class="animation-container"></div>
+        <pre>
+import React, { useRef, useState } from "react";
+import MotionDiagram from "orion/lib/motionDiagram";
+import Slider from "orion/lib/slider";
+import Input from "orion/lib/input";
+import animationData from "./animation.json";
+
+const ControlledExample = () => {
+  const [loop, setLoop] = useState(false);
+  const [animStopped, setAnimStopped] = useState(false);
+  const lottieRef = useRef(null);
+
+  const handleEvent = (event) => {
+    if (event === "complete") {
+      setAnimStopped(true);
+    }
+  };
+
+  const handleLoopChange = (e) => {
+    setLoop(e.target.checked);
+    if (lottieRef.current) {
+      lottieRef.current.setLoop(e.target.checked);
+      if (animStopped) {
+        lottieRef.current.play();
+      }
+    }
+  };
+
+  const handleSpeedChange = (value) => {
+    if (lottieRef.current) {
+      lottieRef.current.setPlayerSpeed(value);
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Loop Animation
+          &lt;Input type="checkbox" checked={loop} onChange={handleLoopChange} /&gt;
+        &lt;/label&gt;
+
+        &lt;div&gt;
+          &lt;label&gt;Animation Speed&lt;/label&gt;
+          &lt;Slider
+            min={1}
+            max={5}
+            step={1}
+            labelStep={1}
+            tooltip
+            onChange={handleSpeedChange}
+          /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;MotionDiagram
+        ref={lottieRef}
+        src={animationData}
+        autoplay
+        loop={loop}
+        speed={1}
+        onEvent={handleEvent}
+        style={{
+          height: "400px",
+          width: "100%",
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+};</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Usage Notes</h2>
+      <ul>
+        <li>
+          The MotionDiagram component is designed to work with Lottie animations
+          exported from After Effects using the Bodymovin plugin.
+        </li>
+        <li>
+          The <code>src</code> prop can accept either a JSON object containing
+          the animation data or a URL to a JSON file.
+        </li>
+        <li>
+          For large animations, consider loading the animation data
+          asynchronously to improve performance.
+        </li>
+        <li>
+          You can control the animation programmatically using a ref to access
+          the component's methods.
+        </li>
+        <li>
+          Animations can be styled with custom dimensions using inline styles or
+          CSS classes.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
