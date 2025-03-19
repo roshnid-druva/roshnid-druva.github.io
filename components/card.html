@@ -57,6 +57,13 @@
       .back-link:hover {
         color: #2980b9;
       }
+      .note {
+        background-color: #e8f4fd;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
@@ -65,10 +72,14 @@
     <div class="component-header">
       <h1>Card Component</h1>
       <p>
-        The Card component is a flexible container that can be used to display
-        content in a clear and organized way. It supports various features like
-        headers, footers, titles, subtitles, and collapsible content.
+        A component to create content containers with customizable titles,
+        bodies, and footers.
       </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Card from "orion/lib/card"; </code>
     </div>
 
     <div class="section">
@@ -88,10 +99,8 @@
             <td>String|Function</td>
             <td>-</td>
             <td>
-              Main title of the card. If passing as a function, use the
-              Card.Title component and pass the title prop as a string to it.
-              Note: If title is not provided, subtitle and titleAction will be
-              ignored.
+              Main title of the card. Can be a string or a function for custom
+              rendering.
             </td>
           </tr>
           <tr>
@@ -116,14 +125,18 @@
             <td>fullHeight</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Set multiple cards to equal height in a row.</td>
+            <td>
+              Makes cards in the same row have equal height regardless of
+              content.
+            </td>
           </tr>
           <tr>
             <td>titleAction</td>
             <td>Function</td>
             <td>-</td>
             <td>
-              Function to add action items like icons next to the card title.
+              Function to add action items like icons or buttons next to the
+              card title.
             </td>
           </tr>
           <tr>
@@ -154,43 +167,83 @@
             <td>className</td>
             <td>String</td>
             <td>-</td>
-            <td>Custom class for styling.</td>
+            <td>Provision to pass custom class.</td>
           </tr>
           <tr>
             <td>dataTestId</td>
             <td>String</td>
             <td>orion-card</td>
-            <td>Custom data test ID for automation.</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
           </tr>
           <tr>
             <td>onClick</td>
             <td>Function</td>
             <td>-</td>
             <td>
-              Click handler for the entire card. Note: For collapsible cards,
-              clicking title/arrow won't trigger this.
+              Click handler for the card (title, body, footer). Note: For
+              collapsible cards, clicking on title or arrow icon will not
+              trigger this handler.
             </td>
           </tr>
           <tr>
             <td>disabled</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Disables all card interactions and shows an overlay.</td>
+            <td>
+              Disables all card interactions with an overlay showing over it.
+            </td>
           </tr>
           <tr>
             <td>isLoading</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Shows loading bouncer icon when component is loading.</td>
+            <td>
+              Show loading bouncer icon when the component is in loading state.
+            </td>
           </tr>
           <tr>
             <td>isError</td>
             <td>Boolean</td>
             <td>false</td>
-            <td>Shows error message when component is in error state.</td>
+            <td>Show error message when the component is in error state.</td>
           </tr>
         </tbody>
       </table>
+
+      <h3>Card.Title Props</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>title</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Title string to be shown</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <p>
+          <strong>Note:</strong> If the title is not provided, subtitle and
+          titleAction will be ignored altogether.
+        </p>
+      </div>
     </div>
 
     <div class="section">
@@ -199,14 +252,13 @@
       <div class="example">
         <h3>Basic Card</h3>
         <code>
-          import Card from "orion/lib/card";<br /><br />
           &lt;Card<br />
-          &nbsp;&nbsp;title="Card Title"<br />
-          &nbsp;&nbsp;body={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Card content goes
-          here&lt;/div&gt;<br />
-          &nbsp;&nbsp;)}<br />
-          /&gt;
+          &nbsp;&nbsp;title="Card title"<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}
+          <br />/&gt;
         </code>
       </div>
 
@@ -214,15 +266,16 @@
         <h3>Card with Subtitle and Footer</h3>
         <code>
           &lt;Card<br />
-          &nbsp;&nbsp;title="Card Title"<br />
+          &nbsp;&nbsp;title="Card With Footer"<br />
           &nbsp;&nbsp;subtitle="Card Subtitle"<br />
-          &nbsp;&nbsp;body={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Card content goes
-          here&lt;/div&gt;<br />
-          &nbsp;&nbsp;)}<br />
-          &nbsp;&nbsp;footer={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Footer content&lt;/div&gt;<br />
-          &nbsp;&nbsp;)}<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          &nbsp;&nbsp;footer={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;a href="#">Click Here To
+          View&lt;/a>;<br />
+          &nbsp;&nbsp;}}<br />
           /&gt;
         </code>
       </div>
@@ -232,71 +285,142 @@
         <code>
           &lt;Card<br />
           &nbsp;&nbsp;title="Collapsible Card"<br />
-          &nbsp;&nbsp;collapsible={true}<br />
-          &nbsp;&nbsp;collapsedByDefault={true}<br />
-          &nbsp;&nbsp;body={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Collapsible content goes
-          here&lt;/div&gt;<br />
-          &nbsp;&nbsp;)}<br />
-          &nbsp;&nbsp;onCollapse={() => console.log('Card collapsed')}<br />
-          &nbsp;&nbsp;onExpand={() => console.log('Card expanded')}<br />
+          &nbsp;&nbsp;collapsible<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          /&gt;<br /><br />
+
+          // Initially collapsed<br />
+          &lt;Card<br />
+          &nbsp;&nbsp;title="Collapsed by Default"<br />
+          &nbsp;&nbsp;collapsible<br />
+          &nbsp;&nbsp;collapsedByDefault<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
           /&gt;
+        </code>
+      </div>
+
+      <div class="example">
+        <h3>Cards with Equal Height</h3>
+        <code>
+          &lt;Row><br />
+          &nbsp;&nbsp;&lt;Col><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Card<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Card 1"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullHeight<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body={() => &lt;div>Content with
+          varying length...&lt;/div>}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;/><br />
+          &nbsp;&nbsp;&lt;/Col><br />
+          &nbsp;&nbsp;&lt;Col><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Card title="Card 2" fullHeight body={() =>
+          &lt;div>Short content&lt;/div>} /><br />
+          &nbsp;&nbsp;&lt;/Col><br />
+          &nbsp;&nbsp;&lt;Col><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Card<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Card 3"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullHeight<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body={() => &lt;div>Medium length
+          content...&lt;/div>}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;/><br />
+          &nbsp;&nbsp;&lt;/Col><br />
+          &lt;/Row>
         </code>
       </div>
 
       <div class="example">
         <h3>Card with Title Actions</h3>
         <code>
+          // With dropdown<br />
           &lt;Card<br />
-          &nbsp;&nbsp;title="Card with Actions"<br />
+          &nbsp;&nbsp;title="Card title Action Buttons"<br />
           &nbsp;&nbsp;titleAction={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Button icon="edit" variant="link" /&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Dropdown<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;items={buttons}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size="sm"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type="secondary"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon={{ classes: "di di-more"
+          }}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rightAligned<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;/><br />
           &nbsp;&nbsp;)}<br />
-          &nbsp;&nbsp;body={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Card content with
-          actions&lt;/div&gt;<br />
-          &nbsp;&nbsp;)}<br />
-          /&gt;
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          /><br /><br />
+
+          // With icon<br />
+          &lt;Card<br />
+          &nbsp;&nbsp;title="Card title with icon"<br />
+          &nbsp;&nbsp;titleAction={() => &lt;Icon src={Edit} clickable />}<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          /><br /><br />
+
+          // With button<br />
+          &lt;Card<br />
+          &nbsp;&nbsp;title="Card title with button"<br />
+          &nbsp;&nbsp;titleAction={() => &lt;Button label="Edit" type="primary"
+          size="sm" />}<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          />
         </code>
       </div>
 
       <div class="example">
         <h3>Custom Card Title</h3>
         <code>
+          // With tooltip<br />
           &lt;Card<br />
           &nbsp;&nbsp;title={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;Card.Title title="Custom Title"&gt;<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{/* Additional title content
-          */}<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/Card.Title&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div style={{ display: "flex", alignItems:
+          "center" }}><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Tooltip text="Some useful
+          information"><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Card.Title<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Custom
+          title with tooltip"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;className="oui-mr-3"<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Tooltip><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div><br />
           &nbsp;&nbsp;)}<br />
-          &nbsp;&nbsp;body={() => (<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;Card with custom
-          title&lt;/div&gt;<br />
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          /><br /><br />
+
+          // With icon<br />
+          &lt;Card<br />
+          &nbsp;&nbsp;collapsible<br />
+          &nbsp;&nbsp;title={() => (<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div style={{ display: "flex", alignItems:
+          "center" }}><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Icon classes="di di-settings"
+          /><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Card.Title collapsible
+          title="Title With Icon" className="oui-ml-3" /><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div><br />
           &nbsp;&nbsp;)}<br />
-          /&gt;
+          &nbsp;&nbsp;body={() => {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;return &lt;div>Card Body goes
+          here.&lt;/div>;<br />
+          &nbsp;&nbsp;}}<br />
+          />
         </code>
       </div>
-    </div>
-
-    <div class="section">
-      <h2>Styling</h2>
-      <p>The Card component uses the following CSS classes for styling:</p>
-      <ul>
-        <li>
-          <code>oui-card-collapsible</code> - Applied to collapsible cards
-        </li>
-        <li><code>oui-card-expanded</code> - Applied when card is expanded</li>
-        <li>
-          <code>oui-card-collapsed</code> - Applied when card is collapsed
-        </li>
-        <li><code>oui-card-title</code> - Styles for the card title</li>
-        <li>
-          <code>oui-card-title-container</code> - Container for card title and
-          actions
-        </li>
-        <li><code>oui-card-title-action</code> - Styles for title actions</li>
-      </ul>
     </div>
   </body>
 </html>

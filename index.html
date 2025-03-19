@@ -45,6 +45,18 @@
       a:hover {
         color: #2980b9;
       }
+      .component-categories {
+        margin-bottom: 20px;
+      }
+      .category {
+        margin-bottom: 30px;
+      }
+      .category-title {
+        margin-bottom: 15px;
+        color: #2c3e50;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
     </style>
   </head>
   <body>
@@ -58,33 +70,400 @@
     </header>
 
     <main>
-      <h2>Components</h2>
-      <div class="component-grid">
-        <div class="component-card">
-          <h3>Button</h3>
-          <p>
-            A versatile button component supporting multiple variants, sizes,
-            and states.
-          </p>
-          <a href="./components/button.html">View Documentation →</a>
+      <div class="component-categories">
+        <div class="category">
+          <h2 class="category-title">Basic Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Button</h3>
+              <p>
+                A versatile button component with multiple types, sizes, and
+                states.
+              </p>
+              <a href="./components/button.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>ButtonGroup</h3>
+              <p>A component for grouping related buttons together.</p>
+              <a href="./components/buttongroup.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Icon</h3>
+              <p>
+                Component for displaying vector icons from the Orion icon
+                library.
+              </p>
+              <a href="./components/icon.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Avatar</h3>
+              <p>
+                A component to display user avatars with customizable variants
+                and sizes.
+              </p>
+              <a href="./components/avatar.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Badge</h3>
+              <p>Component for displaying status indicators and counts.</p>
+              <a href="./components/badge.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Divider</h3>
+              <p>
+                Simple component for creating horizontal dividers with optional
+                labels.
+              </p>
+              <a href="./components/divider.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Label</h3>
+              <p>Text label component with various styling options.</p>
+              <a href="./components/label.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Heading</h3>
+              <p>Standardized heading component with consistent styling.</p>
+              <a href="./components/heading.html">View Documentation →</a>
+            </div>
+          </div>
         </div>
-        <div class="component-card">
-          <h3>DataCollection</h3>
-          <p>
-            A composite component for building data tables with advanced
-            features like search, filter, and action buttons.
-          </p>
-          <a href="./components/datacollection.html">View Documentation →</a>
+
+        <div class="category">
+          <h2 class="category-title">Form Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Input</h3>
+              <p>
+                Text input component with support for labels, validation, and
+                various states.
+              </p>
+              <a href="./components/input.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Select</h3>
+              <p>
+                Dropdown select component for choosing from a list of options.
+              </p>
+              <a href="./components/select.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Checkbox</h3>
+              <p>Component for binary choices and multiple selections.</p>
+              <a href="./components/checkbox.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Form</h3>
+              <p>
+                Container for form elements with built-in validation and
+                submission handling.
+              </p>
+              <a href="./components/form.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>DatePicker</h3>
+              <p>Component for selecting dates from a calendar interface.</p>
+              <a href="./components/datepicker.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>TimePicker</h3>
+              <p>Component for selecting time values.</p>
+              <a href="./components/timepicker.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>InputGroup</h3>
+              <p>Combines multiple input elements with consistent styling.</p>
+              <a href="./components/inputgroup.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>PhoneInput</h3>
+              <p>
+                Specialized input for phone numbers with country code selection.
+              </p>
+              <a href="./components/phoneinput.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>AutoSuggest</h3>
+              <p>
+                Input with autocomplete suggestions for improved user
+                experience.
+              </p>
+              <a href="./components/autosuggest.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>TagSelect</h3>
+              <p>Select component that displays selected options as tags.</p>
+              <a href="./components/tagselect.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>ToggleButton</h3>
+              <p>Button component that toggles between two states.</p>
+              <a href="./components/togglebutton.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Slider</h3>
+              <p>Input component for selecting a value from a range.</p>
+              <a href="./components/slider.html">View Documentation →</a>
+            </div>
+          </div>
         </div>
-        <div class="component-card">
-          <h3>Card</h3>
-          <p>
-            A flexible container component that supports headers, footers,
-            titles, subtitles, and collapsible content.
-          </p>
-          <a href="./components/card.html">View Documentation →</a>
+
+        <div class="category">
+          <h2 class="category-title">Layout Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Card</h3>
+              <p>
+                A flexible container component with headers, footers, and
+                collapsible content.
+              </p>
+              <a href="./components/card.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Layout</h3>
+              <p>
+                Component for creating responsive page layouts with configurable
+                sections.
+              </p>
+              <a href="./components/layout.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Sidebar</h3>
+              <p>Collapsible side navigation component for applications.</p>
+              <a href="./components/sidebar.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Page</h3>
+              <p>Top-level container for creating consistent page layouts.</p>
+              <a href="./components/page.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>StickyPanel</h3>
+              <p>Panel that remains fixed in the viewport during scrolling.</p>
+              <a href="./components/stickypanel.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>SideNav</h3>
+              <p>
+                Navigation component with expandable sections and routing
+                integration.
+              </p>
+              <a href="./components/sidenav.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Headerbar</h3>
+              <p>
+                Application header bar with customizable navigation and actions.
+              </p>
+              <a href="./components/headerbar.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>GlobalHeaderTemplate</h3>
+              <p>
+                Standardized header template for consistent application design.
+              </p>
+              <a href="./components/globalheadertemplate.html"
+                >View Documentation →</a
+              >
+            </div>
+            <div class="component-card">
+              <h3>GlobalFooter</h3>
+              <p>Standardized footer component for applications.</p>
+              <a href="./components/globalfooter.html">View Documentation →</a>
+            </div>
+          </div>
         </div>
-        <!-- More component cards will be added here as they are documented -->
+
+        <div class="category">
+          <h2 class="category-title">Data Display Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>DataCollection</h3>
+              <p>
+                A comprehensive data presentation component that combines
+                search, filtering, and a data grid.
+              </p>
+              <a href="./components/datacollection.html"
+                >View Documentation →</a
+              >
+            </div>
+            <div class="component-card">
+              <h3>DataGrid</h3>
+              <p>
+                Advanced table component with sorting, filtering, and selection
+                capabilities.
+              </p>
+              <a href="./components/datagrid.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Table</h3>
+              <p>Simple table component for displaying tabular data.</p>
+              <a href="./components/table.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Tree</h3>
+              <p>
+                Component for displaying hierarchical data with expandable
+                nodes.
+              </p>
+              <a href="./components/tree.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Pagination</h3>
+              <p>Component for navigating through paginated data.</p>
+              <a href="./components/pagination.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>MotionDiagram</h3>
+              <p>Component for visualizing processes and workflows.</p>
+              <a href="./components/motiondiagram.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>SortableList</h3>
+              <p>List component with drag-and-drop reordering capabilities.</p>
+              <a href="./components/sortablelist.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>LabelValue</h3>
+              <p>Component for displaying labeled data in key-value format.</p>
+              <a href="./components/labelvalue.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>NumberText</h3>
+              <p>Component for displaying formatted numbers with animations.</p>
+              <a href="./components/numbertext.html">View Documentation →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="category">
+          <h2 class="category-title">Feedback Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Toast</h3>
+              <p>
+                Non-disruptive notification component for displaying messages.
+              </p>
+              <a href="./components/toast.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Modal</h3>
+              <p>
+                Dialog component for displaying content in a layer above the
+                page.
+              </p>
+              <a href="./components/modal.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Alert</h3>
+              <p>
+                Component for displaying important messages with different
+                severity levels.
+              </p>
+              <a href="./components/alert.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>MessageBox</h3>
+              <p>Component for displaying messages with icons and actions.</p>
+              <a href="./components/messagebox.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Popover</h3>
+              <p>
+                Component for displaying floating content anchored to a trigger
+                element.
+              </p>
+              <a href="./components/popover.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Tooltip</h3>
+              <p>Component for displaying explanatory text on hover.</p>
+              <a href="./components/tooltip.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Loader</h3>
+              <p>Loading indicator for async operations.</p>
+              <a href="./components/loader.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Progress</h3>
+              <p>Component for displaying the progress of a task.</p>
+              <a href="./components/progress.html">View Documentation →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="category">
+          <h2 class="category-title">Navigation Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Tab</h3>
+              <p>Component for organizing content into selectable tabs.</p>
+              <a href="./components/tab.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Breadcrumb</h3>
+              <p>
+                Navigation component showing the current location in a
+                hierarchy.
+              </p>
+              <a href="./components/breadcrumb.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Dropdown</h3>
+              <p>
+                Component for displaying a list of options in a dropdown menu.
+              </p>
+              <a href="./components/dropdown.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Wizard</h3>
+              <p>Multi-step process navigation component.</p>
+              <a href="./components/wizard.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>ActionButtons</h3>
+              <p>
+                Component for displaying action buttons in a standardized way.
+              </p>
+              <a href="./components/actionbuttons.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>FilterButton</h3>
+              <p>Specialized dropdown for applying filters to data.</p>
+              <a href="./components/filterbutton.html">View Documentation →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="category">
+          <h2 class="category-title">Miscellaneous Components</h2>
+          <div class="component-grid">
+            <div class="component-card">
+              <h3>Collapse</h3>
+              <p>Component for toggling the visibility of content.</p>
+              <a href="./components/collapse.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Accordion</h3>
+              <p>Component for displaying collapsible content panels.</p>
+              <a href="./components/accordion.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>Tag</h3>
+              <p>Component for displaying categorical information or status.</p>
+              <a href="./components/tag.html">View Documentation →</a>
+            </div>
+            <div class="component-card">
+              <h3>TrialBadge</h3>
+              <p>
+                Component for indicating trial status with customizable
+                appearance.
+              </p>
+              <a href="./components/trialbadge.html">View Documentation →</a>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </body>
