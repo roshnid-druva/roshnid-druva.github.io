@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SideNav Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* SideNav Demo Styles */
+      .sidenav-demo {
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        width: 280px;
+        max-width: 100%;
+        padding: 16px;
+        margin-bottom: 20px;
+      }
+      .sidenav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidenav-item {
+        margin-bottom: 4px;
+      }
+      .sidenav-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 4px;
+        color: #333;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .sidenav-link:hover {
+        background-color: #e9ecef;
+      }
+      .sidenav-link.active {
+        background-color: #e7f5ff;
+        color: #007bff;
+      }
+      .sidenav-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        color: #6c757d;
+      }
+      .sidenav-link.active .sidenav-icon {
+        color: #007bff;
+      }
+      .sidenav-text {
+        flex: 1;
+      }
+      .sidenav-subtitle {
+        font-size: 12px;
+        color: #6c757d;
+        display: block;
+      }
+      .sidenav-extras {
+        margin-left: 8px;
+        color: #6c757d;
+        font-size: 14px;
+      }
+      .sidenav-group {
+        margin-bottom: 8px;
+      }
+      .sidenav-group-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .sidenav-group-header:hover {
+        background-color: #e9ecef;
+      }
+      .sidenav-group-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        color: #6c757d;
+      }
+      .sidenav-group-name {
+        flex: 1;
+      }
+      .sidenav-group-toggle {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+      }
+      .sidenav-group-toggle.open {
+        transform: rotate(90deg);
+      }
+      .sidenav-group-children {
+        list-style: none;
+        padding: 0;
+        padding-left: 30px;
+        margin: 4px 0 8px;
+      }
+      .sidenav-heading {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin: 16px 12px 8px;
+        font-weight: 600;
+      }
+      .sidenav-custom {
+        padding: 8px 12px;
+      }
+      .sidenav-custom-select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        background-color: white;
+      }
+      .sidenav-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>SideNav Component</h1>
+      <p>
+        A component for displaying hierarchical navigation menu in a sidebar,
+        supporting collapsible groups, custom items, and icons.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import SideNav from "orion/lib/sideNav";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of navigation items to render. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>onItemClick</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when a navigation item is clicked</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the SideNav container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-sidenav"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Item Object Structure</h2>
+      <p>
+        The <code>items</code> prop accepts an array of objects with different
+        possible structures:
+      </p>
+
+      <h3>Regular Link Item</h3>
+      <pre>
+{
+  name: "Phoenix AWS Proxies",    // Text displayed for the item
+  subtitle: "AWS Proxies",        // Optional subtitle
+  href: "/aws_proxies",           // URL to navigate to
+  target: "_blank",               // Optional target attribute for links
+  extras: () => &lt;NewTabIcon /&gt;,   // Optional function to render extra content
+  icon: &lt;PhoenixIcon /&gt;,          // Optional icon to display
+  isActive: false,                // Whether the item is currently active
+  disabled: false                 // Whether the item is disabled
+}</pre
+      >
+
+      <h3>Collapsible Group</h3>
+      <pre>
+{
+  name: "DR Plans",               // Group name
+  icon: &lt;DisasterRecoveryIcon /&gt;, // Optional icon
+  collapsible: true,              // Makes the group expandable/collapsible
+  items: [                        // Child items
+    { name: "Plan 1" },
+    { name: "Plan 2" },
+    { name: "Plan 3" }
+  ]
+}</pre
+      >
+
+      <h3>Heading Group</h3>
+      <pre>
+{
+  heading: "Resources",           // Heading text
+  items: [                        // Items under this heading
+    {
+      name: "Documentation",
+      href: "/docs",
+      icon: &lt;DocsIcon /&gt;
+    },
+    {
+      name: "API Reference",
+      href: "/api",
+      icon: &lt;ApiIcon /&gt;
+    }
+  ]
+}</pre
+      >
+
+      <h3>Custom Component Item</h3>
+      <pre>
+{
+  renderComponent: (item, key, activeClass, otherClasses) => (
+    &lt;CustomComponent key={key} className={otherClasses} /&gt;
+  ),
+  collapsible: false,             // Optional, whether children should be collapsible
+  items: [                        // Optional child items
+    { name: "Child Item 1" },
+    { name: "Child Item 2" }
+  ]
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic SideNav</h3>
+        <div class="sidenav-demo">
+          <ul class="sidenav-list">
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link active">
+                <span class="sidenav-icon">📊</span>
+                <span class="sidenav-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-icon">👥</span>
+                <span class="sidenav-text">Users</span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-icon">⚙️</span>
+                <span class="sidenav-text">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <pre>
+const items = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: &lt;DashboardIcon /&gt;,
+  },
+  {
+    name: "Users",
+    href: "/users",
+    icon: &lt;UsersIcon /&gt;,
+  },
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: &lt;SettingsIcon /&gt;,
+  },
+];
+
+&lt;SideNav
+  items={items}
+  onItemClick={(item, event) => {
+    console.log(`${item.name} clicked`);
+  }}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Collapsible Groups</h3>
+        <div class="sidenav-demo">
+          <ul class="sidenav-list">
+            <li class="sidenav-group">
+              <div class="sidenav-group-header">
+                <span class="sidenav-group-icon">📁</span>
+                <span class="sidenav-group-name">Data Sources</span>
+                <span class="sidenav-group-toggle open">▶</span>
+              </div>
+              <ul class="sidenav-group-children">
+                <li class="sidenav-item">
+                  <a href="#" class="sidenav-link">
+                    <span class="sidenav-text">Databases</span>
+                  </a>
+                </li>
+                <li class="sidenav-item">
+                  <a href="#" class="sidenav-link">
+                    <span class="sidenav-text">APIs</span>
+                  </a>
+                </li>
+                <li class="sidenav-item">
+                  <a href="#" class="sidenav-link">
+                    <span class="sidenav-text">Files</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidenav-group">
+              <div class="sidenav-group-header">
+                <span class="sidenav-group-icon">📊</span>
+                <span class="sidenav-group-name">Reports</span>
+                <span class="sidenav-group-toggle">▶</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <pre>
+const items = [
+  {
+    name: "Data Sources",
+    icon: &lt;DataSourcesIcon /&gt;,
+    collapsible: true,
+    items: [
+      { name: "Databases", href: "/databases" },
+      { name: "APIs", href: "/apis" },
+      { name: "Files", href: "/files" },
+    ],
+  },
+  {
+    name: "Reports",
+    icon: &lt;ReportsIcon /&gt;,
+    collapsible: true,
+    items: [
+      { name: "Sales", href: "/reports/sales" },
+      { name: "Marketing", href: "/reports/marketing" },
+    ],
+  },
+];
+
+&lt;SideNav items={items} /&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Headings and Subtitles</h3>
+        <div class="sidenav-demo">
+          <div class="sidenav-heading">Resources</div>
+          <ul class="sidenav-list">
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-icon">📄</span>
+                <span class="sidenav-text"> Documentation </span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-icon">🔌</span>
+                <span class="sidenav-text"> API Reference </span>
+              </a>
+            </li>
+          </ul>
+          <div class="sidenav-heading">Recent Projects</div>
+          <ul class="sidenav-list">
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-icon">📊</span>
+                <span class="sidenav-text">
+                  Phoenix AWS Proxies
+                  <span class="sidenav-subtitle">AWS Proxies</span>
+                </span>
+                <span class="sidenav-extras">↗</span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link disabled">
+                <span class="sidenav-icon">🛡️</span>
+                <span class="sidenav-text">
+                  Disaster Recovery
+                  <span class="sidenav-subtitle">DR Plans</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <pre>
+const items = [
+  {
+    heading: "Resources",
+    items: [
+      {
+        name: "Documentation",
+        href: "/docs",
+        icon: &lt;DocsIcon /&gt;
+      },
+      {
+        name: "API Reference",
+        href: "/api",
+        icon: &lt;ApiIcon /&gt;
+      }
+    ]
+  },
+  {
+    heading: "Recent Projects",
+    items: [
+      {
+        name: "Phoenix AWS Proxies",
+        subtitle: "AWS Proxies",
+        href: "/aws",
+        icon: &lt;AwsIcon /&gt;,
+        extras: () => &lt;NewTabIcon /&gt;,
+        target: "_blank"
+      },
+      {
+        name: "Disaster Recovery",
+        subtitle: "DR Plans",
+        href: "/dr",
+        icon: &lt;ShieldIcon /&gt;,
+        disabled: true
+      }
+    ]
+  }
+];</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Custom Component</h3>
+        <div class="sidenav-demo">
+          <div class="sidenav-custom">
+            <select class="sidenav-custom-select">
+              <option>United States</option>
+              <option>Canada</option>
+              <option>United Kingdom</option>
+              <option>Australia</option>
+            </select>
+          </div>
+          <ul class="sidenav-group-children">
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-text">California</span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-text">New York</span>
+              </a>
+            </li>
+            <li class="sidenav-item">
+              <a href="#" class="sidenav-link">
+                <span class="sidenav-text">Texas</span>
+              </a>
+            </li>
+          </ul>
+          <div class="sidenav-group">
+            <div class="sidenav-group-header">
+              <span class="sidenav-group-name">Main Navigation</span>
+              <span class="sidenav-group-toggle open">▶</span>
+            </div>
+            <ul class="sidenav-group-children">
+              <li class="sidenav-item">
+                <a href="#" class="sidenav-link active">
+                  <span class="sidenav-text">Home</span>
+                </a>
+              </li>
+              <li class="sidenav-item">
+                <a href="#" class="sidenav-link">
+                  <span class="sidenav-text">Profile</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <pre>
+const items = [
+  {
+    renderComponent: () => (
+      &lt;Select
+        className="select-in-sidebar"
+        type="select"
+        options={countries}
+        value={selectedCountry}
+        onChange={handleCountryChange}
+        customComponents={(components) => ({
+          SingleValue: (props) => (
+            &lt;components.SingleValue {...props}&gt;
+              &lt;img
+                height="26"
+                width="26"
+                src={props.data.flag}
+                alt="flag"
+                className="oui-mr-1"
+              /&gt;
+              {props.data.label}
+            &lt;/components.SingleValue&gt;
+          ),
+        })}
+      /&gt;
+    ),
+    collapsible: false,
+    items: states,
+  },
+  {
+    name: "Main Navigation",
+    collapsible: true,
+    items: [
+      { name: "Home", href: "/" },
+      { name: "Profile", href: "/profile" },
+    ],
+  },
+];
+
+&lt;SideNav items={items} /&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          Items can be regular links, collapsible groups, or custom components
+        </li>
+        <li>
+          Collapsible groups can be expanded or collapsed by clicking on the
+          group header
+        </li>
+        <li>
+          When <code>onItemClick</code> is provided, it will be called with the
+          item object and event when a clickable item is clicked
+        </li>
+        <li>
+          Active state can be controlled via the <code>isActive</code> property
+          on items
+        </li>
+        <li>
+          Links with external URLs can use the <code>target</code> property to
+          open in a new tab
+        </li>
+        <li>
+          Custom components can be rendered using the
+          <code>renderComponent</code> property, which overrides other
+          properties
+        </li>
+        <li>
+          The component supports hierarchical navigation with nested items
+        </li>
+        <li>
+          Heading groups are useful for organizing navigation into categories
+        </li>
+        <li>
+          Subtitles can be used to provide additional context for navigation
+          items
+        </li>
+        <li>Disabled items cannot be clicked and appear grayed out</li>
+        <li>
+          The <code>extras</code> property allows adding small indicators to
+          items, like external link icons
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

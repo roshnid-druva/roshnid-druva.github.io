@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Select Demo Styles */
+      .select-demo {
+        margin-bottom: 20px;
+        max-width: 400px;
+      }
+      .select-container {
+        position: relative;
+        box-sizing: border-box;
+      }
+      .select-control {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        min-height: 38px;
+        transition: all 0.2s;
+        cursor: pointer;
+        padding: 2px 8px;
+      }
+      .select-control:hover {
+        border-color: #b3b3b3;
+      }
+      .select-control:focus-within {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+      .select-control.invalid {
+        border-color: #dc3545;
+      }
+      .select-value-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        flex: 1;
+        padding: 2px;
+        gap: 4px;
+      }
+      .select-placeholder {
+        color: #6c757d;
+      }
+      .select-single-value {
+        grid-area: 1/1/2/3;
+        max-width: calc(100% - 8px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .select-input {
+        color: inherit;
+        background: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        min-width: 30px;
+        outline: none;
+      }
+      .select-indicators {
+        display: flex;
+        align-items: center;
+      }
+      .select-indicator-separator {
+        align-self: stretch;
+        background-color: #ced4da;
+        width: 1px;
+        margin: 8px 4px;
+      }
+      .select-dropdown-indicator {
+        padding: 0 8px;
+        color: #6c757d;
+      }
+      .select-multi-value {
+        background-color: #e9ecef;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+      }
+      .select-multi-value-label {
+        padding: 3px 6px;
+        font-size: 0.85em;
+      }
+      .select-multi-value-remove {
+        border-radius: 0 2px 2px 0;
+        padding: 1px 5px;
+        cursor: pointer;
+        color: #999;
+      }
+      .select-multi-value-remove:hover {
+        background-color: #d3d4d5;
+        color: #333;
+      }
+      .select-menu {
+        position: absolute;
+        margin-top: 4px;
+        width: 100%;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+        z-index: 2;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .select-menu-list {
+        padding: 5px 0;
+      }
+      .select-option {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      .select-option:hover {
+        background-color: #f8f9fa;
+      }
+      .select-option.selected {
+        background-color: #e6f7ff;
+        font-weight: 500;
+      }
+      .select-option.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .select-group {
+        padding: 0;
+        margin: 0;
+      }
+      .select-group-heading {
+        font-weight: 600;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        color: #6c757d;
+        padding: 8px 12px 4px;
+      }
+      .select-group-options {
+        padding-left: 12px;
+      }
+      .select-all-button {
+        border-bottom: 1px solid #eee;
+        padding: 8px 12px;
+        font-weight: 500;
+        cursor: pointer;
+        color: #007bff;
+      }
+      .select-all-button:hover {
+        background-color: #f8f9fa;
+      }
+      .select-no-options {
+        padding: 8px 12px;
+        color: #6c757d;
+        font-style: italic;
+      }
+      .select-create-option {
+        padding: 8px 12px;
+        color: #007bff;
+        cursor: pointer;
+      }
+      .select-create-option:hover {
+        background-color: #f8f9fa;
+      }
+      .select-async-message {
+        padding: 8px 12px;
+        color: #6c757d;
+        font-style: italic;
+      }
+      .select-loading-indicator {
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .select-loading-spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Custom Styled Select */
+      .select-custom .select-multi-value {
+        background-color: rgba(0, 123, 255, 0.2);
+        border: 1px solid #007bff;
+      }
+      .select-custom .select-option.selected {
+        color: #007bff;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Select Component</h1>
+      <p>
+        A flexible select component that supports single and multi-selection,
+        searching, custom styling, and asynchronous data loading.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Select from "orion/lib/select";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>options</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Array of option objects. <strong>(Required)</strong></td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>"select"</td>
+            <td>
+              Type of select: "select", "creatable", "async", or
+              "async-creatable".
+            </td>
+          </tr>
+          <tr>
+            <td>isMulti</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Enable multi-selection.</td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Indicates error condition.</td>
+          </tr>
+          <tr>
+            <td>autoFocus</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Focus the select component on mount.</td>
+          </tr>
+          <tr>
+            <td>isDisabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the select component.</td>
+          </tr>
+          <tr>
+            <td>isClearable</td>
+            <td>Boolean</td>
+            <td>true (for multi)</td>
+            <td>Allows clearing selected options.</td>
+          </tr>
+          <tr>
+            <td>isSearchable</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Enables search functionality.</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>String</td>
+            <td>"Select"</td>
+            <td>Placeholder text.</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>Object/Array</td>
+            <td>-</td>
+            <td>Selected option(s).</td>
+          </tr>
+          <tr>
+            <td>defaultValue</td>
+            <td>Object/Array</td>
+            <td>-</td>
+            <td>Initially selected option(s).</td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when selection changes.</td>
+          </tr>
+          <tr>
+            <td>onBlur</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when component loses focus.</td>
+          </tr>
+          <tr>
+            <td>menuPosition</td>
+            <td>String</td>
+            <td>"absolute"</td>
+            <td>Position of menu: "absolute" or "fixed".</td>
+          </tr>
+          <tr>
+            <td>menuPlacement</td>
+            <td>String</td>
+            <td>"auto"</td>
+            <td>Placement of menu: "auto", "bottom", or "top".</td>
+          </tr>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows loading indicator.</td>
+          </tr>
+          <tr>
+            <td>hideDownArrow</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Hides dropdown arrow and separator.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Option Object Structure</h3>
+      <pre>
+{
+  label: String,           // Display text
+  value: String/Number,    // Option value
+  isDisabled: Boolean,     // Whether option is disabled
+  tooltip: {               // Optional tooltip configuration
+    placement: String,     // Position of tooltip
+    maxWidth: String/Number, // Max width of tooltip
+    text: Function/String, // Tooltip content or function returning content
+    overflowOnly: Boolean, // Show tooltip only on overflow
+    showTooltip: Boolean   // Control tooltip visibility
+  }
+}</pre
+      >
+
+      <h3>For Async Select</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>loadOptions</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function returning a promise with options.</td>
+          </tr>
+          <tr>
+            <td>defaultOptions</td>
+            <td>Array/Boolean</td>
+            <td>-</td>
+            <td>Default options or true to load initial options.</td>
+          </tr>
+          <tr>
+            <td>cacheOptions</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Cache loaded options.</td>
+          </tr>
+          <tr>
+            <td>debounceDelay</td>
+            <td>Number</td>
+            <td>0</td>
+            <td>Delay in milliseconds before loading options.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>For Groups and Select All</h3>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>groupLabelRenderer</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom renderer for group labels.</td>
+          </tr>
+          <tr>
+            <td>selectAllOption</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Object to use when "Select All" is clicked.</td>
+          </tr>
+          <tr>
+            <td>selectAllButtonText</td>
+            <td>String</td>
+            <td>"Select All"</td>
+            <td>Text for the select all button.</td>
+          </tr>
+          <tr>
+            <td>selectAllOptionDisabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the select all option.</td>
+          </tr>
+          <tr>
+            <td>selectAllOptionDisabledTooltip</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Tooltip for disabled select all option.</td>
+          </tr>
+          <tr>
+            <td>allowSelectDeselectAll</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Alternate select/deselect all behavior.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Single Select</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-single-value">Strawberry</div>
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+constructor(props) {
+  super(props);
+  this.state = {
+    selectedOption: null
+  };
+
+  this.options = [
+    {
+      value: 'strawberry',
+      label: 'Strawberry',
+      tooltip: {
+        text: 'Simple tooltip'
+      }
+    },
+    {
+      value: 'chocolate',
+      label: 'Chocolate',
+      isDisabled: true,
+      tooltip: {
+        placement: "bottom",
+        textAlign: "center",
+        maxWidth: 200,
+        text: option => {
+          return option.isDisabled && "Chocolate is not selectable";
+        }
+      }
+    },
+    { value: 'vanilla', label: 'Vanilla' }
+  ];
+}
+
+handleChange = (selectedOption) => {
+  this.setState({ selectedOption });
+}
+
+render() {
+  return (
+    &lt;Select
+      type="select"
+      options={this.options}
+      value={this.state.selectedOption}
+      onChange={this.handleChange}
+    /&gt;
+  );
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Multi-Select</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-multi-value">
+                  <div class="select-multi-value-label">Strawberry</div>
+                  <div class="select-multi-value-remove">×</div>
+                </div>
+                <div class="select-multi-value">
+                  <div class="select-multi-value-label">Vanilla</div>
+                  <div class="select-multi-value-remove">×</div>
+                </div>
+                <input class="select-input" />
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Select
+  type="select"
+  isMulti
+  options={this.options}
+  value={this.state.selectedOption}
+  onChange={this.handleChange}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Grouped Options</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-single-value">Ocean</div>
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+            <div class="select-menu">
+              <div class="select-menu-list">
+                <div class="select-group">
+                  <div class="select-group-heading">Colors</div>
+                  <div class="select-group-options">
+                    <div class="select-option selected">Ocean</div>
+                    <div class="select-option">Blue</div>
+                    <div class="select-option">Purple</div>
+                  </div>
+                </div>
+                <div class="select-group">
+                  <div class="select-group-heading">Flavors</div>
+                  <div class="select-group-options">
+                    <div class="select-option">Vanilla</div>
+                    <div class="select-option">Chocolate</div>
+                    <div class="select-option">Strawberry</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+const groupedOptions = [
+  {
+    label: "Colors",
+    options: [
+      { value: "ocean", label: "Ocean", color: "#00B8D9" },
+      { value: "blue", label: "Blue", color: "#0052CC" },
+      { value: "purple", label: "Purple", color: "#5243AA" },
+    ],
+  },
+  {
+    label: "Flavors",
+    options: [
+      { value: "vanilla", label: "Vanilla", rating: "safe" },
+      { value: "chocolate", label: "Chocolate", rating: "good" },
+      { value: "strawberry", label: "Strawberry", rating: "wild" },
+    ],
+  },
+];
+
+&lt;Select
+  type="select"
+  options={groupedOptions}
+  value={this.state.groupedSelectedOptions}
+  onChange={(options) => this.handleChange("groupedSelectedOptions", options)}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Creatable Select</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-placeholder">Type to create...</div>
+                <input class="select-input" />
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+            <div class="select-menu">
+              <div class="select-menu-list">
+                <div class="select-option">Strawberry</div>
+                <div class="select-option disabled">Chocolate</div>
+                <div class="select-option">Vanilla</div>
+                <div class="select-create-option">Create "New Flavor"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Select
+  type="creatable"
+  options={this.options}
+  value={this.state.createdOption}
+  onChange={(options) => this.handleChange("createdOption", options)}
+  onCreateOption={this.handleCreate}
+  formatCreateLabel={(inputValue) => `Create "${inputValue}"`}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Async Select</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-placeholder">Search for users...</div>
+                <input class="select-input" />
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+            <div class="select-menu">
+              <div class="select-loading-indicator">
+                <div class="select-loading-spinner"></div>
+                <span>Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+loadUsers = (inputValue, callback) => {
+  // Simulate API call
+  setTimeout(() => {
+    const filteredOptions = this.filterUsers(inputValue);
+    callback(filteredOptions);
+  }, 1000);
+};
+
+&lt;Select
+  type="async"
+  defaultOptions
+  cacheOptions
+  loadOptions={this.loadUsers}
+  value={this.state.asyncSelectedOptions}
+  onChange={(options) => this.handleChange("asyncSelectedOptions", options)}
+  placeholder="Search for users..."
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Select with Custom Styles</h3>
+        <div class="select-demo select-custom">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-multi-value">
+                  <div class="select-multi-value-label">Ocean</div>
+                  <div class="select-multi-value-remove">×</div>
+                </div>
+                <div class="select-multi-value">
+                  <div class="select-multi-value-label">Blue</div>
+                  <div class="select-multi-value-remove">×</div>
+                </div>
+                <input class="select-input" />
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+const customStyles = {
+  multiValue: (base, state) => ({
+    ...base,
+    backgroundColor: state.data.color ? `${state.data.color}30` : "#f0f0f0",
+    borderColor: state.data.color,
+    color: "#333",
+  }),
+  option: (base, state) => ({
+    ...base,
+    color: state.data.color,
+    fontWeight: state.isSelected ? "bold" : "normal",
+  }),
+};
+
+&lt;Select
+  options={colorOptions}
+  styles={customStyles}
+  isMulti
+  value={this.state.colorOptions}
+  onChange={(options) => this.handleChange("colorOptions", options)}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Select with Select All Option</h3>
+        <div class="select-demo">
+          <div class="select-container">
+            <div class="select-control">
+              <div class="select-value-container">
+                <div class="select-multi-value">
+                  <div class="select-multi-value-label">All Countries</div>
+                  <div class="select-multi-value-remove">×</div>
+                </div>
+                <input class="select-input" />
+              </div>
+              <div class="select-indicators">
+                <span class="select-indicator-separator"></span>
+                <div class="select-dropdown-indicator">▼</div>
+              </div>
+            </div>
+            <div class="select-menu">
+              <div class="select-menu-list">
+                <div class="select-all-button">Select All</div>
+                <div class="select-option">United States</div>
+                <div class="select-option">Canada</div>
+                <div class="select-option">United Kingdom</div>
+                <div class="select-option">Australia</div>
+                <div class="select-option">Germany</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Select
+  type="select"
+  isMulti
+  options={countries}
+  selectAllOption={{ label: "All Countries", value: "all" }}
+  value={this.state.selectedCountries}
+  onChange={(options) => this.handleChange("selectedCountries", options)}
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Usage Notes</h2>
+      <ul>
+        <li>
+          The <code>type="creatable"</code> allows users to create options that
+          don't exist
+        </li>
+        <li>
+          For async selects, <code>defaultOptions={true}</code> will load
+          initial options automatically
+        </li>
+        <li>
+          Setting <code>menuPosition="fixed"</code> is useful when the select is
+          inside a modal
+        </li>
+        <li>
+          Use the <code>validationProps</code> prop for integration with Formik
+          form validation
+        </li>
+        <li>
+          Custom styling can be applied using the <code>styles</code> prop,
+          which follows Emotion CSS syntax
+        </li>
+        <li>
+          The <code>tooltip</code> property in options allows showing tooltips
+          on hover
+        </li>
+        <li>
+          For grouped options, each group needs a <code>label</code> and
+          <code>options</code> array
+        </li>
+        <li>
+          The <code>selectAllOption</code> simplifies selecting all options in a
+          multi-select
+        </li>
+        <li>
+          Async and creatable variants can be combined with
+          <code>type="async-creatable"</code>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

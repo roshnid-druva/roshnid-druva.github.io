@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Sidebar Demo Styles */
+      .sidebar-container {
+        display: flex;
+        height: 420px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+      .sidebar-static {
+        width: 240px;
+        background-color: #f8f9fa;
+        border-right: 1px solid #e0e0e0;
+        display: flex;
+        flex-direction: column;
+        transition: width 0.3s ease;
+      }
+      .sidebar-static.collapsed {
+        width: 60px;
+      }
+      .sidebar-site {
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+      }
+      .sidebar-site-icon {
+        width: 32px;
+        height: 32px;
+        background-color: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        margin-right: 12px;
+      }
+      .sidebar-collapsed-toggle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: absolute;
+        top: 16px;
+        right: -12px;
+        border: 1px solid #dee2e6;
+        z-index: 2;
+      }
+      .sidebar-static.collapsed .sidebar-site-icon {
+        margin-right: 0;
+      }
+      .sidebar-site-info {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .sidebar-static.collapsed .sidebar-site-info {
+        display: none;
+      }
+      .sidebar-site-name {
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .sidebar-site-subtitle {
+        font-size: 12px;
+        color: #6c757d;
+      }
+      .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+      }
+      .sidebar-section {
+        padding: 16px;
+      }
+      .sidebar-static.collapsed .sidebar-section-heading {
+        display: none;
+      }
+      .sidebar-section-heading {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+      .sidebar-divider {
+        height: 1px;
+        background-color: #e0e0e0;
+        margin: 0;
+      }
+      .sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidebar-nav-item {
+        margin-bottom: 4px;
+      }
+      .sidebar-nav-link {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 4px;
+        color: #333;
+        text-decoration: none;
+      }
+      .sidebar-nav-link:hover {
+        background-color: #e9ecef;
+      }
+      .sidebar-nav-link.active {
+        background-color: #e7f5ff;
+        color: #007bff;
+      }
+      .sidebar-nav-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        color: #6c757d;
+      }
+      .sidebar-nav-link.active .sidebar-nav-icon {
+        color: #007bff;
+      }
+      .sidebar-nav-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .sidebar-static.collapsed .sidebar-nav-text {
+        display: none;
+      }
+      .sidebar-frequent-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidebar-frequent-link {
+        margin-bottom: 4px;
+      }
+      .sidebar-frequent-link a {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 4px;
+        color: #333;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .sidebar-frequent-link a:hover {
+        background-color: #e9ecef;
+      }
+      .sidebar-static.collapsed .sidebar-frequent-links {
+        display: none;
+      }
+
+      /* Floating Sidebar */
+      .sidebar-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+      .sidebar-float {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+      }
+      .sidebar-float.right {
+        left: auto;
+        right: 0;
+      }
+      .sidebar-float-header {
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        font-weight: 500;
+      }
+      .sidebar-float-content {
+        flex: 1;
+        overflow-y: auto;
+      }
+      .sidebar-float-footer {
+        padding: 16px;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+      }
+      .sidebar-float-footer a {
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 12px;
+      }
+      .sidebar-float-footer a:hover {
+        color: #007bff;
+        text-decoration: underline;
+      }
+      .sidebar-page-content {
+        flex: 1;
+        padding: 20px;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Sidebar Component</h1>
+      <p>
+        A component for displaying a navigation sidebar with sections, which can
+        be either static (fixed) or floating (overlay).
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>
+import Sidebar from "orion/lib/sidebar";
+import FrequentlyVisitedLinks from "orion/lib/sidebar/FrequentlyVisitedLinks";</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>sections</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of section objects to render in the sidebar.
+              <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>float</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Configuration for a floating sidebar</td>
+          </tr>
+          <tr>
+            <td>site</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Site information for the static sidebar</td>
+          </tr>
+          <tr>
+            <td>collapsible</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether the sidebar can be collapsed (static sidebar only)</td>
+          </tr>
+          <tr>
+            <td>collapsedByDefault</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Whether the sidebar starts collapsed (requires collapsible=true)
+            </td>
+          </tr>
+          <tr>
+            <td>onCollapse</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when sidebar is collapsed</td>
+          </tr>
+          <tr>
+            <td>onExpand</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Callback when sidebar is expanded</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the sidebar</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-sidebar"</td>
+            <td>Custom data test ID for automation</td>
+          </tr>
+          <tr>
+            <td>sidebarName</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Text displayed at the top of the sidebar</td>
+          </tr>
+          <tr>
+            <td>footerLinks</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>
+              Array of links displayed at the bottom of a floating sidebar
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Section Object Structure</h3>
+      <p>
+        Each item in the <code>sections</code> array can have the following
+        structure:
+      </p>
+      <pre>
+{
+  // Display a heading for the section
+  heading: "Data Protection",
+
+  // Function that returns the content of the section
+  component: () => &lt;SideNav items={navigationItems} /&gt;,
+
+  // Optional custom CSS class for the section
+  className: "custom-section-class",
+
+  // Render a divider between sections
+  divider: true
+}</pre
+      >
+
+      <h3>Float Object Structure</h3>
+      <p>
+        For floating sidebars, the <code>float</code> prop accepts an object
+        with:
+      </p>
+      <pre>
+{
+  // Direction from which the sidebar appears ("left" or "right")
+  direction: "left",
+
+  // Whether the sidebar is currently visible
+  visible: false,
+
+  // Function to toggle sidebar visibility
+  toggle: () => {}
+}</pre
+      >
+
+      <h3>Site Object Structure</h3>
+      <p>
+        For static sidebars, the <code>site</code> prop accepts an object with:
+      </p>
+      <pre>
+{
+  // Name of the site
+  name: "Project Name",
+
+  // Optional subtitle
+  subtitle: "Project Description",
+
+  // Icon component from orion-icons
+  icon: &lt;ProjectIcon /&gt;,
+
+  // Whether to display the icon in a circular container (default: true)
+  circledIcon: true
+}</pre
+      >
+
+      <h3>FrequentlyVisitedLinks Props</h3>
+      <p>
+        The <code>FrequentlyVisitedLinks</code> component can be used inside
+        sidebar sections:
+      </p>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>links</td>
+            <td>Array</td>
+            <td>[]</td>
+            <td>Array of link objects to display</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Link Object Structure</h3>
+      <p>
+        Each item in the <code>links</code> array for
+        <code>FrequentlyVisitedLinks</code> or <code>footerLinks</code> should
+        have:
+      </p>
+      <pre>
+{
+  // Link URL
+  url: "/path",  // or href: "/path" for footerLinks
+
+  // Link text
+  text: "Link Text",  // or label: "Link Text" for footerLinks
+
+  // Whether to open in a new tab
+  newTab: true,  // or target: "_blank" for footerLinks
+
+  // Optional custom renderer
+  renderComponent: (link, key) => &lt;CustomLink key={key} to={link.url}&gt;{link.text}&lt;/CustomLink&gt;
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Static Sidebar</h3>
+        <div class="sidebar-container">
+          <div class="sidebar-static">
+            <div class="sidebar-site">
+              <div class="sidebar-site-icon">A</div>
+              <div class="sidebar-site-info">
+                <div class="sidebar-site-name">Project Admin</div>
+                <div class="sidebar-site-subtitle">Configuration Panel</div>
+              </div>
+              <div class="sidebar-collapsed-toggle">◀</div>
+            </div>
+            <div class="sidebar-content">
+              <div class="sidebar-section">
+                <div class="sidebar-section-heading">Navigation</div>
+                <ul class="sidebar-nav">
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link active">
+                      <span class="sidebar-nav-icon">📊</span>
+                      <span class="sidebar-nav-text">Dashboard</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-icon">👥</span>
+                      <span class="sidebar-nav-text">Users</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-icon">⚙️</span>
+                      <span class="sidebar-nav-text">Settings</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div class="sidebar-section">
+                <div class="sidebar-section-heading">Recent Items</div>
+                <ul class="sidebar-frequent-links">
+                  <li class="sidebar-frequent-link">
+                    <a href="#">My Account</a>
+                  </li>
+                  <li class="sidebar-frequent-link">
+                    <a href="#">Create User</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-page-content">
+            <h3>Page Content</h3>
+            <p>
+              This is the main page content that appears next to the static
+              sidebar.
+            </p>
+          </div>
+        </div>
+        <pre>
+&lt;Sidebar
+  sections={[
+    {
+      heading: "Navigation",
+      component: () => (
+        &lt;SideNav
+          items={[
+            { name: "Dashboard", href: "/dashboard", icon: &lt;DashboardIcon /&gt; },
+            { name: "Users", href: "/users", icon: &lt;UsersIcon /&gt; },
+            { name: "Settings", href: "/settings", icon: &lt;SettingsIcon /&gt; },
+          ]}
+        /&gt;
+      ),
+    },
+    {
+      divider: true,
+    },
+    {
+      heading: "Recent Items",
+      component: () => (
+        &lt;FrequentlyVisitedLinks
+          links={[
+            { text: "My Account", url: "/account", newTab: false },
+            { text: "Create User", url: "/users/new", newTab: false },
+          ]}
+        /&gt;
+      ),
+    },
+  ]}
+  site={{
+    name: "Project Admin",
+    subtitle: "Configuration Panel",
+    icon: &lt;AdminIcon /&gt;,
+  }}
+  collapsible={true}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Collapsed Static Sidebar</h3>
+        <div class="sidebar-container">
+          <div class="sidebar-static collapsed">
+            <div class="sidebar-site">
+              <div class="sidebar-site-icon">A</div>
+              <div class="sidebar-site-info">
+                <div class="sidebar-site-name">Project Admin</div>
+                <div class="sidebar-site-subtitle">Configuration Panel</div>
+              </div>
+              <div class="sidebar-collapsed-toggle">▶</div>
+            </div>
+            <div class="sidebar-content">
+              <div class="sidebar-section">
+                <div class="sidebar-section-heading">Navigation</div>
+                <ul class="sidebar-nav">
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link active">
+                      <span class="sidebar-nav-icon">📊</span>
+                      <span class="sidebar-nav-text">Dashboard</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-icon">👥</span>
+                      <span class="sidebar-nav-text">Users</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-icon">⚙️</span>
+                      <span class="sidebar-nav-text">Settings</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div class="sidebar-section">
+                <div class="sidebar-section-heading">Recent Items</div>
+                <ul class="sidebar-frequent-links">
+                  <li class="sidebar-frequent-link">
+                    <a href="#">My Account</a>
+                  </li>
+                  <li class="sidebar-frequent-link">
+                    <a href="#">Create User</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-page-content">
+            <h3>Page Content</h3>
+            <p>
+              This is the main page content that appears next to the collapsed
+              sidebar.
+            </p>
+            <p>
+              More space is available for the main content when the sidebar is
+              collapsed.
+            </p>
+          </div>
+        </div>
+        <pre>
+&lt;Sidebar
+  sections={[...]}
+  site={{...}}
+  collapsible={true}
+  collapsedByDefault={true}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Floating Sidebar</h3>
+        <div class="sidebar-container">
+          <div class="sidebar-overlay"></div>
+          <div class="sidebar-float">
+            <div class="sidebar-float-header">Application Menu</div>
+            <div class="sidebar-float-content">
+              <div class="sidebar-section">
+                <ul class="sidebar-nav">
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link active">
+                      <span class="sidebar-nav-text">Home</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-text">Profile</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-text">Settings</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-section">
+                <div class="sidebar-section-heading">Administration</div>
+                <ul class="sidebar-nav">
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-text">Users</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-nav-item">
+                    <a href="#" class="sidebar-nav-link">
+                      <span class="sidebar-nav-text">Roles</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="sidebar-float-footer">
+              <a href="#" target="_blank">Privacy Policy</a>
+              <a href="#">Terms</a>
+              <a href="#">Help</a>
+            </div>
+          </div>
+          <div class="sidebar-page-content">
+            <h3>Page Content</h3>
+            <p>
+              This is the main page content that appears behind the floating
+              sidebar.
+            </p>
+            <p>
+              The floating sidebar overlays the content with a semi-transparent
+              background.
+            </p>
+          </div>
+        </div>
+        <pre>
+&lt;Sidebar
+  sections={[
+    {
+      component: () => (
+        &lt;SideNav
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Profile", href: "/profile" },
+            { name: "Settings", href: "/settings" },
+          ]}
+        /&gt;
+      ),
+    },
+    {
+      heading: "Administration",
+      component: () => (
+        &lt;SideNav
+          items={[
+            { name: "Users", href: "/admin/users" },
+            { name: "Roles", href: "/admin/roles" },
+          ]}
+        /&gt;
+      ),
+    },
+  ]}
+  float={{
+    direction: "left",
+    visible: isSidebarVisible,
+    toggle: () => setIsSidebarVisible(!isSidebarVisible),
+  }}
+  footerLinks={[
+    { label: "Privacy Policy", href: "/privacy", target: "_blank" },
+    { label: "Terms", href: "/terms" },
+    { label: "Help", href: "/help" },
+  ]}
+  sidebarName="Application Menu"
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The sidebar can be either static (fixed on the page) or floating
+          (appearing as an overlay)
+        </li>
+        <li>
+          Static sidebars support collapsing, which reduces their width and only
+          shows icons
+        </li>
+        <li>
+          Floating sidebars automatically add an overlay to the rest of the page
+          when visible
+        </li>
+        <li>
+          Sections can contain any component, but typically contain navigation
+          menus using <code>SideNav</code>
+        </li>
+        <li>
+          The <code>FrequentlyVisitedLinks</code> component provides a
+          standardized way to display recent or frequently used links
+        </li>
+        <li>Footer links are only displayed in floating sidebars</li>
+        <li>
+          For Dell-branded applications, additional customization options are
+          available
+        </li>
+        <li>
+          Use the <code>divider</code> property in a section to create visual
+          separation between sections
+        </li>
+        <li>
+          Static sidebars typically display the site name and icon at the top
+        </li>
+        <li>
+          Floating sidebars can be configured to appear from either the left or
+          right side
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

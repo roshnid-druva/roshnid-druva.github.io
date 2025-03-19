@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slider Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Slider Demo Styles */
+      .slider-demo {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 30px 20px;
+        margin-bottom: 20px;
+      }
+      .slider-track {
+        position: relative;
+        height: 6px;
+        background-color: #e0e0e0;
+        border-radius: 3px;
+        margin: 30px 10px;
+      }
+      .slider-track-filled {
+        position: absolute;
+        height: 100%;
+        background-color: #3498db;
+        border-radius: 3px;
+      }
+      .slider-handle {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background-color: #fff;
+        border: 2px solid #3498db;
+        border-radius: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+      }
+      .slider-marks {
+        position: relative;
+        height: 4px;
+        margin-top: 10px;
+      }
+      .slider-mark {
+        position: absolute;
+        width: 1px;
+        height: 8px;
+        background-color: #ccc;
+        transform: translateX(-50%);
+      }
+      .slider-label {
+        position: absolute;
+        font-size: 12px;
+        color: #666;
+        transform: translateX(-50%);
+        margin-top: 12px;
+      }
+      .slider-tooltip {
+        position: absolute;
+        background-color: #333;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 12px;
+        transform: translate(-50%, -30px);
+      }
+      .slider-value {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      .slider-vertical {
+        height: 200px;
+        width: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .slider-vertical .slider-track {
+        width: 6px;
+        height: 150px;
+        margin: 10px 0;
+      }
+      .slider-vertical .slider-track-filled {
+        width: 100%;
+        bottom: 0;
+      }
+      .slider-vertical .slider-handle {
+        left: 50%;
+      }
+      .slider-vertical .slider-value {
+        margin-top: 10px;
+      }
+      .slider-custom-labels {
+        margin-top: 30px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+      }
+      .slider-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .range-value {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .min-value {
+        color: #e74c3c;
+      }
+      .max-value {
+        color: #2ecc71;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Slider Component</h1>
+      <p>
+        Components for selecting values from a range with simple and range
+        selection variants.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>
+import Slider from "orion/lib/slider";
+import RangeSlider from "orion/lib/slider/rangeSlider";</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>min</td>
+            <td>Number</td>
+            <td>0</td>
+            <td>Minimum value for the slider range.</td>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>
+              Maximum value for the slider range. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>step</td>
+            <td>Number</td>
+            <td>1</td>
+            <td>Step increment between values when dragging the knob.</td>
+          </tr>
+          <tr>
+            <td>labelStep</td>
+            <td>Number</td>
+            <td>1</td>
+            <td>Step to skip marker labels on the slider bar.</td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback when slider value changes (called only after dragging
+              ends).
+            </td>
+          </tr>
+          <tr>
+            <td>onMove</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Callback while dragging the slider knob (called continuously).
+            </td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables slider interaction.</td>
+          </tr>
+          <tr>
+            <td>defaultValue</td>
+            <td>Number/Array</td>
+            <td>0 or [0, 0]</td>
+            <td>
+              Initial value of the slider (array of two numbers for
+              RangeSlider).
+            </td>
+          </tr>
+          <tr>
+            <td>tooltip</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to show a tooltip while dragging the knob.</td>
+          </tr>
+          <tr>
+            <td>vertical</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Controls placement of the selected value display.</td>
+          </tr>
+          <tr>
+            <td>renderLabel</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to customize slider marker labels.</td>
+          </tr>
+          <tr>
+            <td>graduated</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>Whether to show the slider markers.</td>
+          </tr>
+          <tr>
+            <td>selectedValueRenderer</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function to customize the display of selected values.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class for the slider container.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-slider"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Slider</h3>
+        <div class="slider-demo">
+          <div class="slider-track">
+            <div class="slider-track-filled" style="width: 50%"></div>
+            <div class="slider-handle" style="left: 50%"></div>
+            <div class="slider-marks">
+              <div class="slider-mark" style="left: 0%">
+                <div class="slider-label">0</div>
+              </div>
+              <div class="slider-mark" style="left: 25%">
+                <div class="slider-label">5</div>
+              </div>
+              <div class="slider-mark" style="left: 50%">
+                <div class="slider-label">10</div>
+              </div>
+              <div class="slider-mark" style="left: 75%">
+                <div class="slider-label">15</div>
+              </div>
+              <div class="slider-mark" style="left: 100%">
+                <div class="slider-label">20</div>
+              </div>
+            </div>
+          </div>
+          <div class="slider-value">Selected value: 10</div>
+        </div>
+        <pre>
+&lt;Slider
+  min={0}
+  max={20}
+  step={1}
+  labelStep={1}
+  onChange={(value, event) => console.log(`Selected value: ${value}`)}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Range Slider</h3>
+        <div class="slider-demo">
+          <div class="slider-track">
+            <div
+              class="slider-track-filled"
+              style="left: 25%; width: 50%"
+            ></div>
+            <div class="slider-handle" style="left: 25%"></div>
+            <div class="slider-handle" style="left: 75%"></div>
+            <div class="slider-marks">
+              <div class="slider-mark" style="left: 0%">
+                <div class="slider-label">0</div>
+              </div>
+              <div class="slider-mark" style="left: 20%">
+                <div class="slider-label">4</div>
+              </div>
+              <div class="slider-mark" style="left: 40%">
+                <div class="slider-label">8</div>
+              </div>
+              <div class="slider-mark" style="left: 60%">
+                <div class="slider-label">12</div>
+              </div>
+              <div class="slider-mark" style="left: 80%">
+                <div class="slider-label">16</div>
+              </div>
+              <div class="slider-mark" style="left: 100%">
+                <div class="slider-label">20</div>
+              </div>
+            </div>
+          </div>
+          <div class="range-value">
+            <span class="min-value">Min: 5</span>
+            <span class="max-value">Max: 15</span>
+          </div>
+        </div>
+        <pre>
+&lt;RangeSlider
+  min={0}
+  max={20}
+  step={1}
+  labelStep={2}
+  defaultValue={[5, 15]}
+  onChange={(value, event) =>
+    console.log(`Selected range: ${value[0]} - ${value[1]}`)
+  }
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Disabled Slider</h3>
+        <div class="slider-demo">
+          <div class="slider-track slider-disabled">
+            <div class="slider-track-filled" style="width: 50%"></div>
+            <div class="slider-handle" style="left: 50%"></div>
+            <div class="slider-marks">
+              <div class="slider-mark" style="left: 0%">
+                <div class="slider-label">0</div>
+              </div>
+              <div class="slider-mark" style="left: 25%">
+                <div class="slider-label">5</div>
+              </div>
+              <div class="slider-mark" style="left: 50%">
+                <div class="slider-label">10</div>
+              </div>
+              <div class="slider-mark" style="left: 75%">
+                <div class="slider-label">15</div>
+              </div>
+              <div class="slider-mark" style="left: 100%">
+                <div class="slider-label">20</div>
+              </div>
+            </div>
+          </div>
+          <div class="slider-value">Selected value: 10</div>
+        </div>
+        <pre>
+&lt;Slider min={0} max={20} disabled={true} defaultValue={10} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Vertical Slider with No Tooltip</h3>
+        <div class="slider-demo">
+          <div class="slider-vertical">
+            <div class="slider-track">
+              <div class="slider-track-filled" style="height: 50%"></div>
+              <div class="slider-handle" style="bottom: 50%"></div>
+            </div>
+            <div class="slider-value">10</div>
+          </div>
+        </div>
+        <pre>
+&lt;Slider min={0} max={20} vertical={true} tooltip={false} defaultValue={10} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Slider with Custom Labels</h3>
+        <div class="slider-demo">
+          <div class="slider-track">
+            <div class="slider-track-filled" style="width: 50%"></div>
+            <div class="slider-handle" style="left: 50%"></div>
+          </div>
+          <div class="slider-custom-labels">
+            <div>Very Poor</div>
+            <div>Sounds Ok</div>
+            <div>Good</div>
+            <div>Best</div>
+            <div>Excellent</div>
+          </div>
+          <div class="slider-value">Good</div>
+        </div>
+        <pre>
+&lt;Slider
+  min={0}
+  max={4}
+  renderLabel={(label) => {
+    switch (label) {
+      case 0:
+        return "Very Poor";
+      case 1:
+        return "Sounds Ok";
+      case 2:
+        return "Good";
+      case 3:
+        return "Best";
+      case 4:
+        return "Excellent";
+      default:
+        return label;
+    }
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Range Slider with Custom Selected Value Display</h3>
+        <div class="slider-demo">
+          <div class="slider-track">
+            <div
+              class="slider-track-filled"
+              style="left: 25%; width: 50%"
+            ></div>
+            <div class="slider-handle" style="left: 25%"></div>
+            <div class="slider-handle" style="left: 75%"></div>
+            <div class="slider-marks">
+              <div class="slider-mark" style="left: 0%">
+                <div class="slider-label">0</div>
+              </div>
+              <div class="slider-mark" style="left: 25%">
+                <div class="slider-label">5</div>
+              </div>
+              <div class="slider-mark" style="left: 50%">
+                <div class="slider-label">10</div>
+              </div>
+              <div class="slider-mark" style="left: 75%">
+                <div class="slider-label">15</div>
+              </div>
+              <div class="slider-mark" style="left: 100%">
+                <div class="slider-label">20</div>
+              </div>
+            </div>
+          </div>
+          <div class="range-value">
+            <span class="min-value">Min selected 5</span>
+            <span>-</span>
+            <span class="max-value">Max selected 15</span>
+          </div>
+        </div>
+        <pre>
+&lt;RangeSlider
+  min={0}
+  max={20}
+  tooltip={false}
+  selectedValueRenderer={(value, isVertical, sideIndex) => {
+    if (isVertical) {
+      return sideIndex === 0 ? (
+        &lt;span className="oui-text-danger"&gt;Min selected {value}&lt;/span&gt;
+      ) : (
+        &lt;span className="oui-text-success"&gt;Max selected {value}&lt;/span&gt;
+      );
+    }
+
+    return (
+      &lt;div className="oui-d-flex"&gt;
+        &lt;span className="oui-text-danger"&gt;Min {value[0]}&lt;/span&gt;
+        &lt;span className="oui-ml-1 oui-mr-1"&gt;-&lt;/span&gt;
+        &lt;span className="oui-text-success"&gt;Max {value[1]}&lt;/span&gt;
+      &lt;/div&gt;
+    );
+  }}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Non-Graduated Slider (Without Markers)</h3>
+        <div class="slider-demo">
+          <div class="slider-track">
+            <div class="slider-track-filled" style="width: 50%"></div>
+            <div class="slider-handle" style="left: 50%"></div>
+          </div>
+          <div class="slider-value">10</div>
+        </div>
+        <pre>
+&lt;Slider min={0} max={20} graduated={false} defaultValue={10} /&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The <code>onChange</code> callback is triggered only after dragging
+          ends, making it suitable for expensive operations
+        </li>
+        <li>
+          The <code>onMove</code> callback is triggered continuously during
+          dragging, useful for real-time updates
+        </li>
+        <li>
+          For <code>RangeSlider</code>, both callbacks receive an array of two
+          values representing the lower and upper bounds
+        </li>
+        <li>
+          When <code>tooltip</code> is false, the selected value is displayed
+          next to or above the slider bar based on the
+          <code>vertical</code> prop
+        </li>
+        <li>
+          The <code>selectedValueRenderer</code> function receives different
+          arguments based on the slider type and orientation:
+          <ul>
+            <li>
+              For regular <code>Slider</code>: <code>(value, isVertical)</code>
+            </li>
+            <li>
+              For <code>RangeSlider</code>:
+              <code>(value, isVertical, sideIndex)</code> where sideIndex is 0
+              for left/bottom handle and 1 for right/top handle
+            </li>
+          </ul>
+        </li>
+        <li>
+          The <code>labelStep</code> prop can be used to reduce visual clutter
+          when there are many tick marks
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

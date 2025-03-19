@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Progress Demo Styles */
+      .progress-demo {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .progress-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        max-width: 100%;
+      }
+      .progress-container.right-label {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+      }
+      .progress-label {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #555;
+      }
+      .progress-container.right-label .progress-label {
+        margin-top: 0;
+      }
+
+      /* Linear Progress */
+      .linear-progress {
+        width: 100%;
+        max-width: 400px;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+      .linear-progress.xs {
+        height: 4px;
+      }
+      .linear-progress.sm {
+        height: 6px;
+      }
+      .linear-progress.md {
+        height: 8px;
+      }
+      .linear-progress-bar {
+        height: 100%;
+        background-color: #007bff;
+        border-radius: 4px;
+        width: 0%;
+      }
+      .linear-progress-bar.w50 {
+        width: 50%;
+      }
+      .linear-progress-bar.w75 {
+        width: 75%;
+      }
+      .linear-progress-bar.w25 {
+        width: 25%;
+      }
+      .linear-progress-value {
+        margin-top: 4px;
+        font-size: 12px;
+        color: #666;
+        text-align: right;
+      }
+
+      /* Indeterminate Linear Progress */
+      .linear-progress-bar.indeterminate {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      .linear-progress-bar.indeterminate:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.3);
+        animation: linear-indeterminate 1.5s infinite linear;
+      }
+      @keyframes linear-indeterminate {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* Animated Linear Progress */
+      .linear-progress-bar.animated {
+        position: relative;
+        overflow: hidden;
+      }
+      .linear-progress-bar.animated:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.2) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.2) 75%,
+          transparent 75%,
+          transparent
+        );
+        background-size: 16px 16px;
+        animation: linear-animated 1s infinite linear;
+      }
+      @keyframes linear-animated {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 16px 0;
+        }
+      }
+
+      /* Circular Progress */
+      .circular-progress {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .circular-progress.sm {
+        width: 40px;
+        height: 40px;
+      }
+      .circular-progress.md {
+        width: 60px;
+        height: 60px;
+      }
+      .circular-progress.lg {
+        width: 80px;
+        height: 80px;
+      }
+      .circular-background {
+        fill: none;
+        stroke: #e9ecef;
+      }
+      .circular-value {
+        fill: none;
+        stroke: #007bff;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.3s ease;
+      }
+      .circular-text {
+        font-size: 12px;
+        font-weight: 500;
+        fill: #333;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
+      /* Indeterminate Circular Progress */
+      .circular-progress.indeterminate .circular-value {
+        animation: circular-rotate 1.5s linear infinite;
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: 0;
+      }
+      @keyframes circular-rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Progress Component</h1>
+      <p>
+        A component for displaying progress indicators in either linear or
+        circular format.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>import Progress from "orion/lib/progress";</pre>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>"linear"</td>
+            <td>Type of progress: "linear" or "circular".</td>
+          </tr>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>
+              Size of the progress: "xs", "sm", "md", or "lg" (lg only for
+              circular).
+            </td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>String/Number</td>
+            <td>0</td>
+            <td>Current value of the progress.</td>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>String/Number</td>
+            <td>100</td>
+            <td>Maximum value for the progress.</td>
+          </tr>
+          <tr>
+            <td>indeterminate</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Shows an indeterminate state for unknown completion time. Ignores
+              value prop.
+            </td>
+          </tr>
+          <tr>
+            <td>animate</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows animation while honoring value (linear only).</td>
+          </tr>
+          <tr>
+            <td>showPercProgress</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>
+              Shows percentage progress label (not shown in small linear
+              progress).
+            </td>
+          </tr>
+          <tr>
+            <td>renderPercProgress</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Custom function to render progress label (linear only).</td>
+          </tr>
+          <tr>
+            <td>label</td>
+            <td>String/Element</td>
+            <td>-</td>
+            <td>Optional label for the progress.</td>
+          </tr>
+          <tr>
+            <td>labelPlacement</td>
+            <td>String</td>
+            <td>"bottom"</td>
+            <td>Label placement: "right" or "bottom".</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-progress-bar"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Linear Progress</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="linear-progress-value">50%</div>
+            <div class="progress-label">Loading data...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Progress
+  value={50}
+  max={100}
+  size="md"
+  showPercProgress={true}
+  label="Loading data..."
+  labelPlacement="bottom"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Circular Progress</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="circular-progress md">
+              <svg viewBox="0 0 36 36">
+                <circle
+                  class="circular-background"
+                  cx="18"
+                  cy="18"
+                  r="16"
+                  stroke-width="3"
+                ></circle>
+                <circle
+                  class="circular-value"
+                  cx="18"
+                  cy="18"
+                  r="16"
+                  stroke-width="3"
+                  stroke-dasharray="75, 100"
+                  stroke-dashoffset="0"
+                  transform="rotate(-90, 18, 18)"
+                ></circle>
+                <text class="circular-text" x="18" y="18">75%</text>
+              </svg>
+            </div>
+            <div class="progress-label">Uploading files</div>
+          </div>
+        </div>
+        <pre>
+&lt;Progress
+  type="circular"
+  value={75}
+  max={100}
+  size="md"
+  showPercProgress={true}
+  label="Uploading files"
+  labelPlacement="bottom"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Indeterminate Progress</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar indeterminate"></div>
+            </div>
+            <div class="progress-label">Please wait...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Progress indeterminate={true} label="Please wait..." /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Animated Linear Progress</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar w50 animated"></div>
+            </div>
+            <div class="linear-progress-value">50%</div>
+            <div class="progress-label">Processing files...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Progress value={50} animate={true} label="Processing files..." /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Custom Progress Label</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="linear-progress-value">
+              25 of 50 files processed (50%)
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Progress
+  value={25}
+  max={50}
+  renderPercProgress={(value, max, percentage) =>
+    `${value} of ${max} files processed (${percentage}%)`
+  }
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Different Sizes</h3>
+        <div class="progress-demo">
+          <p><strong>Linear Progress Sizes:</strong></p>
+
+          <div class="progress-container">
+            <div class="linear-progress xs">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="progress-label">Extra Small (xs)</div>
+          </div>
+
+          <div class="progress-container">
+            <div class="linear-progress sm">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="progress-label">Small (sm)</div>
+          </div>
+
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="linear-progress-value">50%</div>
+            <div class="progress-label">Medium (md - default)</div>
+          </div>
+
+          <p><strong>Circular Progress Sizes:</strong></p>
+
+          <div style="display: flex; gap: 40px; margin-top: 16px">
+            <div class="progress-container">
+              <div class="circular-progress sm">
+                <svg viewBox="0 0 36 36">
+                  <circle
+                    class="circular-background"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                  ></circle>
+                  <circle
+                    class="circular-value"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                    stroke-dasharray="50, 100"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90, 18, 18)"
+                  ></circle>
+                  <text
+                    class="circular-text"
+                    x="18"
+                    y="18"
+                    style="font-size: 10px"
+                  >
+                    50%
+                  </text>
+                </svg>
+              </div>
+              <div class="progress-label">Small (sm)</div>
+            </div>
+
+            <div class="progress-container">
+              <div class="circular-progress md">
+                <svg viewBox="0 0 36 36">
+                  <circle
+                    class="circular-background"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                  ></circle>
+                  <circle
+                    class="circular-value"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                    stroke-dasharray="50, 100"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90, 18, 18)"
+                  ></circle>
+                  <text class="circular-text" x="18" y="18">50%</text>
+                </svg>
+              </div>
+              <div class="progress-label">Medium (md)</div>
+            </div>
+
+            <div class="progress-container">
+              <div class="circular-progress lg">
+                <svg viewBox="0 0 36 36">
+                  <circle
+                    class="circular-background"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                  ></circle>
+                  <circle
+                    class="circular-value"
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    stroke-width="3"
+                    stroke-dasharray="50, 100"
+                    stroke-dashoffset="0"
+                    transform="rotate(-90, 18, 18)"
+                  ></circle>
+                  <text
+                    class="circular-text"
+                    x="18"
+                    y="18"
+                    style="font-size: 14px"
+                  >
+                    50%
+                  </text>
+                </svg>
+              </div>
+              <div class="progress-label">Large (lg)</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+// Extra small (linear only)
+&lt;Progress value={50} size="xs" /&gt;
+
+// Small
+&lt;Progress value={50} size="sm" /&gt;
+
+// Medium (default)
+&lt;Progress value={50} size="md" /&gt;
+
+// Large
+&lt;Progress type="circular" value={50} size="lg" /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Label Placement</h3>
+        <div class="progress-demo">
+          <div class="progress-container">
+            <div class="linear-progress md">
+              <div class="linear-progress-bar w50"></div>
+            </div>
+            <div class="linear-progress-value">50%</div>
+            <div class="progress-label">Bottom Label (Default)</div>
+          </div>
+
+          <div class="progress-container right-label">
+            <div>
+              <div class="linear-progress md">
+                <div class="linear-progress-bar w50"></div>
+              </div>
+              <div class="linear-progress-value">50%</div>
+            </div>
+            <div class="progress-label">Right Label</div>
+          </div>
+        </div>
+        <pre>
+// Bottom Label (Default)
+&lt;Progress
+  value={50}
+  label="Bottom Label"
+  labelPlacement="bottom"
+/&gt;
+
+// Right Label
+&lt;Progress
+  value={50}
+  label="Right Label"
+  labelPlacement="right"
+/&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+
+      <h3>Linear Progress</h3>
+      <ul>
+        <li>Supports both indeterminate and animate states</li>
+        <li>Animate is useful when progress is taking a long time to update</li>
+        <li>Percentage progress label can be customized</li>
+        <li>Percentage label is only shown in "md" size</li>
+        <li>Supports sizes: "xs", "sm", and "md"</li>
+      </ul>
+
+      <h3>Circular Progress</h3>
+      <ul>
+        <li>Does not support the animate state, only indeterminate</li>
+        <li>
+          Cannot customize the percentage progress label due to space
+          constraints
+        </li>
+        <li>Supports sizes: "sm", "md", and "lg"</li>
+      </ul>
+
+      <h3>Customizing Progress Label</h3>
+      <p>
+        The <code>renderPercProgress</code> function allows customizing the
+        percentage label text for linear progress:
+      </p>
+      <pre>
+renderPercProgress={(value, max, percentage) => (
+  `${value} MB of ${max} MB (${percentage}%)`
+)}</pre
+      >
+      <p>The function receives:</p>
+      <ul>
+        <li>current value</li>
+        <li>maximum value</li>
+        <li>calculated percentage</li>
+      </ul>
+    </div>
+  </body>
+</html>
