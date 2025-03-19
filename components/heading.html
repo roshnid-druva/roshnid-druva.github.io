@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heading Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .heading-demo {
+        margin-bottom: 20px;
+      }
+      .heading-block {
+        margin-bottom: 10px;
+      }
+      .heading1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0.67em 0;
+      }
+      .heading2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0.83em 0;
+      }
+      .heading3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 1em 0;
+      }
+      .heading4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 1.33em 0;
+      }
+      .heading5 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin: 1.67em 0;
+      }
+      .heading6 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 2.33em 0;
+      }
+      .inline {
+        display: inline;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Heading Component</h1>
+      <p>
+        A component for displaying headings with different levels of hierarchy.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Heading from "orion/lib/heading"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>type</td>
+            <td>String | Number</td>
+            <td>"6"</td>
+            <td>Heading level from 1-6. By default it is 6.</td>
+          </tr>
+          <tr>
+            <td>text</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Text to be shown as the heading.</td>
+          </tr>
+          <tr>
+            <td>inline</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              When true, renders as a <code>&lt;span&gt;</code> to display
+              adjacent to other elements.
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-heading"</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+        <div class="heading-demo">
+          <div class="heading-block">
+            <h1 class="heading1">Heading 1</h1>
+          </div>
+          <div class="heading-block">
+            <h2 class="heading2">Heading 2</h2>
+          </div>
+          <div class="heading-block">
+            <h3 class="heading3">Heading 3</h3>
+          </div>
+          <div class="heading-block">
+            <h4 class="heading4">Heading 4</h4>
+          </div>
+          <div class="heading-block">
+            <h5 class="heading5">Heading 5</h5>
+          </div>
+          <div class="heading-block">
+            <h6 class="heading6">Heading 6</h6>
+          </div>
+        </div>
+        <pre>
+&lt;Heading type="1" text="Heading 1" /&gt;
+&lt;Heading type="2" text="Heading 2" /&gt;
+&lt;Heading type="3" text="Heading 3" /&gt;
+&lt;Heading type="4" text="Heading 4" /&gt;
+&lt;Heading type="5" text="Heading 5" /&gt;
+&lt;Heading type="6" text="Heading 6" /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Inline Headings</h3>
+        <p>
+          Use the <code>inline</code> prop to render headings as
+          <code>&lt;span&gt;</code> elements, allowing them to appear adjacent
+          to other elements.
+        </p>
+        <div class="heading-demo">
+          <div class="heading-block">
+            <span class="heading1 inline">Heading 1</span>
+            <span class="heading2 inline">Heading 2</span>
+            <span class="heading3 inline">Heading 3</span>
+          </div>
+          <div class="heading-block">
+            <span class="heading4 inline">Heading 4</span>
+            <span class="heading5 inline">Heading 5</span>
+            <span class="heading6 inline">Heading 6</span>
+          </div>
+        </div>
+        <pre>
+&lt;Heading inline type="1" text="Heading 1" /&gt;
+&lt;Heading inline type="2" text="Heading 2" /&gt;
+&lt;Heading inline type="3" text="Heading 3" /&gt;
+&lt;Heading inline type="4" text="Heading 4" /&gt;
+&lt;Heading inline type="5" text="Heading 5" /&gt;
+&lt;Heading inline type="6" text="Heading 6" /&gt;</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>

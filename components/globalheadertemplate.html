@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlobalHeaderTemplate Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .header-demo {
+        margin-bottom: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: white;
+      }
+      .global-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 60px;
+        background-color: #fff;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+      }
+      .brand-logo {
+        width: 32px;
+        height: 32px;
+        background-color: #007bff;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+      .brand-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+      .brand-portal {
+        font-size: 14px;
+        color: #6c757d;
+        margin-left: 8px;
+      }
+      .nav-items {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .nav-link {
+        color: #495057;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .nav-dropdown {
+        position: relative;
+        cursor: pointer;
+      }
+      .nav-dropdown-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #495057;
+        font-weight: 500;
+      }
+      .nav-dropdown-label::after {
+        content: "▼";
+        font-size: 8px;
+      }
+      .nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+      }
+      .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: #dc3545;
+        color: white;
+        font-size: 10px;
+        padding: 2px 5px;
+        border-radius: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>GlobalHeaderTemplate Component</h1>
+      <p>
+        A component that provides a consistent global header interface across
+        Druva products, including navigation, branding, and menu capabilities.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code>
+        import GlobalHeaderTemplate from "orion/lib/globalHeaderTemplate";
+      </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>appDataSet</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>
+              Data containing product information, navigation structure, and
+              URLs
+            </td>
+          </tr>
+          <tr>
+            <td>brand</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Configuration for brand logo and name</td>
+          </tr>
+          <tr>
+            <td>getAppNavMenu</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>
+              Function that returns application-specific navigation menu items
+            </td>
+          </tr>
+          <tr>
+            <td>getCommonNavMenu</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function that returns common navigation menu items</td>
+          </tr>
+          <tr>
+            <td>globalSidebarEnabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether the global sidebar is enabled</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Brand Object Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>Brand name</td>
+          </tr>
+          <tr>
+            <td>portalName</td>
+            <td>String</td>
+            <td>Name of the portal</td>
+          </tr>
+          <tr>
+            <td>href</td>
+            <td>String</td>
+            <td>URL to navigate to when clicking the logo</td>
+          </tr>
+          <tr>
+            <td>isActive</td>
+            <td>Boolean</td>
+            <td>Whether the brand is active</td>
+          </tr>
+          <tr>
+            <td>logoUrl</td>
+            <td>String</td>
+            <td>URL to the brand logo image</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>App Navigation Menu Item Types</h2>
+      <p>
+        The <code>getAppNavMenu</code> function should return an array of menu
+        item objects, each with a <code>component</code> property that defines
+        its type.
+      </p>
+
+      <div class="example">
+        <h3>Dropdown Menu</h3>
+        <div class="header-demo">
+          <div class="global-header">
+            <div class="brand">
+              <div class="brand-logo"></div>
+              <div class="brand-name">Product</div>
+              <div class="brand-portal">Backup Service</div>
+            </div>
+            <div class="nav-items">
+              <div class="nav-dropdown">
+                <div class="nav-dropdown-label">Availability</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+{
+  component: "dropdown",
+  data: {
+    label: "Availability",
+    items: [
+      {
+        label: "Backup",
+        href: "#/backup-manage"
+      },
+      {
+        label: "Restore",
+        href: "#/restore-manage"
+      }
+    ]
+  }
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Link Menu Item</h3>
+        <div class="header-demo">
+          <div class="global-header">
+            <div class="brand">
+              <div class="brand-logo"></div>
+              <div class="brand-name">Product</div>
+              <div class="brand-portal">Backup Service</div>
+            </div>
+            <div class="nav-items">
+              <a class="nav-link" href="#/user">Users</a>
+            </div>
+          </div>
+        </div>
+        <pre>
+{
+  component: "link",
+  data: {
+    href: "#/user",
+    name: "Users"
+  }
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Icon Menu Item</h3>
+        <div class="header-demo">
+          <div class="global-header">
+            <div class="brand">
+              <div class="brand-logo"></div>
+              <div class="brand-name">Product</div>
+              <div class="brand-portal">Backup Service</div>
+            </div>
+            <div class="nav-items">
+              <div class="nav-icon" title="Downloads">⬇️</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+{
+  component: "icon",
+  data: {
+    icon: &lt;DownloadIcon /&gt;,
+    title: "Downloads",
+    tooltip: {
+      text: "Downloads",
+      placement: "bottom"
+    },
+    href: "#/download",
+    target: "_blank"
+  }
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Icon with Dropdown</h3>
+        <div class="header-demo">
+          <div class="global-header">
+            <div class="brand">
+              <div class="brand-logo"></div>
+              <div class="brand-name">Product</div>
+              <div class="brand-portal">Backup Service</div>
+            </div>
+            <div class="nav-items">
+              <div class="nav-icon" title="Settings">⚙️</div>
+            </div>
+          </div>
+        </div>
+        <pre>
+{
+  component: "icon-dropdown",
+  data: {
+    icon: &lt;SettingsIcon /&gt;,
+    title: "Settings",
+    tooltip: {
+      text: "Settings",
+      placement: "bottom"
+    },
+    dropdown: {
+      label: "Settings",
+      items: [
+        {
+          label: "Manage Administrators",
+          href: "#/storage-manage"
+        },
+        {
+          label: "Settings",
+          href: "#/settings-manage"
+        },
+        { divider: true },
+        {
+          label: "Downloads",
+          href: "#/download",
+          target: "_blank"
+        }
+      ]
+    }
+  }
+}</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Icon with Badge</h3>
+        <div class="header-demo">
+          <div class="global-header">
+            <div class="brand">
+              <div class="brand-logo"></div>
+              <div class="brand-name">Product</div>
+              <div class="brand-portal">Backup Service</div>
+            </div>
+            <div class="nav-items">
+              <div class="nav-icon" title="Alerts" style="position: relative">
+                🔔
+                <span class="badge">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+{
+  component: "icon",
+  data: {
+    icon: &lt;Alert /&gt;,
+    title: "Alerts",
+    tooltip: {
+      text: "Alerts",
+      placement: "bottom"
+    },
+    href: "#/alerts-manage",
+    badge: {
+      label: "3",
+      type: "danger"
+    }
+  }
+}</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Complete Example</h2>
+      <div class="header-demo">
+        <div class="global-header">
+          <div class="brand">
+            <div class="brand-logo"></div>
+            <div class="brand-name">Product</div>
+            <div class="brand-portal">Backup Service</div>
+          </div>
+          <div class="nav-items">
+            <div class="nav-dropdown">
+              <div class="nav-dropdown-label">Availability</div>
+            </div>
+            <a class="nav-link" href="#/user">Users</a>
+            <div class="nav-icon" title="Downloads">⬇️</div>
+          </div>
+        </div>
+      </div>
+      <pre>
+import GlobalHeaderTemplate from "orion/lib/globalHeaderTemplate";
+import SettingsIcon from "orion-icons/lib/SettingsGreyOutline";
+import DownloadIcon from "orion-icons/lib/DownloadGreyOutline";
+
+// AppDataSet containing product information
+const appDataSet = {
+  productDisplayName: "Product",
+  druvaoneurl: "https://console.example.org/dashboard",
+  globalSidebarContent: {
+    // Content for the global sidebar
+    // (See documentation for structure)
+  },
+};
+
+// Brand configuration
+const brandConfig = {
+  name: "Product",
+  portalName: "Backup Service",
+  href: "/",
+  isActive: true,
+  logoUrl: "https://example.org/logo.svg",
+};
+
+// Application navigation menu generator
+const getAppNavMenu = (appDataSet) => {
+  return [
+    {
+      component: "dropdown",
+      data: {
+        label: "Availability",
+        items: [
+          {
+            label: "Backup",
+            href: "#/backup-manage",
+          },
+          {
+            label: "Restore",
+            href: "#/restore-manage",
+          },
+        ],
+      },
+    },
+    {
+      component: "link",
+      data: {
+        href: "#/user",
+        name: "Users",
+      },
+    },
+    {
+      component: "icon",
+      data: {
+        icon: &lt;DownloadIcon /&gt;,
+        title: "Downloads",
+        tooltip: {
+          text: "Downloads",
+          placement: "bottom",
+        },
+        href: "#/download",
+      },
+    },
+  ];
+};
+
+// Common navigation menu generator
+const getCommonNavMenu = (appDataSet) => {
+  return [];
+};
+
+// Component usage
+&lt;GlobalHeaderTemplate
+  appDataSet={appDataSet}
+  brand={brandConfig}
+  getAppNavMenu={getAppNavMenu}
+  getCommonNavMenu={getCommonNavMenu}
+  globalSidebarEnabled={true}
+/&gt;;</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Behavior Notes</h2>
+      <ul>
+        <li>
+          The GlobalHeaderTemplate provides consistent navigation across Druva
+          products
+        </li>
+        <li>
+          The component displays brand information on the left and navigation on
+          the right
+        </li>
+        <li>
+          Navigation can include dropdowns, links, and icon buttons with
+          tooltips and badges
+        </li>
+        <li>
+          When globalSidebarEnabled is true, the component displays a global
+          navigation sidebar
+        </li>
+        <li>
+          The appDataSet contains product information and is used by the
+          navigation generators
+        </li>
+        <li>
+          Icon menu items can display badges for notifications or status
+          indicators
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

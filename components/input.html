@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .input-demo {
+        margin-bottom: 15px;
+      }
+      .input-field {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        max-width: 300px;
+        margin-bottom: 10px;
+      }
+      .input-field:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+      .input-field:disabled {
+        background-color: #e9ecef;
+        opacity: 1;
+      }
+      .input-field.textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .checkbox-field,
+      .radio-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .checkbox-label,
+      .radio-label {
+        margin-left: 8px;
+        user-select: none;
+      }
+      .checkbox-input,
+      .radio-input {
+        margin: 0;
+      }
+      .button-input {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      .button-input.reset {
+        background-color: #6c757d;
+      }
+      .button-input.submit {
+        background-color: #28a745;
+      }
+      .select-field {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+      .invalid-field {
+        border-color: #dc3545;
+      }
+      .error-feedback {
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Input Component</h1>
+      <p>
+        A versatile form control component that supports various input types
+        such as text, password, checkbox, radio, number, and more.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Input from "orion/lib/input"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>type</td>
+            <td>String</td>
+            <td>"text"</td>
+            <td>
+              Type of input: "text", "password", "checkbox", "radio",
+              "textarea", "number", "select", "submit", "button", "reset",
+              "email"
+            </td>
+          </tr>
+          <tr>
+            <td>id</td>
+            <td>String</td>
+            <td>-</td>
+            <td>HTML ID attribute for the input element</td>
+          </tr>
+          <tr>
+            <td>name</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Name of the input field (required for forms)</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>String/Number/Boolean</td>
+            <td>-</td>
+            <td>Value of the input field</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Placeholder text for text-based inputs</td>
+          </tr>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Text label for radio and checkbox inputs</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the input field</td>
+          </tr>
+          <tr>
+            <td>min</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Minimum value for number inputs</td>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Maximum value for number inputs</td>
+          </tr>
+          <tr>
+            <td>inline</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Display checkbox or radio inputs inline</td>
+          </tr>
+          <tr>
+            <td>validationProps</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Formik props for form validation</td>
+          </tr>
+          <tr>
+            <td>isInvalid</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Whether the input field has validation errors</td>
+          </tr>
+          <tr>
+            <td>disableInputFeedback</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disable the display of validation feedback</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS classes to apply to the input</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-input"</td>
+            <td>Data test ID for automation testing</td>
+          </tr>
+          <tr>
+            <td>onChange</td>
+            <td>Function</td>
+            <td>-</td>
+            <td>Function called when input value changes</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>Options for select inputs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Text Input</h3>
+        <div class="input-demo">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            class="input-field"
+          />
+        </div>
+        <pre>
+&lt;Input
+  type="text"
+  id="username"
+  name="username"
+  placeholder="Enter your username"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Password Input</h3>
+        <div class="input-demo">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            class="input-field"
+          />
+        </div>
+        <pre>
+&lt;Input
+  type="password"
+  id="password"
+  name="password"
+  placeholder="Enter your password"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Textarea Input</h3>
+        <div class="input-demo">
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Enter a description"
+            class="input-field textarea"
+          ></textarea>
+        </div>
+        <pre>
+&lt;Input
+  type="textarea"
+  id="description"
+  name="description"
+  placeholder="Enter a description"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Number Input</h3>
+        <div class="input-demo">
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="0"
+            max="100"
+            placeholder="0"
+            class="input-field"
+          />
+        </div>
+        <pre>
+&lt;Input
+  type="number"
+  id="quantity"
+  name="quantity"
+  min={0}
+  max={100}
+  placeholder="0"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Checkbox Input</h3>
+        <div class="input-demo">
+          <div class="checkbox-field">
+            <input
+              type="checkbox"
+              id="agreement"
+              name="agreement"
+              class="checkbox-input"
+            />
+            <label for="agreement" class="checkbox-label"
+              >I agree to the terms and conditions</label
+            >
+          </div>
+        </div>
+        <pre>
+&lt;Input
+  type="checkbox"
+  id="agreement"
+  name="agreement"
+  label="I agree to the terms and conditions"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Radio Input</h3>
+        <div class="input-demo">
+          <div class="radio-field">
+            <input
+              type="radio"
+              id="option1"
+              name="options"
+              value="option1"
+              class="radio-input"
+            />
+            <label for="option1" class="radio-label">Option 1</label>
+          </div>
+          <div class="radio-field">
+            <input
+              type="radio"
+              id="option2"
+              name="options"
+              value="option2"
+              class="radio-input"
+            />
+            <label for="option2" class="radio-label">Option 2</label>
+          </div>
+        </div>
+        <pre>
+&lt;Input
+  type="radio"
+  id="option1"
+  name="options"
+  value="option1"
+  label="Option 1"
+/&gt;
+&lt;Input
+  type="radio"
+  id="option2"
+  name="options"
+  value="option2"
+  label="Option 2"
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Button Inputs</h3>
+        <div class="input-demo">
+          <button type="submit" class="button-input submit">Submit Form</button>
+          <button type="reset" class="button-input reset">Reset Form</button>
+          <button type="button" class="button-input">Click Me</button>
+        </div>
+        <pre>
+// Submit button
+&lt;Input type="submit" label="Submit Form" /&gt;
+
+// Reset button
+&lt;Input type="reset" label="Reset Form" /&gt;
+
+// Regular button
+&lt;Input type="button" label="Click Me" /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Disabled Input</h3>
+        <div class="input-demo">
+          <input
+            type="text"
+            id="readonly"
+            name="readonly"
+            value="This field is disabled"
+            disabled
+            class="input-field"
+          />
+        </div>
+        <pre>
+&lt;Input
+  type="text"
+  id="readonly"
+  name="readonly"
+  value="This field is disabled"
+  disabled
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Input with Validation</h3>
+        <div class="input-demo">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            class="input-field invalid-field"
+          />
+          <div class="error-feedback">Username is required</div>
+        </div>
+        <pre>
+&lt;Input
+  type="text"
+  id="username"
+  name="username"
+  placeholder="Enter username"
+  validationProps={formikProps}
+  isInvalid={formikProps.touched.username && formikProps.errors.username !== undefined}
+/&gt;
+&lt;InputFeedback
+  show={formikProps.touched.username && formikProps.errors.username !== undefined}
+  message={formikProps.errors.username}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Select Input</h3>
+        <div class="input-demo">
+          <select id="country" name="country" class="select-field">
+            <option value="us">United States</option>
+            <option value="ca">Canada</option>
+            <option value="mx">Mexico</option>
+          </select>
+        </div>
+        <pre>
+&lt;Input
+  type="select"
+  id="country"
+  name="country"
+  options={[
+    { label: "United States", value: "us" },
+    { label: "Canada", value: "ca" },
+    { label: "Mexico", value: "mx" },
+  ]}
+/&gt;</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>
