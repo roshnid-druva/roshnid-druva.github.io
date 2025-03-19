@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MessageBox Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* MessageBox Demo Styles */
+      .messagebox {
+        display: flex;
+        align-items: flex-start;
+        padding: 20px;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        margin-bottom: 20px;
+      }
+      .messagebox-lg {
+        padding: 30px;
+      }
+      .messagebox-sm {
+        padding: 15px;
+        align-items: center;
+      }
+      .messagebox-icon {
+        flex-shrink: 0;
+        margin-right: 16px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .messagebox-lg .messagebox-icon {
+        width: 48px;
+        height: 48px;
+      }
+      .messagebox-sm .messagebox-icon {
+        width: 24px;
+        height: 24px;
+      }
+      .messagebox-content {
+        flex: 1;
+      }
+      .messagebox-primary {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .messagebox-lg .messagebox-primary {
+        font-size: 18px;
+      }
+      .messagebox-sm .messagebox-primary {
+        margin: 0;
+        font-size: 14px;
+      }
+      .messagebox-secondary {
+        margin: 0;
+        color: #6c757d;
+        font-size: 14px;
+      }
+      .messagebox-action {
+        margin-top: 16px;
+      }
+      .messagebox-btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .messagebox-link {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .messagebox-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Icons */
+      .outlook-icon {
+        color: #0078d4;
+        font-size: 24px;
+      }
+      .gsuite-icon {
+        color: #4285f4;
+        font-size: 24px;
+      }
+      .critical-icon {
+        color: #dc3545;
+        font-size: 24px;
+      }
+      .settings-icon {
+        color: #0078d4;
+        font-size: 18px;
+      }
+      .user-icon {
+        color: #6c757d;
+        font-size: 24px;
+      }
+      .eye-icon {
+        color: #0078d4;
+        font-size: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>MessageBox Component</h1>
+      <p>
+        A component for displaying messages with an icon, text, and optional
+        actions.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import MessageBox from "orion/lib/messageBox"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>Size of message box: "lg", "md", or "sm".</td>
+          </tr>
+          <tr>
+            <td>primaryText</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Primary text of the message box.</td>
+          </tr>
+          <tr>
+            <td>secondaryText</td>
+            <td>String</td>
+            <td>-</td>
+            <td>
+              Secondary text of the message box (ignored in small message box).
+            </td>
+          </tr>
+          <tr>
+            <td>icon</td>
+            <td>React Element</td>
+            <td>-</td>
+            <td>
+              Icon imported from orion-icons library. Required for large and
+              medium box, optional for small. <strong>(Required)</strong>
+            </td>
+          </tr>
+          <tr>
+            <td>action</td>
+            <td>Object</td>
+            <td>-</td>
+            <td>Configuration for an action button or link.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Custom CSS class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-message-box"</td>
+            <td>Custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Action Object</h3>
+      <p>When providing an action, use the following structure:</p>
+      <pre>
+{
+  type: String, // "button" or "link"
+  data: {
+    label: String,        // Text for the button or link
+    onClick: Function,    // Click handler
+    href: String,         // URL for link type
+    disabled: Boolean     // Whether the action is disabled
+  }
+}</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>MessageBox with Button Action</h3>
+        <div class="messagebox">
+          <div class="messagebox-icon">
+            <span class="outlook-icon">📁</span>
+          </div>
+          <div class="messagebox-content">
+            <h4 class="messagebox-primary">Exchange Online</h4>
+            <p class="messagebox-secondary">
+              Protect Mails, Contacts, Calendar, Notes and Tasks
+            </p>
+            <div class="messagebox-action">
+              <button class="messagebox-btn">Protect</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+import Outlook from "@druva-apps/orion-icons/lib/OutlookfileYellowOutline";
+
+&lt;MessageBox
+  icon={&lt;Outlook /&gt;}
+  primaryText="Exchange Online"
+  secondaryText="Protect Mails, Contacts, Calendar, Notes and Tasks"
+  action={{
+    type: "button",
+    data: {
+      label: "Protect",
+      onClick: () => alert("Protect"),
+    },
+  }}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>MessageBox with Link Action</h3>
+        <div class="messagebox">
+          <div class="messagebox-icon">
+            <span class="outlook-icon">📁</span>
+          </div>
+          <div class="messagebox-content">
+            <h4 class="messagebox-primary">Exchange Online</h4>
+            <p class="messagebox-secondary">
+              Protect Mails, Contacts, Calendar, Notes and Tasks
+            </p>
+            <div class="messagebox-action">
+              <a href="#" class="messagebox-link">Protect Link</a>
+            </div>
+          </div>
+        </div>
+        <pre>
+import Outlook from "@druva-apps/orion-icons/lib/OutlookfileYellowOutline";
+
+&lt;MessageBox
+  icon={&lt;Outlook /&gt;}
+  primaryText="Exchange Online"
+  secondaryText="Protect Mails, Contacts, Calendar, Notes and Tasks"
+  action={{
+    type: "link",
+    data: {
+      label: "Protect Link",
+      href: "/",
+      target: "_blank",
+    },
+  }}
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Simple MessageBox with Secondary Text Only</h3>
+        <div class="messagebox">
+          <div class="messagebox-icon">
+            <span class="gsuite-icon">🔤</span>
+          </div>
+          <div class="messagebox-content">
+            <p class="messagebox-secondary">No GSuite Tenant Registered</p>
+          </div>
+        </div>
+        <pre>
+import Gsuite from "@druva-apps/orion-icons/lib/GoogleworkspaceMulticolorFilled";
+
+&lt;MessageBox icon={&lt;Gsuite /&gt;} secondaryText="No GSuite Tenant Registered" /&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Error MessageBox</h3>
+        <div class="messagebox">
+          <div class="messagebox-icon">
+            <span class="critical-icon">⚠️</span>
+          </div>
+          <div class="messagebox-content">
+            <h4 class="messagebox-primary">Error Code</h4>
+            <p class="messagebox-secondary">
+              We are facing issues while loading Recommendations. Please retry
+              again later.
+            </p>
+          </div>
+        </div>
+        <pre>
+import Critical from "@druva-apps/orion-icons/lib/ExpiredRedOutline";
+
+&lt;MessageBox
+  icon={&lt;Critical /&gt;}
+  primaryText="Error Code"
+  secondaryText="We are facing issues while loading Recommendations. Please retry again later."
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Small MessageBox</h3>
+        <div class="messagebox messagebox-sm">
+          <div class="messagebox-icon">
+            <span class="settings-icon">⚙️</span>
+          </div>
+          <div class="messagebox-content">
+            <h4 class="messagebox-primary">Scan settings are not available</h4>
+          </div>
+        </div>
+        <pre>
+import SettingsBlue from "@druva-apps/orion-icons/lib/SettingsMultitoneFilled";
+
+&lt;MessageBox
+  size="sm"
+  icon={&lt;SettingsBlue /&gt;}
+  primaryText="Scan settings are not available"
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>MessageBox as Empty State in Table</h3>
+        <div class="messagebox">
+          <div class="messagebox-icon">
+            <span class="user-icon">👤</span>
+          </div>
+          <div class="messagebox-content">
+            <p class="messagebox-secondary">No Custodian Added</p>
+          </div>
+        </div>
+        <pre>
+import UserProfileSolid from "@druva-apps/orion-icons/lib/UserprofileGreyFilled";
+
+&lt;Table
+  dataList={[]}
+  columnsDef={columnsDef}
+  noDataMessage={
+    &lt;MessageBox
+      size="md"
+      icon={&lt;UserProfileSolid /&gt;}
+      secondaryText="No Custodian Added"
+    /&gt;
+  }
+/&gt;;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Large MessageBox with Both Text Properties</h3>
+        <div class="messagebox messagebox-lg">
+          <div class="messagebox-icon">
+            <span class="eye-icon">👁️</span>
+          </div>
+          <div class="messagebox-content">
+            <h4 class="messagebox-primary">
+              No Resources added to Quarantine Bay
+            </h4>
+            <p class="messagebox-secondary">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </p>
+          </div>
+        </div>
+        <pre>
+import EyeIcon from "@druva-apps/orion-icons/lib/ViewBlueMultitoneFilled";
+
+&lt;Table
+  dataList={[]}
+  columnsDef={columnsDef}
+  noDataMessage={
+    &lt;MessageBox
+      size="lg"
+      icon={&lt;EyeIcon /&gt;}
+      primaryText="No Resources added to Quarantine Bay"
+      secondaryText="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+    /&gt;
+  }
+/&gt;;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Size Variations</h2>
+
+      <h3>Large (lg)</h3>
+      <ul>
+        <li>Most spacious with larger icon</li>
+        <li>Good for empty states and important messages</li>
+        <li>Supports both primary and secondary text</li>
+      </ul>
+
+      <h3>Medium (md)</h3>
+      <ul>
+        <li>Default size</li>
+        <li>Balanced design for most use cases</li>
+        <li>Supports both primary and secondary text</li>
+      </ul>
+
+      <h3>Small (sm)</h3>
+      <ul>
+        <li>Compact design for limited space</li>
+        <li>Icon is optional</li>
+        <li>Secondary text is ignored</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Notes</h2>
+      <ul>
+        <li>
+          Icons should be imported from the
+          <a
+            href="http://orion.druva.org/icons-library/public-icons"
+            target="_blank"
+            >orion-icons</a
+          >
+          library
+        </li>
+        <li>
+          For empty states in tables, use MessageBox as the
+          <code>noDataMessage</code> prop
+        </li>
+        <li>
+          MessageBox is often used inside Card components for better visual
+          organization
+        </li>
+        <li>The component adapts its layout based on the size prop</li>
+      </ul>
+    </div>
+  </body>
+</html>

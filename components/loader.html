@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loader Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      /* Loader Demo Styles */
+      .loader-demo {
+        margin-bottom: 20px;
+        position: relative;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .loader-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+      .loader-invert {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+      }
+      .loader-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+      }
+      .loader-spinner.sm {
+        width: 20px;
+        height: 20px;
+        border-width: 2px;
+      }
+      .loader-spinner.lg {
+        width: 50px;
+        height: 50px;
+        border-width: 4px;
+      }
+      .loader-bouncer {
+        display: flex;
+        align-items: center;
+      }
+      .loader-bouncer .dot {
+        background-color: #3498db;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 0 3px;
+        animation: bounce 1.5s infinite ease-in-out;
+      }
+      .loader-bouncer .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .loader-bouncer .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .loader-text {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      .card {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .card-header {
+        background-color: #f8f9fa;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+      }
+      .card-body {
+        padding: 15px;
+      }
+      .flex-center {
+        display: flex;
+        align-items: center;
+      }
+      .mr-2 {
+        margin-right: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Loader Component</h1>
+      <p>
+        A component for displaying loading states with optional text and
+        animation.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <pre>
+import Loader from "orion/lib/loader";
+import Spinner from "orion/lib/spinner";
+import Bouncer from "orion/lib/bouncer";</pre
+      >
+    </div>
+
+    <div class="section">
+      <h2>Loader Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>A flag to toggle the Loader.</td>
+          </tr>
+          <tr>
+            <td>showIcon</td>
+            <td>Boolean</td>
+            <td>true</td>
+            <td>A flag to toggle the loading icon.</td>
+          </tr>
+          <tr>
+            <td>iconSize</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>Size of the loader icon: "sm", "md", or "lg".</td>
+          </tr>
+          <tr>
+            <td>text</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Loading text to be shown on top of Loader.</td>
+          </tr>
+          <tr>
+            <td>fullPage</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>A flag to add a full page loader.</td>
+          </tr>
+          <tr>
+            <td>invert</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Inverts colors: overlay is black and content is white when true
+              (default is white overlay, black content).
+            </td>
+          </tr>
+          <tr>
+            <td>noOverlay</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              Shows loader without overlay background. Can be used to show
+              loader inline.
+            </td>
+          </tr>
+          <tr>
+            <td>opacity</td>
+            <td>Number | String</td>
+            <td>"0.8"</td>
+            <td>
+              Controls the loader background opacity (ignored if noOverlay is
+              true).
+            </td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-loader"</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Spinner/Bouncer Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>size</td>
+            <td>String</td>
+            <td>"md"</td>
+            <td>Size of the animation: "sm", "md", or "lg".</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-(spinner|bouncer)"</td>
+            <td>Provision to pass a custom data test ID for automation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Loader</h3>
+        <div class="loader-demo">
+          <div class="card">
+            <div class="card-header">Card Title</div>
+            <div class="card-body">Card content goes here</div>
+          </div>
+          <div class="loader-overlay">
+            <div class="loader-spinner"></div>
+          </div>
+        </div>
+        <pre>
+&lt;Loader isLoading={isLoading}&gt;
+  &lt;Card title="Card Title" body={() => &lt;div&gt;Card content goes here&lt;/div&gt;} /&gt;
+&lt;/Loader&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Loader with Text</h3>
+        <div class="loader-demo">
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #ddd;
+                  "
+                >
+                  Name
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #ddd;
+                  "
+                >
+                  Age
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #ddd;
+                  "
+                >
+                  Email
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #eee">
+                  John Doe
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee">30</td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee">
+                  john@example.com
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="loader-overlay">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading data...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Loader isLoading={isLoading} text="Loading data..."&gt;
+  &lt;Table columns={columns} data={data} /&gt;
+&lt;/Loader&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Loader with Custom Icon Size</h3>
+        <div class="loader-demo">
+          <div>Content to be loaded</div>
+          <div class="loader-overlay">
+            <div class="loader-spinner lg"></div>
+            <div class="loader-text">Loading...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Loader isLoading={isLoading} showIcon={true} iconSize="lg" text="Loading..."&gt;
+  &lt;div&gt;Content to be loaded&lt;/div&gt;
+&lt;/Loader&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Full Page Loader</h3>
+        <div class="loader-demo" style="height: 150px">
+          <div class="loader-overlay">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading application...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Loader
+  fullPage={true}
+  isLoading={isLoading}
+  showIcon={true}
+  text="Loading application..."
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Inverted Loader</h3>
+        <div class="loader-demo">
+          <div>Content to be loaded</div>
+          <div class="loader-overlay loader-invert">
+            <div
+              class="loader-spinner"
+              style="
+                border-color: rgba(255, 255, 255, 0.2);
+                border-top-color: white;
+              "
+            ></div>
+            <div class="loader-text">Loading with dark background...</div>
+          </div>
+        </div>
+        <pre>
+&lt;Loader
+  isLoading={isLoading}
+  invert={true}
+  text="Loading with dark background..."
+&gt;
+  &lt;div&gt;Content to be loaded&lt;/div&gt;
+&lt;/Loader&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Using Spinner Independently</h3>
+        <div class="flex-center">
+          <div class="loader-spinner sm mr-2"></div>
+          <span>Loading data...</span>
+        </div>
+        <pre>
+&lt;div style={{ display: "flex", alignItems: "center" }}&gt;
+  &lt;Spinner size="md" className="oui-mr-2" /&gt;
+  &lt;span&gt;Loading data...&lt;/span&gt;
+&lt;/div&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Using Bouncer Independently</h3>
+        <div class="flex-center">
+          <div class="loader-bouncer mr-2">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <span>Processing request...</span>
+        </div>
+        <pre>
+&lt;div style={{ display: "flex", alignItems: "center" }}&gt;
+  &lt;Bouncer size="md" className="oui-mr-2" /&gt;
+  &lt;span&gt;Processing request...&lt;/span&gt;
+&lt;/div&gt;</pre
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Usage Notes</h2>
+      <ul>
+        <li>
+          Loader adds a wrapper over the given component and is designed to
+          occupy the full width.
+        </li>
+        <li>
+          If your component is not full width, provide a parent container for
+          the Loader with a predefined width.
+        </li>
+        <li>
+          It's recommended to use a <code>Col</code> as the parent for the
+          Loader component to make it responsive.
+        </li>
+        <li>
+          A full page loader doesn't need to wrap the entire body; it can be
+          used as a standalone component.
+        </li>
+        <li>
+          The Spinner and Bouncer components can be used independently when you
+          need loading animations without the overlay.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InputGroup Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .input-group-demo {
+        margin-bottom: 15px;
+      }
+      .input-group {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        max-width: 400px;
+      }
+      .input-group-prepend,
+      .input-group-append {
+        display: flex;
+        align-items: center;
+      }
+      .input-group-text {
+        display: flex;
+        align-items: center;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+      }
+      .input-group > .input-group-prepend > .input-group-text {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .input-group > .input-group-append > .input-group-text {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .input-group-input {
+        flex: 1 1 auto;
+        width: 1%;
+        min-width: 0;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+      }
+      .input-group > .input-group-input:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .input-group > .input-group-input:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .input-group-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+      }
+      .input-group-btn {
+        position: relative;
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        cursor: pointer;
+      }
+      .input-group > .input-group-prepend > .input-group-btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .input-group > .input-group-append > .input-group-btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .input-group-dropdown {
+        position: relative;
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+      }
+      .input-group > .input-group-prepend > .input-group-dropdown {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .input-group > .input-group-append > .input-group-dropdown {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .input-group-dropdown::after {
+        content: "▼";
+        font-size: 0.7em;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>InputGroup Component</h1>
+      <p>
+        A component that allows grouping of inputs with other controls or text
+        elements.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import InputGroup from "orion/lib/inputGroup"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>items</td>
+            <td>Array</td>
+            <td>-</td>
+            <td>
+              Array of component configurations to be rendered in the group.
+              (Required)
+            </td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Disables the entire input group.</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Provision to pass custom class.</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-input-group"</td>
+            <td>
+              Provision to pass a custom data test ID for automation purpose.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Items Array Structure</h2>
+      <p>
+        Each item in the <code>items</code> array should have the following
+        structure:
+      </p>
+      <pre>
+{
+  component: String,  // Type of component: 'input', 'text', 'icon', 'button', or 'dropdown'
+  data: Object        // Props specific to the component type
+}</pre
+      >
+
+      <p>The <code>data</code> object varies based on the component type:</p>
+      <ul>
+        <li><strong>input</strong>: Accepts all Orion Input component props</li>
+        <li>
+          <strong>text</strong>:
+          <code>{ text: String, disabled: Boolean }</code>
+        </li>
+        <li>
+          <strong>icon</strong>: React Element imported from orion-icons library
+        </li>
+        <li>
+          <strong>button</strong>: Accepts all Orion Button component props
+        </li>
+        <li>
+          <strong>dropdown</strong>: Accepts all Orion Dropdown component props
+        </li>
+      </ul>
+
+      <p>
+        <strong>Note:</strong> At least one item with
+        <code>component: 'input'</code> is required. Components placed before
+        the input will be treated as prepend items, and those after will be
+        append items.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Text In Input Group</h3>
+
+        <h4>Text before input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            <input
+              type="text"
+              class="input-group-input"
+              placeholder="Enter Email..."
+              value="orion@druva.org"
+            />
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "text",
+      data: {
+        text: "@"
+      }
+    },
+    {
+      component: "input",
+      data: {
+        placeholder: "Enter Email...",
+        value: "orion@druva.org",
+        onChange: () => {}
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+
+        <h4>Text after input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <input
+              type="number"
+              class="input-group-input"
+              min="0"
+              placeholder="Enter Amount..."
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">$</span>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "input",
+      data: {
+        type: "number",
+        min: 0,
+        placeholder: "Enter Amount..."
+      }
+    },
+    {
+      component: "text",
+      data: {
+        text: "$"
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+
+        <h4>Text before and after input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">http://orion.druva.org</span>
+            </div>
+            <input
+              type="text"
+              class="input-group-input"
+              placeholder="Enter Website..."
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">@</span>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "text",
+      data: {
+        text: "http://orion.druva.org"
+      }
+    },
+    {
+      component: "input",
+      data: {
+        type: "text",
+        placeholder: "Enter Website..."
+      }
+    },
+    {
+      component: "text",
+      data: {
+        text: "@"
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Icon In Input Group</h3>
+
+        <h4>Icon before input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <span class="input-group-icon">✉️</span>
+              </span>
+            </div>
+            <input
+              type="text"
+              class="input-group-input"
+              placeholder="Enter Email..."
+            />
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "icon",
+      data: &lt;Mail inheritFontColor /&gt;
+    },
+    {
+      component: "input",
+      data: {
+        placeholder: "Enter Email...",
+        type: "text"
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+
+        <h4>Icon after input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <input
+              type="text"
+              class="input-group-input"
+              placeholder="Enter Email..."
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <span class="input-group-icon">✉️</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "input",
+      data: {
+        placeholder: "Enter Email...",
+        type: "text"
+      }
+    },
+    {
+      component: "icon",
+      data: &lt;Mail inheritFontColor /&gt;
+    }
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Button In Input Group</h3>
+
+        <h4>Button before input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="input-group-btn">Search</button>
+            </div>
+            <input type="text" class="input-group-input" />
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "button",
+      data: {
+        label: "Search"
+      }
+    },
+    {
+      component: "input",
+      data: {
+        type: "text"
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+
+        <h4>Button after input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <input type="text" class="input-group-input" />
+            <div class="input-group-append">
+              <button class="input-group-btn">Search</button>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "input",
+      data: {
+        type: "text"
+      }
+    },
+    {
+      component: "button",
+      data: {
+        label: "Search"
+      }
+    }
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Dropdown In Input Group</h3>
+
+        <h4>Dropdown before input</h4>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-dropdown">KB</span>
+            </div>
+            <input
+              type="number"
+              class="input-group-input"
+              min="0"
+              placeholder="Enter Size..."
+            />
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "dropdown",
+      data: {
+        label: "KB",
+        items: [{ label: "KB" }, { label: "MB" }, { label: "GB" }],
+      },
+    },
+    {
+      component: "input",
+      data: {
+        placeholder: "Enter Size...",
+        type: "number",
+        min: 0,
+      },
+    },
+  ]}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Mixed Components In Input Group</h3>
+        <div class="input-group-demo">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <span class="input-group-icon">⏰</span>
+              </span>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Alarm Snooze</span>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-dropdown">5 Mins</span>
+            </div>
+            <input type="text" class="input-group-input" />
+          </div>
+        </div>
+        <pre>
+&lt;InputGroup
+  items={[
+    {
+      component: "icon",
+      data: &lt;SnooseIcon /&gt;,
+    },
+    {
+      component: "text",
+      data: {
+        text: "Alarm Snooze",
+      },
+    },
+    {
+      component: "dropdown",
+      data: {
+        label: "5 Mins",
+        items: [
+          { label: "5 Mins" },
+          { label: "10 Mins" },
+          { label: "15 Mins" },
+        ],
+      },
+    },
+    {
+      component: "input",
+      data: {
+        type: "text",
+      },
+    },
+  ]}
+/&gt;</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>

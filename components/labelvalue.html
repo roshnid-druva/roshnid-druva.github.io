@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LabelValue Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .label-value-demo {
+        margin-bottom: 15px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .label {
+        font-weight: 500;
+        margin-right: 1rem;
+        min-width: 150px;
+      }
+      .value {
+        flex: 1;
+      }
+      .loading .value {
+        color: #6c757d;
+        font-style: italic;
+      }
+      .error .value {
+        color: #dc3545;
+      }
+      .text-link {
+        color: #3498db;
+        text-decoration: none;
+      }
+      .text-link:hover {
+        text-decoration: underline;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+      }
+      .col-sm-6 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        margin-bottom: 20px;
+      }
+      .card-header {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      }
+      .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+      }
+      .label-right {
+        text-align: right;
+      }
+      .label-center {
+        text-align: center;
+      }
+
+      @media (min-width: 576px) {
+        .col-sm-6 {
+          flex: 0 0 50%;
+          max-width: 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>LabelValue Component</h1>
+      <p>
+        A component to display data in a label-value pair format, commonly used
+        in detail views and information panels.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import LabelValue from "orion/lib/labelValue"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>label</td>
+            <td>String</td>
+            <td>-</td>
+            <td>The label text to display (Required)</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>String/Node</td>
+            <td>-</td>
+            <td>The value to display (can be text or a React element)</td>
+          </tr>
+          <tr>
+            <td>isLoading</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows a loading indicator when true</td>
+          </tr>
+          <tr>
+            <td>isError</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Shows error styling when true</td>
+          </tr>
+          <tr>
+            <td>fullWidth</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>Makes the component take up full width of its container</td>
+          </tr>
+          <tr>
+            <td>labelAlign</td>
+            <td>String</td>
+            <td>"left"</td>
+            <td>Alignment of the label text ("left", "right", "center")</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS classes to apply to the container</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-labelvalue"</td>
+            <td>Data test ID for automation testing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Usage</h3>
+        <div class="label-value-demo">
+          <div class="label">Username</div>
+          <div class="value">johndoe</div>
+        </div>
+        <pre>&lt;LabelValue label="Username" value="johndoe" /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>With Custom Link as Value</h3>
+        <div class="label-value-demo">
+          <div class="label">Profile</div>
+          <div class="value">
+            <a href="#" class="text-link">View Profile</a>
+          </div>
+        </div>
+        <pre>
+&lt;LabelValue
+  label="Profile"
+  value={
+    &lt;a href="#" className="oui-text-link"&gt;
+      View Profile
+    &lt;/a&gt;
+  }
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Loading State</h3>
+        <div class="label-value-demo loading">
+          <div class="label">Account Balance</div>
+          <div class="value">Loading...</div>
+        </div>
+        <pre>
+&lt;LabelValue
+  label="Account Balance"
+  value="$1,250.00"
+  isLoading={isLoadingBalance}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Error State</h3>
+        <div class="label-value-demo error">
+          <div class="label">Last Login</div>
+          <div class="value">Failed to retrieve</div>
+        </div>
+        <pre>
+&lt;LabelValue label="Last Login" value="Failed to retrieve" isError={true} /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Multiple Label-Value Pairs in a Layout</h3>
+        <div class="card">
+          <div class="card-header">
+            <h4 style="margin: 0">User Details</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="label-value-demo">
+                  <div class="label">Full Name</div>
+                  <div class="value">John Doe</div>
+                </div>
+                <div class="label-value-demo">
+                  <div class="label">Email</div>
+                  <div class="value">john@example.com</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="label-value-demo">
+                  <div class="label">Role</div>
+                  <div class="value">Administrator</div>
+                </div>
+                <div class="label-value-demo">
+                  <div class="label">Status</div>
+                  <div class="value">Active</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;Card
+  title="User Details"
+  body={() => (
+    &lt;Row&gt;
+      &lt;Col sm={6}&gt;
+        &lt;LabelValue label="Full Name" value="John Doe" /&gt;
+        &lt;LabelValue label="Email" value="john@example.com" /&gt;
+      &lt;/Col&gt;
+      &lt;Col sm={6}&gt;
+        &lt;LabelValue label="Role" value="Administrator" /&gt;
+        &lt;LabelValue label="Status" value="Active" /&gt;
+      &lt;/Col&gt;
+    &lt;/Row&gt;
+  )}
+/&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>With Label Alignment</h3>
+        <div class="label-value-demo">
+          <div class="label label-right">Created On</div>
+          <div class="value">Jan 15, 2023</div>
+        </div>
+        <pre>
+&lt;LabelValue label="Created On" value="Jan 15, 2023" labelAlign="right" /&gt;</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Label Component - Orion Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+      }
+      .component-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .props-table th,
+      .props-table td {
+        border: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+      }
+      .props-table th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .example {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: #2980b9;
+      }
+
+      .label-demo {
+        margin-bottom: 15px;
+      }
+      .form-label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      .form-label-optional {
+        font-weight: normal;
+        color: #6c757d;
+        margin-left: 5px;
+      }
+      .text-danger {
+        color: #dc3545;
+      }
+      .text-muted {
+        color: #6c757d;
+      }
+      .ml-1 {
+        margin-left: 0.25rem;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+      }
+      .col-sm-2,
+      .col-sm-3,
+      .col-sm-9,
+      .col-sm-10 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+      .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+
+      @media (min-width: 576px) {
+        .col-sm-2 {
+          flex: 0 0 16.666667%;
+          max-width: 16.666667%;
+        }
+        .col-sm-3 {
+          flex: 0 0 25%;
+          max-width: 25%;
+        }
+        .col-sm-9 {
+          flex: 0 0 75%;
+          max-width: 75%;
+        }
+        .col-sm-10 {
+          flex: 0 0 83.333333%;
+          max-width: 83.333333%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-link">← Back to Components</a>
+
+    <div class="component-header">
+      <h1>Label Component</h1>
+      <p>A component to render form labels with consistent styling.</p>
+    </div>
+
+    <div class="section">
+      <h2>Import</h2>
+      <code> import Label from "orion/lib/label"; </code>
+    </div>
+
+    <div class="section">
+      <h2>Properties</h2>
+      <table class="props-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>for</td>
+            <td>String</td>
+            <td>-</td>
+            <td>ID of the form element that the label is bound to</td>
+          </tr>
+          <tr>
+            <td>text</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Label text content</td>
+          </tr>
+          <tr>
+            <td>optional</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>If true, displays "(Optional)" after the label text</td>
+          </tr>
+          <tr>
+            <td>sm</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Grid column size for small screens (for responsive layouts)</td>
+          </tr>
+          <tr>
+            <td>md</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Grid column size for medium screens</td>
+          </tr>
+          <tr>
+            <td>lg</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Grid column size for large screens</td>
+          </tr>
+          <tr>
+            <td>xl</td>
+            <td>Number</td>
+            <td>-</td>
+            <td>Grid column size for extra large screens</td>
+          </tr>
+          <tr>
+            <td>className</td>
+            <td>String</td>
+            <td>-</td>
+            <td>Additional CSS classes to apply to the label</td>
+          </tr>
+          <tr>
+            <td>dataTestId</td>
+            <td>String</td>
+            <td>"orion-label"</td>
+            <td>Data test ID for automation testing</td>
+          </tr>
+          <tr>
+            <td>children</td>
+            <td>Node</td>
+            <td>-</td>
+            <td>Child elements to be rendered inside the label</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Usage Examples</h2>
+
+      <div class="example">
+        <h3>Basic Label</h3>
+        <div class="label-demo">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" class="form-control" />
+        </div>
+        <pre>&lt;Label for="username" text="Username" /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>Optional Label</h3>
+        <div class="label-demo">
+          <label for="bio" class="form-label"
+            >Biography
+            <span class="form-label-optional">(Optional)</span></label
+          >
+          <textarea id="bio" class="form-control"></textarea>
+        </div>
+        <pre>&lt;Label for="bio" text="Biography" optional /&gt;</pre>
+      </div>
+
+      <div class="example">
+        <h3>Label with Grid Column Size (Responsive)</h3>
+        <div class="label-demo">
+          <div class="form-group row">
+            <label for="email" class="form-label col-sm-3">Email Address</label>
+            <div class="col-sm-9">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;FormGroup row&gt;
+  &lt;Label for="email" text="Email Address" sm={3} /&gt;
+  &lt;Col sm={9}&gt;
+    &lt;Input type="email" id="email" name="email" /&gt;
+  &lt;/Col&gt;
+&lt;/FormGroup&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Label with Custom Styling</h3>
+        <div class="label-demo">
+          <label for="password" class="form-label text-danger">Password</label>
+          <input type="password" id="password" class="form-control" />
+        </div>
+        <pre>
+&lt;Label for="password" text="Password" className="oui-text-danger" /&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Label with Children</h3>
+        <div class="label-demo">
+          <label for="username-required" class="form-label">
+            Username
+            <span class="text-muted ml-1">(Required)</span>
+          </label>
+          <input type="text" id="username-required" class="form-control" />
+        </div>
+        <pre>
+&lt;Label for="username"&gt;
+  Username
+  &lt;span className="oui-text-muted oui-ml-1"&gt;(Required)&lt;/span&gt;
+&lt;/Label&gt;</pre
+        >
+      </div>
+
+      <div class="example">
+        <h3>Label Used in a Form Group Row</h3>
+        <div class="label-demo">
+          <div class="form-group row">
+            <label for="firstName" class="form-label col-sm-2"
+              >First Name</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <pre>
+&lt;FormGroup row&gt;
+  &lt;Label for="firstName" sm={2} text="First Name" /&gt;
+  &lt;Col sm={10}&gt;
+    &lt;Input type="text" id="firstName" name="firstName" /&gt;
+  &lt;/Col&gt;
+&lt;/FormGroup&gt;</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>
