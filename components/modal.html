@@ -68,9 +68,14 @@
       /* Modal Demo Styles */
       .modal-demo {
         margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        position: relative;
+        height: 350px;
+        overflow: hidden;
       }
       .modal-backdrop {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -201,6 +206,20 @@
       }
       .text-center {
         text-align: center;
+      }
+
+      /* Added for clear visualization of success icon */
+      .success-icon {
+        background-color: #00c853;
+        border-radius: 4px;
+        color: white;
+        width: 80px;
+        height: 80px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        font-size: 48px;
       }
     </style>
   </head>
@@ -836,7 +855,7 @@ const toggle = () => setIsOpen(!isOpen);
                 <button class="modal-close">&times;</button>
               </div>
               <div class="modal-body text-center">
-                <div class="modal-icon">✅</div>
+                <div class="success-icon">✓</div>
                 <h4>Operation Completed</h4>
                 <p>All files have been processed successfully.</p>
               </div>
